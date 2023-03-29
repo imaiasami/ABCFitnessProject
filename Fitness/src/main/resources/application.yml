@@ -1,0 +1,14 @@
+server:
+  port: 9000
+  
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:xe
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: exercise
+    password: 92949597
+
+mybatis:
+  mapper-locations:
+  - mapper/**/*.xml
+  type-aliases-package: com.project.file.model
