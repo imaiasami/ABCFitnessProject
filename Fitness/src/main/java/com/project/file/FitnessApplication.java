@@ -14,6 +14,8 @@ public class FitnessApplication {
 		System.out.println("Hello Git Hub World");
 		System.out.println("Hello Git Hub World");
 		System.out.println("Hello Git Hub World");
+		System.out.println("Hello Git Hub World");
+
 	}
 
 }
