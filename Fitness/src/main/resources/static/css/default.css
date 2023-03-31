@@ -51,7 +51,7 @@ body {
     background-color: #ccc;
 }
 
-#content {
+#contents {
     height: calc(100vh - 50px);
     overflow-x: auto;
     overflow-y: scroll;
@@ -69,7 +69,7 @@ body {
         left: 0;
     }
 
-    #content {
+    #contents {
         width: 100%;
     }
 }
@@ -85,7 +85,7 @@ body {
         width: 200px;
     }
 
-    #content {
+    #contents {
         position: relative;
         left: 50px;
         width: calc(100% - 50px);
@@ -101,7 +101,7 @@ body {
         width: 200px;
     }
 
-    #content {
+    #contents {
         width: calc(100% - 200px);
     }
 }
