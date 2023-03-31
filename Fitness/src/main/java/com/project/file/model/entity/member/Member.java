@@ -1,4 +1,4 @@
-package com.project.file.member;
+package com.project.file.model.entity.member;
 
 import java.util.Date;
 
@@ -36,5 +36,4 @@ public Member(long mem_no, String mail, String mem_id, String password, String n
 		this.birth = birth;
 		this.gender = gender;
 	}
-
 }
