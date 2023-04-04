@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/login.css">
 </head>
-<body>
+<body layout:fragment="section">
+	<form class="form-signin" action="login" method="post"
+		th:object="${memberLogin}">
 
+		<div class="wrapper">
+			<h2 class="form-signin-heading">Login</h2>
+			<input type="text" class="form-control" th:field="*{mail}"
+				placeholder="Email Address" required="" autofocus="" /> <br>
+			<input type="password" class="form-control" th:field="*{password}"
+				placeholder="Password" required="" /> <label class="checkbox">
+			</label>
+			<div class="center">
+				<button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+				<button class="btn btn-lg btn-primary btn-block" onclick="location.href='/join'" >회원가입</button>
+				<br> <input type="submit" value="비밀번호를 잊으셨나요?">
+			</div>
+		</div>
+
+	</form>
 </body>
 </html>

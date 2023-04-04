@@ -1,6 +1,11 @@
 package com.project.file.model.entity.member;
 
+import java.time.LocalDate;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +20,8 @@ public class Member {
 	private String language;
 	private  int status;
 	private String name;
-	private Date birth;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate birth;
 	private String gender;
 	private String phone;
 	private String image;
@@ -27,7 +33,7 @@ public class Member {
 
 
 
-public Member(long mem_no, String mail, String mem_id, String password, String name, Date birth, String gender) {
+public Member(long mem_no, String mail, String mem_id, String password, String name, LocalDate birth, String gender) {
 		this.mem_no = mem_no;
 		this.mail = mail;
 		this.mem_id = mem_id;
@@ -36,4 +42,26 @@ public Member(long mem_no, String mail, String mem_id, String password, String n
 		this.birth = birth;
 		this.gender = gender;
 	}
+
+
+
+public Member(String mail, String password) {
+	super();
+	this.mail = mail;
+	this.password = password;
+}
+
+
+
+public Member(String mail, String name, String phone) {
+	this.mail = mail;
+	this.name = name;
+	this.phone = phone;
+}
+
+
+
+
+
+
 }
