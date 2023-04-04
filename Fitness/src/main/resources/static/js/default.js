@@ -1,10 +1,15 @@
-// window.addEventListener('DOMContentLoaded', function() {
-//     document.getElementById('menu-icon').addEventListener('click', () => {
-//         document.getElementById('sidebar').classList.toggle('open');
-//     });
-// });
 $(() => {
     $('#menu-icon').click(() => {
+        $('#sidemodal').toggleClass('open');
         $('#sidebar').toggleClass('open');
+    });
+
+    $('#sidemodal').click(() => {
+        $('#sidemodal').toggleClass('open');
+        $('#sidebar').toggleClass('open');
+    });
+
+    $('#etc-btn').click(() => {
+        $('#etc-popup').toggleClass('open');
     });
 });

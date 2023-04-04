@@ -3,7 +3,7 @@ server:
   
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521:xe
+    url: jdbc:oracle:thin:@abcfitness.duckdns.org:22360:xe
     driver-class-name: oracle.jdbc.OracleDriver
     username: exercise
     password: 92949597
