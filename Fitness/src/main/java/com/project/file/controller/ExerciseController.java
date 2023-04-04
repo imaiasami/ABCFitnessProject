@@ -9,11 +9,10 @@ public class ExerciseController {
 	public String exercise() {
 		return "exercise/exercise";
 	}
-	
+
 	@GetMapping("/exerciseDetail")
 	public String exerciseDetail() {
 		return "exercise/exerciseDetail";
 	}
-	
 
 }
