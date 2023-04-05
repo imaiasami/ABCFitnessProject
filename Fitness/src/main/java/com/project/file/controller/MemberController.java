@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.file.model.entity.member.Member;
 import com.project.file.repository.MemberRepository;
@@ -48,23 +48,23 @@ public class MemberController {
 		// 로그인하기
 		@PostMapping("login")
 		public String loginMember(@Validated @ModelAttribute("memberLogin") Member memberLogin, 
-				BindingResult result, HttpServletRequest request) {
+				BindingResult result, HttpServletRequest request, @RequestParam String redirectURL) {
 		// 로그인 폼 유효성 검사
 		if (result.hasErrors()) {
 		return "login/login";
 		}
 
-		// 패스워드 비교
+		// 로그인 처리 로직
 		Member findMember = memberMapper.findMemberById(memberLogin.getMail());
 		if (findMember == null || !findMember.getPassword().equals(memberLogin.getPassword())) {
 		result.reject("loginError", "아이디 또는 패스워드가 다릅니다.");
 		return "login/login";
-		}
+		}else {
 		// 로그인 성공 처리
 		HttpSession session = request.getSession();
 		session.setAttribute("memberLogin", findMember);
-		
-		return "redirect:/";
+		}
+		return "redirect:/" + redirectURL;
 			
 		}
 		
