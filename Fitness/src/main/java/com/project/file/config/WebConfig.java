@@ -15,14 +15,16 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 	
 		registry.addInterceptor(new LoginCheckInterceptor())
-		.order(2)
-		.addPathPatterns("/**")
-		.excludePathPatterns("/",  
-				"/join",  
-				"/login",
-				"/css/*.css",
-				"/js/*.js");
-		
+		.order(1)
+		.addPathPatterns(
+				""
+		)
+		.excludePathPatterns(
+				"/",
+				"/css/**",
+				"/js/**",
+				"*.ico"
+		);
 	}
 	
 }

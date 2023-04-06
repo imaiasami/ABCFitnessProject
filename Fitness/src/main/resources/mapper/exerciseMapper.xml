@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.file.repository.ExerciseRepository">
+	<select id="getExercisesKo" resultType="exercise">
+		select
+			ex.ex_no,
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			mu.name_ko muscle,
+			eq.name_ko equip,
+			ex.name_ko name,
+			ex.effect_ko effect,
+			ex.guide_ko guide
+		from exercise ex, muscle mu, equipment eq
+        where ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id;
+	</select>
+	
+	<select id="getExercisesJp" resultType="exercise">
+		select
+			ex.ex_no,
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			mu.name_jp muscle,
+			eq.name_jp equip,
+			ex.name_jp name,
+			ex.effect_jp effect,
+			ex.guide_jp guide
+		from exercise ex, muscle mu, equipment eq
+        where ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id;
+	</select>
+	
+	<select id="getExercisesEn" resultType="exercise">
+		select
+			ex.ex_no,
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			mu.name_en muscle,
+			eq.name_en equip,
+			ex.name_en name,
+			ex.effect_en effect,
+			ex.guide_en guide
+		from exercise ex, muscle mu, equipment eq
+        where ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id;
+	</select>
+	
+	<insert id="createExercise">
+		<selectKey keyProperty="ex_no"  resultType="long"  order="BEFORE">
+			select seq_exercise.nextval from dual
+		</selectKey>
+		insert into exercise (
+			ex_no,
+			musc_id,
+			equip_id,
+			diff,
+			freq,
+			image,
+			name_ko,
+			effect_ko,
+			guide_ko,
+			name_jp,
+			effect_jp,
+			guide_jp,
+			name_en,
+			effect_en,
+			guide_en
+		) values (
+			#{ex_no},
+			#{musc_id},
+			#{equip_id},
+			#{diff},
+			#{freq},
+			#{image},
+			#{name_ko},
+			#{effect_ko},
+			#{guide_ko},
+			#{name_jp},
+			#{effect_jp},
+			#{guide_jp},
+			#{name_en},
+			#{effect_en},
+			#{guide_en}
+		)
+	</insert>
+	
+	<select id="getAllExercises" resultType="fullExerciseForm">
+		select * from exercise order by ex_no desc
+	</select>
+	
+	<select id="getAllExercise" resultType="fullExerciseForm">
+		select * from exercise where ex_no = #{ex_no}
+	</select>
+	
+	<update id="updateExercise">
+		update exercise set
+			musc_id = #{musc_id},
+			equip_id = #{equip_id},
+			diff = #{diff},
+			freq = #{freq},
+			image = #{image},
+			name_ko = #{name_ko},
+			effect_ko = #{effect_ko},
+			guide_ko = #{guide_ko},
+			name_jp = #{name_jp},
+			effect_jp = #{effect_jp},
+			guide_jp = #{guide_jp},
+			name_en = #{name_en},
+			effect_en = #{effect_en},
+			guide_en = #{guide_en}
+		where ex_no = #{ex_no}
+	</update>
+	
+	<delete id="deleteExercise">
+		delete from exercise where ex_no = #{ex_no}
+	</delete>
+</mapper>

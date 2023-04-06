@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style>
+		table {
+			margin: auto;
+			width: 100%;
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		
+		th, td {
+			border: 1px solid black;
+			padding: 5px;
+		}
+		
+		table tr:last-child > th, table tr:last-child > td {
+			width: 15%;
+		}
+		table tr:last-child > td:first-child {
+			width: 10%;
+			text-align: center;
+		}
+		table tr:last-child > td:last-child {
+			width: 30%;
+		}
+
+		textarea {
+			width: calc(100% - 10px);
+		}
+		
+		table input[type="submit"] {
+			padding: 10px 15px;
+		}
+	</style>
+	<title>운동 수정</title>
+</head>
+<body>
+	<h1>운동 수정</h1>
+	<form action="/addexercise/modify" method="post">
+		<table th:object=${exercise}>
+			<tr>
+				<th th:text="*{ex_no}"></th>
+				<th colspan="2">한국어</th>
+				<th colspan="2">일본어</th>
+				<th colspan="2">영어</th>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td colspan="2"><textarea rows="2" name="name_ko" th:text="*{name_ko}"></textarea></td>
+				<td colspan="2"><textarea rows="2" name="name_jp" th:text="*{name_jp}"></textarea></td>
+				<td colspan="2"><textarea rows="2" name="name_en" th:text="*{name_en}"></textarea></td>
+			</tr>
+			<tr>
+				<th>효과</th>
+				<td colspan="2"><textarea rows="10" name="effect_ko" th:text="*{effect_ko}"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="effect_jp" th:text="*{effect_jp}"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="effect_en" th:text="*{effect_en}"></textarea></td>
+			</tr>
+			<tr>
+				<th>가이드</th>
+				<td colspan="2"><textarea rows="10" name="guide_ko" th:text="*{guide_ko}"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="guide_jp" th:text="*{guide_jp}"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="guide_en" th:text="*{guide_en}"></textarea></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="submit" value="등록">
+					<input type="button" value="취소" onclick="window.history.back()">
+				</td>
+				<td>
+					<span style="font-weight: bold;">부위</span>
+					<br>
+					<select name="musc_id">
+						<option value="chest" th:selected="*{musc_id}=='chest'">가슴</option>
+						<option value="back" th:selected="*{musc_id}=='back'">등</option>
+						<option value="leg" th:selected="*{musc_id}=='leg'">하체</option>
+						<option value="shoulder" th:selected="*{musc_id}=='shoulder'">어깨</option>
+						<option value="triceps" th:selected="*{musc_id}=='triceps'">삼두</option>
+						<option value="biceps" th:selected="*{musc_id}=='biceps'">이두</option>
+						<option value="core" th:selected="*{musc_id}=='core'">코어</option>
+					</select>
+				</td>
+				<td>
+					<span style="font-weight: bold;">기구</span>
+					<br>
+					<select name="equip_id">
+						<option value="cali" th:selected="*{equip_id}=='cali'">맨몸</option>
+						<option value="dumbbell" th:selected="*{equip_id}=='dumbbell'">덤벨</option>
+						<option value="pullup" th:selected="*{equip_id}=='pullup'">풀업바</option>
+						<option value="band" th:selected="*{equip_id}=='band'">밴드</option>
+						<option value="cycle" th:selected="*{equip_id}=='cycle'">사이클</option>
+						<option value="treadmill" th:selected="*{equip_id}=='treadmill'">러닝머신</option>
+					</select>
+				</td>
+				<td>
+					<span style="font-weight: bold;">난이도</span>
+					<br>
+					<select name="diff">
+						<option value="1" th:selected="*{diff}=='1'">1</option>
+						<option value="2" th:selected="*{diff}=='2'">2</option>
+						<option value="3" th:selected="*{diff}=='3'">3</option>
+						<option value="4" th:selected="*{diff}=='4'">4</option>
+						<option value="5" th:selected="*{diff}=='5'">5</option>
+						<option value="6" th:selected="*{diff}=='6'">유산소</option>
+						<option value="0" th:selected="*{diff}=='0'">스트레칭</option>
+					</select>
+				</td>
+				<td>
+					<span style="font-weight: bold;">횟수</span>
+					<br>
+					<input type="number" name="freq" th:value="*{freq}">
+				</td>
+				<td colspan="2">
+					<span style="font-weight: bold;">이미지</span>
+					<br>
+					<textarea rows="2" name="image" th:text="*{image}"></textarea>
+				</td>
+			</tr>
+		</table>
+		<input type="hidden" name="ex_no" th:value="*{ex_no}">
+	</form>
+</body>
+</html>

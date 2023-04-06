@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style>
+		table {
+			margin: auto;
+			width: 100%;
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		
+		th, td {
+			border: 1px solid black;
+			padding: 5px;
+		}
+		
+		table tr:last-child > th, table tr:last-child > td {
+			width: 15%;
+		}
+		table tr:last-child > td:first-child {
+			width: 10%;
+			text-align: center;
+		}
+		table tr:last-child > td:last-child {
+			width: 30%;
+		}
+
+		textarea {
+			width: calc(100% - 10px);
+		}
+		
+		table input[type="button"]:first-child {
+			padding: 10px 15px;
+		}
+		
+		.hei div {
+			max-height: 200px;
+			overflow-y: auto;
+		}
+	</style>
+	<title>운동 목록</title>
+</head>
+<body>
+	<h1>운동 목록</h1>
+	<input type="button" value="추가하기" onclick="location.href='/addexercise/write'">
+	<p></p>
+	<th:block th:each="exercise : ${exercises}">
+		<table th:object=${exercise}>
+			<tr>
+				<th th:text="*{ex_no}"></th>
+				<th colspan="2">한국어</th>
+				<th colspan="2">일본어</th>
+				<th colspan="2">영어</th>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td colspan="2" th:text="*{name_ko}"></td>
+				<td colspan="2" th:text="*{name_jp}"></td>
+				<td colspan="2" th:text="*{name_en}"></td>
+			</tr>
+			<tr class="hei">
+				<th>효과</th>
+				<td colspan="2"><div th:utext="*{effect_ko}"></div></td>
+				<td colspan="2"><div th:utext="*{effect_jp}"></div></td>
+				<td colspan="2"><div th:utext="*{effect_en}"></div></td>
+			</tr>
+			<tr class="hei">
+				<th>가이드</th>
+				<td colspan="2"><div th:utext="*{guide_ko}"></div></td>
+				<td colspan="2"><div th:utext="*{guide_jp}"></div></td>
+				<td colspan="2"><div th:utext="*{guide_en}"></div></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="button" value="수정" th:onclick="|location.href='/addexercise/modify/*{ex_no}'|">
+					<input type="button" value="삭제" th:onclick="|if (confirm('삭제하시겠습니까?')) {location.href='/addexercise/remove/*{ex_no}'}|">
+				</td>
+				<td>
+					<span style="font-weight: bold;">부위</span>
+					<br>
+					<span th:text="*{musc_id}"></span>
+				</td>
+				<td>
+					<span style="font-weight: bold;">기구</span>
+					<br>
+					<span th:text="*{equip_id}"></span>
+				</td>
+				<td>
+					<span style="font-weight: bold;">난이도</span>
+					<br>
+					<span th:text="*{diff}"></span>
+				</td>
+				<td>
+					<span style="font-weight: bold;">횟수</span>
+					<br>
+					<span th:text="*{freq}"></span>
+				</td>
+				<td colspan="2">
+					<span style="font-weight: bold;">이미지</span>
+					<br>
+					<span th:text="*{image}"></span>
+				</td>
+			</tr>
+		</table>
+	</th:block>
+</body>
+</html>

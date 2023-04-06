@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style>
+		table {
+			margin: auto;
+			width: 100%;
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		
+		th, td {
+			border: 1px solid black;
+			padding: 5px;
+		}
+		
+		table tr:last-child > th, table tr:last-child > td {
+			width: 15%;
+		}
+		table tr:last-child > td:first-child {
+			width: 10%;
+			text-align: center;
+		}
+		table tr:last-child > td:last-child {
+			width: 30%;
+		}
+
+		textarea {
+			width: calc(100% - 10px);
+		}
+		
+		table input[type="submit"] {
+			padding: 10px 15px;
+		}
+	</style>
+	<title>운동 추가</title>
+</head>
+<body>
+	<h1>운동 추가</h1>
+	<form action="/addexercise/write" method="post">
+		<table>
+			<tr>
+				<th></th>
+				<th colspan="2">한국어</th>
+				<th colspan="2">일본어</th>
+				<th colspan="2">영어</th>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td colspan="2"><textarea rows="2" name="name_ko"></textarea></td>
+				<td colspan="2"><textarea rows="2" name="name_jp"></textarea></td>
+				<td colspan="2"><textarea rows="2" name="name_en"></textarea></td>
+			</tr>
+			<tr>
+				<th>효과</th>
+				<td colspan="2"><textarea rows="10" name="effect_ko"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="effect_jp"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="effect_en"></textarea></td>
+			</tr>
+			<tr>
+				<th>가이드</th>
+				<td colspan="2"><textarea rows="10" name="guide_ko"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="guide_jp"></textarea></td>
+				<td colspan="2"><textarea rows="10" name="guide_en"></textarea></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="submit" value="등록">
+					<input type="button" value="취소" onclick="window.history.back()">
+				</td>
+				<td>
+					<span style="font-weight: bold;">부위</span>
+					<br>
+					<select name="musc_id">
+						<option value="chest">가슴</option>
+						<option value="back">등</option>
+						<option value="leg">하체</option>
+						<option value="shoulder">어깨</option>
+						<option value="triceps">삼두</option>
+						<option value="biceps">이두</option>
+						<option value="core">코어</option>
+					</select>
+				</td>
+				<td>
+					<span style="font-weight: bold;">기구</span>
+					<br>
+					<select name="equip_id">
+						<option value="cali">맨몸</option>
+						<option value="dumbbell">덤벨</option>
+						<option value="pullup">풀업바</option>
+						<option value="band">밴드</option>
+						<option value="cycle">사이클</option>
+						<option value="treadmill">러닝머신</option>
+					</select>
+				</td>
+				<td>
+					<span style="font-weight: bold;">난이도</span>
+					<br>
+					<select name="diff">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">유산소</option>
+						<option value="0">스트레칭</option>
+					</select>
+				</td>
+				<td>
+					<span style="font-weight: bold;">횟수</span>
+					<br>
+					<input type="number" name="freq" value="1">
+				</td>
+				<td colspan="2">
+					<span style="font-weight: bold;">이미지</span>
+					<br>
+					<textarea rows="2" name="image"></textarea>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

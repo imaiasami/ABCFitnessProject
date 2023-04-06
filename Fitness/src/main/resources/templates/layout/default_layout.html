@@ -9,7 +9,9 @@
 		<th:block th:replace="layout/header :: headerFragment"></th:block>
 		<th:block th:replace="layout/nav :: navFragment"></th:block>
 		<div id="contents">
-			<th:block layout:fragment="section"></th:block>
+			<div id="section">
+				<th:block layout:fragment="section"></th:block>
+			</div>
 			<th:block th:replace="layout/footer :: footerFragment"></th:block>
 		</div>
 	</div>
