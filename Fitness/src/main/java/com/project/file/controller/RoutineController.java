@@ -5,22 +5,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class RoutineController {
-	@GetMapping("/defaultRoutine")
+	@GetMapping("/routine/default")
 	public String defaultRoutine() {
 		return "routine/defaultRoutine";
 	}
 
-	@GetMapping("/defaultRoutineDetail")
+	@GetMapping("/routine/defaultRoutineDetail")
 	public String defaultRoutineDetail() {
 		return "routine/defaultRoutineDetail";
 	}
 	
-	@GetMapping("/themeRoutine")
+	@GetMapping("routine/themeRoutine")
 	public String themeRoutine() {
 		return "routine/themeRoutine";
 	}
 
-	@GetMapping("/themeRoutineDetail")
+	@GetMapping("routine/themeRoutineDetail")
 	public String themeRoutineDetail() {
 		return "routine/themeRoutineDetail";
 	}
