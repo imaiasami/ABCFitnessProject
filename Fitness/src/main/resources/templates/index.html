@@ -1,15 +1,111 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
 <head>
-	<title>메인 페이지</title>
+<title>메인 페이지</title>
+<style>
+.flex-container {
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.flex-item {
+	display: inline-block;
+	width: 260px;
+	height: 260px;
+	border: 1px solid;
+	margin: 5px;
+}
+</style>
 </head>
 <body layout:fragment="section">
-	Hello World!
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Good World!
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Better World!
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Bye World!
+	<h1>
+		운동이 쉬워진다.<br>MK FITNESS
+	</h1>
+	<h2>가장 인기있는 운동</h2>
+	<div class="flex-container">
+		<th:block th:each="exercise : ${exercises}">
+			<a th:href="|/exercise/${exercise.ex_no}|">
+				<div class="flex-item" th:text=${exercise.name}></div>
+			</a>
+		</th:block>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br> Good World!
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br> Better World!
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br> Bye World!
 </body>
 </html>
