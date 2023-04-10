@@ -10,6 +10,7 @@ import com.project.file.model.entity.member.Member;
 public interface MemberRepository {
 	int joinMember(Member member);
 
-	Member findMemberById(String mail);
+	Member findMemberByMail(String mail);
+	Member findMemberById(String mem_id);
 
 }

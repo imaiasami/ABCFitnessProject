@@ -6,10 +6,14 @@
 			<a href="/">image</a>
 		</div>
 		<div id="etc-btn" class="pointer">etc</div>
-		<div id="login-btn">
+		<div id="login-btn" th:if="${session.memberLogin == null}">
 			<a href="/login">login</a>
 		</div>
 		<div id="etc-popup">
+			<th:block th:if="${session.memberLogin != null}">
+				<div th:text="${session.memberLogin.mail}"></div>
+				<div class="pointer" onclick="location.href='/logout'">Logout</div>
+			</th:block>
 			<div id="etc-theme">Theme</div>
 			<div id="etc-lang">Language</div>
 			<div id="etc-setting">Setting</div>
