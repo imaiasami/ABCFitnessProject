@@ -18,7 +18,7 @@
 			ex.guide_ko guide
 		from exercise ex, muscle mu, equipment eq
         where ex.musc_id = mu.musc_id
-        and ex.equip_id = eq.equip_id;
+        and ex.equip_id = eq.equip_id
 	</select>
 	
 	<select id="getExercisesJp" resultType="exercise">
@@ -36,7 +36,7 @@
 			ex.guide_jp guide
 		from exercise ex, muscle mu, equipment eq
         where ex.musc_id = mu.musc_id
-        and ex.equip_id = eq.equip_id;
+        and ex.equip_id = eq.equip_id
 	</select>
 	
 	<select id="getExercisesEn" resultType="exercise">
@@ -54,7 +54,7 @@
 			ex.guide_en guide
 		from exercise ex, muscle mu, equipment eq
         where ex.musc_id = mu.musc_id
-        and ex.equip_id = eq.equip_id;
+        and ex.equip_id = eq.equip_id
 	</select>
 	
 	<insert id="createExercise">
