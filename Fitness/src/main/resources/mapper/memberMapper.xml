@@ -3,27 +3,36 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.file.repository.MemberRepository">
-	<insert id="joinMember"  parameterType="member">
-		<selectKey keyProperty="mem_no"  resultType="long"  order="BEFORE">
+	<insert id="joinMember" parameterType="member">
+		<selectKey keyProperty="mem_no" resultType="long" order="BEFORE">
 			select seq_member.nextval from dual
 		</selectKey>
-	insert into member(
-	mem_no,
-	mail,
-	password,
-	mem_id,
-	name,
-	birth,
-	gender,
-	phone
-	)values(
-	#{mem_no}, #{mail}, #{password}, #{mem_id}, #{name}, #{birth},#{gender}, #{phone}
-	)
+		insert into member (
+			mem_no,
+			mail,
+			password,
+			mem_id,
+			name,
+			birth,
+			gender,
+			phone
+		) values (
+			#{mem_no},
+			#{mail},
+			#{password},
+			#{mem_id},
+			#{name},
+			#{birth},
+			#{gender},
+			#{phone}
+		)
 	</insert>
 
-<select id="findMemberById" resultType="member">
-        select * from member where mail = #{mail}
-    </select>
-
-
+	<select id="findMemberByMail" resultType="member">
+		select * from member where mail = #{mail}
+	</select>
+	
+	<select id="findMemberById" resultType="member">
+		select * from member where mem_id = #{mem_id}
+	</select>
 </mapper>
