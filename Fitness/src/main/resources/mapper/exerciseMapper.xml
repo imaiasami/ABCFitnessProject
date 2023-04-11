@@ -57,6 +57,25 @@
         and ex.equip_id = eq.equip_id
 	</select>
 	
+	<select id="getExerciseKo" resultType="exercise">
+		select
+			ex.ex_no,
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			mu.name_ko muscle,
+			eq.name_ko equip,
+			ex.name_ko name,
+			ex.effect_ko effect,
+			ex.guide_ko guide
+		from exercise ex, muscle mu, equipment eq
+        where ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id
+        and ex.ex_no = #{ex_no}
+	</select>
+	
 	<insert id="createExercise">
 		<selectKey keyProperty="ex_no"  resultType="long"  order="BEFORE">
 			select seq_exercise.nextval from dual

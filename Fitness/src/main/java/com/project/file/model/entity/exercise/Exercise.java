@@ -15,4 +15,9 @@ public class Exercise {
 	private String name;
 	private String effect;
 	private String guide;
+	
+	public void toBrTag() {
+		if (this.effect != null) this.effect = this.effect.replace("\n", "<br>");
+		if (this.guide != null) this.guide = this.guide.replace("\n", "<br>");
+	}
 }

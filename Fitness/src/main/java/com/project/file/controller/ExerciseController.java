@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.file.model.entity.exercise.Exercise;
 import com.project.file.repository.ExerciseRepository;
@@ -28,7 +29,10 @@ public class ExerciseController {
 	}
 
 	@GetMapping("/exercise/{ex_no}")
-	public String exerciseDetail(@PathVariable long ex_no) {
+	public String exerciseDetail(@PathVariable long ex_no, Model model) {
+		Exercise exercise = exerciseMapper.getExerciseKo(ex_no);
+		exercise.toBrTag();
+		model.addAttribute("exercise", exercise);
 		return "exercise/exerciseDetail";
 	}
 

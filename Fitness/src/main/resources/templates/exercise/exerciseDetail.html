@@ -6,9 +6,28 @@
 <body layout:fragment="section">
 	Hello Exercise Detail World
 	<input type="button" value="운동 목록 페이지" onclick="location.href='/exercise'">
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Hello Exercise Detail World
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Hello Exercise Detail World
+	<table>
+			<tr>
+				<td th:text="${exercise.name}"></td>
+			</tr>
+			<tr>
+				<td th:text="${exercise.muscle}"></td>
+			</tr>
+			<tr>
+				<td th:text="${exercise.equip}"></td>
+			</tr>
+			<tr>
+				<td th:text="${exercise.diff}"></td>
+			</tr>
+			<tr>
+				<td th:text="${exercise.image}"></td>
+			</tr>
+			<tr>
+				<td th:text="${exercise.effect}"></td>
+			</tr>
+			<tr>
+				<td th:utext="${exercise.guide}"></td>
+			</tr>
+		</table>
 </body>
 </html>

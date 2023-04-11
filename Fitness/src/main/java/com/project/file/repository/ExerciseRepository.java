@@ -13,6 +13,8 @@ public interface ExerciseRepository {
 	List<Exercise> getExercisesJp();
 	List<Exercise> getExercisesEn();
 	
+	Exercise getExerciseKo(long ex_no);
+	
 	int createExercise(FullExerciseForm exercise);
 	List<FullExerciseForm> getAllExercises();
 	FullExerciseForm getAllExercise(long ex_no);
