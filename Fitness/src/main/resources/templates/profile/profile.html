@@ -6,42 +6,67 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="/css/calendar.css">
 <title>달력</title>
- <script src="/js/calendar.js"></script>
+<script src="/js/calendar.js"></script>
+<style>
+#myProfile table {
+	border-collapse: collapse;
+	border: 1px solid #ccc
+}
+
+#myProfile td {
+	padding: 5px;
+	border: 1px solid #ccc;
+}
+</style>
+
 </head>
 
 <body layout:fragment="section">
+	<div id=myProfile>
+		나의 프로필
+		
+			<table>
+				<tr>
+					<td rowspan="2">사진</td>
+					<td th:text="${memberProfile.name}">이름</td>
+				</tr>
+				<tr>
+					<td th:text="|@${memberProfile.mem_id}|"></td>
+				</tr>
+			</table>
+		<div th:if="${memberProfile.mem_id == session.memberLogin.mem_id}">
+			 <input type="button" onclick="location.href='/setting/profile'" value="프로필 편집하기">
+		</div>
+	</div>
+	<br>
+	<br>
+	<div>나의 운동루틴</div>
+	<br>
 
-<div>나의 프로필</div>
-<br>
-<div>나의 운동루틴</div>
-<br>
+	<div id="calendarDIv">
+		캘린더
+		<table class="Calendar">
+			<thead>
+				<tr>
+					<td onClick="prevCalendar();" style="cursor: pointer;">&#60;</td>
+					<td colspan="5"><span id="calYear"></span>년 <span
+						id="calMonth"></span>월</td>
+					<td onClick="nextCalendar();" style="cursor: pointer;">&#62;</td>
+				</tr>
+				<tr>
+					<td>일</td>
+					<td>월</td>
+					<td>화</td>
+					<td>수</td>
+					<td>목</td>
+					<td>금</td>
+					<td>토</td>
+				</tr>
+			</thead>
 
-    <div id="calendarDIv">캘린더
-        <table class="Calendar">
-            <thead>
-                <tr>
-                    <td onClick="prevCalendar();" style="cursor:pointer;">&#60;</td>
-                    <td colspan="5">
-                        <span id="calYear"></span>년
-                        <span id="calMonth"></span>월
-                    </td>
-                    <td onClick="nextCalendar();" style="cursor:pointer;">&#62;</td>
-                </tr>
-                <tr>
-                    <td>일</td>
-                    <td>월</td>
-                    <td>화</td>
-                    <td>수</td>
-                    <td>목</td>
-                    <td>금</td>
-                    <td>토</td>
-                </tr>
-            </thead>
-
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    
+			<tbody>
+			</tbody>
+		</table>
+	</div>
 </body>
 </html>
