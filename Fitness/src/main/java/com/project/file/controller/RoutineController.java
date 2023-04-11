@@ -30,6 +30,7 @@ public class RoutineController {
 
 	@GetMapping("themeRoutine/{rout_t_no}")
 	public String themeRoutineDetail(@PathVariable long rout_t_no) {
+		
 		return "routine/themeRoutineDetail";
 	}
 
