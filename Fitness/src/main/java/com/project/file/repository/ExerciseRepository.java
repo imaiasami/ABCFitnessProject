@@ -3,13 +3,14 @@ package com.project.file.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.RowBounds;
 
 import com.project.file.model.dto.exercise.FullExerciseForm;
 import com.project.file.model.entity.exercise.Exercise;
 
 @Mapper
 public interface ExerciseRepository {
-	List<Exercise> getExercisesKo();
+	List<Exercise> getExercisesKo(RowBounds rowBounds);
 	List<Exercise> getExercisesJp();
 	List<Exercise> getExercisesEn();
 	
@@ -20,4 +21,6 @@ public interface ExerciseRepository {
 	FullExerciseForm getAllExercise(long ex_no);
 	int updateExercise(FullExerciseForm exercise);
 	int deleteExercise(long ex_no);
+	
+	int getTotal();
 }

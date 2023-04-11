@@ -145,4 +145,9 @@
 	<delete id="deleteExercise">
 		delete from exercise where ex_no = #{ex_no}
 	</delete>
+	
+	<select id="getTotal" resultType="int">
+		select count(*) from
+		exercise
+	</select>
 </mapper>
