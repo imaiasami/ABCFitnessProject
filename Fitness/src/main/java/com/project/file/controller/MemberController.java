@@ -78,7 +78,7 @@ public class MemberController {
 	@GetMapping("password")
 	public String searchPasswordForm(Model model) {
 		model.addAttribute("memberPassword", new Member());
-		return "login/findpassword";
+		return "login/findPassword";
 	}
 
 	// 비밀번호 찾기
