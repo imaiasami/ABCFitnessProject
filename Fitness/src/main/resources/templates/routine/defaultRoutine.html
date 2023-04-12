@@ -2,14 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <head>
 	<title>루틴 목록 페이지</title>
+	<link rel="stylesheet" href="/css/flexitem.css">
 </head>
 <body layout:fragment="section">
-	Hello Routine List World
-		<input type="button" value="루틴 상세 페이지"
-		onclick="location.href='/defaultRoutineDetail'">
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Hello Routine List World
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Hello Routine List World
+	<div>기본 루틴</div>
+	<div class="flex-container">
+		<th:block th:each="routine : ${routines}">
+			<a th:href="|/routine/default/${routine.rout_no}|">
+				<div class="flex-item" th:text=${routine.name}></div>
+			</a>
+		</th:block>
+	</div>
 </body>
 </html>

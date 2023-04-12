@@ -6,9 +6,17 @@
 <body layout:fragment="section">
 	Hello default Routine Detail World
 	<input type="button" value="루틴 목록 페이지" onclick="location.href='routine/default'">
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Hello default Routine Detail World
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	Hello default Routine Detail World
+	<div th:text="${routine.name}"></div>
+	<div th:text="${routine.guide}"></div>
+	<div>
+		<div th:each="steps : ${routine.getStep()}">
+			<span th:text="|${stepsStat.count}일차|"></span><br>
+			<th:block th:each="step : ${steps}">
+				<th:block th:each="entry : ${step}">
+					<span th:text="|${exMap[entry.key].name} ${entry.value}세트|"></span><br>
+				</th:block>
+			</th:block>
+		</div>
+	</div>
 </body>
 </html>

@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.file.repository.ExerciseRepository">
+	<!-- 전체 운동 목록 가져오기 -->
 	<select id="getExercisesKo" resultType="exercise">
 		select
 			ex.ex_no,
@@ -20,7 +21,6 @@
         where ex.musc_id = mu.musc_id
         and ex.equip_id = eq.equip_id
 	</select>
-	
 	<select id="getExercisesJp" resultType="exercise">
 		select
 			ex.ex_no,
@@ -38,7 +38,6 @@
         where ex.musc_id = mu.musc_id
         and ex.equip_id = eq.equip_id
 	</select>
-	
 	<select id="getExercisesEn" resultType="exercise">
 		select
 			ex.ex_no,
@@ -57,6 +56,7 @@
         and ex.equip_id = eq.equip_id
 	</select>
 	
+	<!-- 개별 운동 정보 가져오기 -->
 	<select id="getExerciseKo" resultType="exercise">
 		select
 			ex.ex_no,
@@ -75,7 +75,44 @@
         and ex.equip_id = eq.equip_id
         and ex.ex_no = #{ex_no}
 	</select>
+	<select id="getExerciseJp" resultType="exercise">
+		select
+			ex.ex_no,
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			mu.name_jp muscle,
+			eq.name_jp equip,
+			ex.name_jp name,
+			ex.effect_jp effect,
+			ex.guide_jp guide
+		from exercise ex, muscle mu, equipment eq
+        where ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id
+        and ex.ex_no = #{ex_no}
+	</select>
+	<select id="getExerciseEn" resultType="exercise">
+		select
+			ex.ex_no,
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			mu.name_en muscle,
+			eq.name_en equip,
+			ex.name_en name,
+			ex.effect_en effect,
+			ex.guide_en guide
+		from exercise ex, muscle mu, equipment eq
+        where ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id
+        and ex.ex_no = #{ex_no}
+	</select>
 	
+	<!-- 운동 CRUD -->
 	<insert id="createExercise">
 		<selectKey keyProperty="ex_no"  resultType="long"  order="BEFORE">
 			select seq_exercise.nextval from dual
@@ -114,15 +151,12 @@
 			#{guide_en}
 		)
 	</insert>
-	
 	<select id="getAllExercises" resultType="fullExerciseForm">
 		select * from exercise order by ex_no desc
 	</select>
-	
 	<select id="getAllExercise" resultType="fullExerciseForm">
 		select * from exercise where ex_no = #{ex_no}
 	</select>
-	
 	<update id="updateExercise">
 		update exercise set
 			musc_id = #{musc_id},
@@ -141,11 +175,11 @@
 			guide_en = #{guide_en}
 		where ex_no = #{ex_no}
 	</update>
-	
 	<delete id="deleteExercise">
 		delete from exercise where ex_no = #{ex_no}
 	</delete>
 	
+	<!-- 총 운동 개수 -->
 	<select id="getTotal" resultType="int">
 		select count(*) from
 		exercise

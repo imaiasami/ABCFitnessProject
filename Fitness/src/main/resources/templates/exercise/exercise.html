@@ -1,25 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layout/default_layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <head>
-<title>운동 목록 페이지</title>
-<style>
-.flex-container {
-	padding: 20px;
-	display: flex;
-	flex-wrap: wrap;
-}
-
-.flex-item {
-	display: inline-block;
-	width: 260px;
-	height: 260px;
-	border: 1px solid;
-	margin: 5px;
-}
-</style>
-
+	<title>운동 목록 페이지</title>
+	<link rel="stylesheet" href="/css/flexitem.css">
 </head>
 <body layout:fragment="section">
 	<div>운동</div>
@@ -28,22 +11,18 @@
 			<a th:href="|/exercise/${exercise.ex_no}|">
 				<div class="flex-item" th:text=${exercise.name}></div>
 			</a>
+		</th:block>
 	</div>
 	<!--  이전 그룹 이동 -->
-	<a
-		th:href="@{/exercise(page=${navigator.currentPage - navigator.pagePerGroup})}"><<</a>&nbsp;&nbsp;
+	<a th:href="@{/exercise(page=${navigator.currentPage - navigator.pagePerGroup})}"><<</a>&nbsp;&nbsp;
 	<!--  이전 페이지 이동 -->
 	<a th:href="@{/exercise(page=${navigator.currentPage - 1})}"><</a>&nbsp;&nbsp;
-	<th:block
-		th:each="counter : ${#numbers.sequence(navigator.startPageGroup, navigator.endPageGroup)}">
+	<th:block th:each="counter : ${#numbers.sequence(navigator.startPageGroup, navigator.endPageGroup)}">
 		<a th:href="@{/exercise/(page=${counter})}" th:text="${counter}"></a>&nbsp;&nbsp;
-		</th:block>
-
+	</th:block>
 	<!--  다음 페이지 이동 -->
 	<a th:href="@{/exercise(page=${navigator.currentPage + 1})}">></a>&nbsp;&nbsp;
 	<!--  다음 그룹 이동 -->
-	<a
-		th:href="@{/exercise(page=${navigator.currentPage + navigator.pagePerGroup})}">>></a>&nbsp;&nbsp;
-	</th:block>
+	<a th:href="@{/exercise(page=${navigator.currentPage + navigator.pagePerGroup})}">>></a>&nbsp;&nbsp;
 </body>
 </html>

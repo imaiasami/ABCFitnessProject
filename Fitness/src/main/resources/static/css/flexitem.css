@@ -1,0 +1,13 @@
+.flex-container {
+	padding: 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.flex-item {
+	display: inline-block;
+	width: 260px;
+	height: 260px;
+	border: 1px solid;
+	margin: 5px;
+}

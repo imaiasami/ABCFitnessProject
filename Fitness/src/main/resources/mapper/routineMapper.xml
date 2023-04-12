@@ -2,6 +2,77 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.file.repository.ExerciseRepository">
-
+<mapper namespace="com.project.file.repository.RoutineRepository">
+	<!-- 전체 기본 루틴 가져오기 -->
+	<select id="getRoutineDefaultsKo" resultType="routineDefault">
+		select 
+			rout_d_no rout_no,
+			step,
+			equip,
+			diff,
+			runtime,
+			name_ko name,
+			guide_ko guide
+		from rout_default
+	</select>
+	<select id="getRoutineDefaultsJp" resultType="routineDefault">
+		select 
+			rout_d_no rout_no,
+			step,
+			equip,
+			diff,
+			runtime,
+			name_jp name,
+			guide_jp guide
+		from rout_default
+	</select>
+	<select id="getRoutineDefaultsEn" resultType="routineDefault">
+		select 
+			rout_d_no rout_no,
+			step,
+			equip,
+			diff,
+			runtime,
+			name_en name,
+			guide_en guide
+		from rout_default
+	</select>
+	
+	<!-- 개별 기본 루틴 가져오기 -->
+	<select id="getRoutineDefaultKo" resultType="routineDefault">
+		select 
+			rout_d_no rout_no,
+			step,
+			equip,
+			diff,
+			runtime,
+			name_ko name,
+			guide_ko guide
+		from rout_default
+		where rout_d_no = #{rout_no}
+	</select>
+	<select id="getRoutineDefaultJp" resultType="routineDefault">
+		select 
+			rout_d_no rout_no,
+			step,
+			equip,
+			diff,
+			runtime,
+			name_jp name,
+			guide_jp guide
+		from rout_default
+		where rout_d_no = #{rout_no}
+	</select>
+	<select id="getRoutineDefaultEn" resultType="routineDefault">
+		select 
+			rout_d_no rout_no,
+			step,
+			equip,
+			diff,
+			runtime,
+			name_en name,
+			guide_en guide
+		from rout_default
+		where rout_d_no = #{rout_no}
+	</select>
 </mapper>
