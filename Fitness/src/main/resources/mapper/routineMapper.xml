@@ -75,4 +75,10 @@
 		from rout_default
 		where rout_d_no = #{rout_no}
 	</select>
+	
+	<!-- 총 루틴 개수 -->
+	<select id="getTotal" resultType="int">
+		select count(*) from
+		rout_default
+	</select>
 </mapper>
