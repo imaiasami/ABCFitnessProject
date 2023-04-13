@@ -35,4 +35,10 @@
 	<select id="findMemberById" resultType="member">
 		select * from member where mem_id = #{mem_id}
 	</select>
+	
+	<!-- 회원정보 전체 검색 -->
+  <select id="findAllMembers" resultType="member">
+        select * from member 
+    </select> 
+	
 </mapper>

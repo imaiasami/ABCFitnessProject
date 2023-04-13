@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.inline-grid {
+  font-size:2;
+}
+
+.inline-grid > * {
+  vertical-align:top;
+  font-size:1rem;
+}
+
+
+
+section {
+  border:0px solid red;
+  height:px;
+}
+
+section > div {
+  width:calc(100% / 10);
+  height:50%;
+  display:inline-block;
+  background-color:black;
+  color:white;
+  font-weight:bold;
+  text-align:center;
+}
+

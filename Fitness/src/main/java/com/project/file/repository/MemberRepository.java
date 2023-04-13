@@ -1,5 +1,7 @@
 package com.project.file.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.project.file.model.entity.member.Member;
@@ -12,5 +14,7 @@ public interface MemberRepository {
 
 	Member findMemberByMail(String mail);
 	Member findMemberById(String mem_id);
+	
+	List<Member> findAllMembers();
 
 }

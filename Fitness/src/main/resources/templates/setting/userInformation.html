@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/userInformation.css">
+<link rel="stylesheet" href="/css/userInformation2.css">
+
+
+<script type="text/javascript">
+	function toggle(btnID) {
+		var theButton = document.getElementById(btnID);
+		if (theButton.getAttribute("aria-pressed") == "false") {
+			theButton.setAttribute("aria-pressed", "true");
+		} else {
+			theButton.setAttribute("aria-pressed", "false");
+		}
+	}
+	
+	function removeMember() {
+		if (window.confirm("탈퇴하시겠습니까?")) {
+			location.href = "/settiong/withdrawal";
+		}
+
+	}
+</script>
+
+
+</head>
+<body layout:fragment="section">
+
+	<h1>개인 정보</h1>
+
+	<form>
+		<fieldset class="toggles">
+			<legend>개인 정보</legend>
+			<div>
+				<table>
+					<div>
+						<tr>
+							<th>이름</th>
+							<td th:text="${session.memberLogin.name}"></td>
+						</tr>
+					</div>
+					<tr>
+						<th>생년월일</th>
+						<td th:text="${session.memberLogin.birth}"></td>
+					</tr>
+					<tr>
+						<th>내 계정</th>
+						<td th:text="${session.memberLogin.mail}"></td>
+					</tr>
+					<th>비밀번호</th>
+					<td th:text="${session.memberLogin.password}"></td>
+
+					</tr>
+					<tr>
+						<th>성별</th>
+						<td th:text="${session.memberLogin.gender}"></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td th:text="${session.memberLogin.phone}"></td> &#128516;
+					</tr>
+
+					<tr>
+						<th>키</th>
+
+					</tr>
+				</table>
+			</div>
+		</fieldset>
+
+		<fieldset class="toggles flip">
+			<legend>나의 프로필</legend>
+			<div>
+				<button type="button" id="Dumb-bal" aria-pressed="false"
+					onclick="toggle(this.id);">덤밸</button>
+			</div>
+			<div>
+				<button type="button" id="bend" aria-pressed="true"
+					onclick="toggle(this.id);">벤드</button>
+			</div>
+			<div>
+				<button type="button" id="pull-up bar" aria-pressed="true"
+					onclick="toggle(this.id);">풀업바</button>
+			</div>
+			<div>
+				<button type="button" id="cycle" aria-pressed="true"
+					onclick="toggle(this.id);">사이클</button>
+			</div>
+
+		</fieldset>
+
+
+		<form>
+			<fieldset class="toggles">
+				<legend>환경설정</legend>
+				<div>
+					<table>
+						<div>
+							<section class="inline-grid">
+								<div style="border-radius: 7px;">디자인</div>
+
+								<strong>디자인 : 밝은 테마</strong> <br>
+								<br>
+
+
+								<div style="border-radius: 7px;">언어설정</div>
+
+								<strong> 언어 : 한국어</strong> <br>
+								<br>
+
+								<div style="border-radius: 7px;">고객센터</div>
+								<br>
+								<br>
+
+								<div style="border-radius: 7px;">내용</div>
+								<br>
+								<br>
+
+								<div style="border-radius: 7px;">탈퇴하기</div>
+								<button type="button" onclick="removeMember();">탈퇴하기</button>
+							</section>
+					</table>
+				</div>
+			</fieldset>
+		</form>
+</body>
+</html>
