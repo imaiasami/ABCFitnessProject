@@ -3,6 +3,8 @@ package com.project.file.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -11,7 +13,6 @@ import com.project.file.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,6 +27,8 @@ public class UserInformationController {
 	public String boardList() {
 		return "setting/userInformation";
 	}
+
+
 
 //	@PostMapping("information")
 //	public String myInformation() {

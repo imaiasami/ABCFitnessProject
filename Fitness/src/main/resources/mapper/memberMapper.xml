@@ -41,4 +41,7 @@
         select * from member 
     </select> 
 	
+
+	
+	
 </mapper>
