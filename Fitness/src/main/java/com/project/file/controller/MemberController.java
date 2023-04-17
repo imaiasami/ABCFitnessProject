@@ -1,3 +1,4 @@
+
 package com.project.file.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.project.file.model.dto.exercise.MemberJoinForm;
 import com.project.file.model.entity.member.Member;
 import com.project.file.repository.MemberRepository;
 
@@ -27,14 +29,14 @@ public class MemberController {
 	// 회원가입 폼 이동
 	@GetMapping("join")
 	public String joinMemberForm(Model model) {
-		model.addAttribute("memberJoin", new Member());
+		model.addAttribute("memberJoin", new MemberJoinForm());
 		return "login/join";
 	}
 
 	// 회원가입
 	@PostMapping("join")
-	public String joinMember(@ModelAttribute("memberJoin") Member member) {
-		memberMapper.joinMember(member);
+	public String joinMember(@ModelAttribute("memberJoin") MemberJoinForm member) {
+		memberMapper.joinMember(member.toMember());
 		return "redirect:/";
 	}
 
@@ -47,7 +49,8 @@ public class MemberController {
 
 	// 로그인하기
 	@PostMapping("login")
-	public String loginMember(@Validated @ModelAttribute("memberLogin") Member memberLogin, BindingResult result, HttpServletRequest request, @RequestParam String redirectURL) {
+	public String loginMember(@Validated @ModelAttribute("memberLogin") Member memberLogin, BindingResult result,
+			HttpServletRequest request, @RequestParam String redirectURL) {
 		// 로그인 폼 유효성 검사
 		if (result.hasErrors()) {
 			return "login/login";
@@ -65,7 +68,7 @@ public class MemberController {
 		}
 		return "redirect:/" + redirectURL;
 	}
-	
+
 	// 로그아웃
 	@GetMapping("logout")
 	public String logoutMember(HttpServletRequest request) {

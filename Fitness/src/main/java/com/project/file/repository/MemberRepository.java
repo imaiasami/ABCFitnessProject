@@ -11,7 +11,7 @@ import com.project.file.model.entity.member.Member;
 @Mapper
 public interface MemberRepository {
 	int joinMember(Member member);
-
+int deleteMember(Member member);
 	Member findMemberByMail(String mail);
 	Member findMemberById(String mem_id);
 	

@@ -4,7 +4,7 @@
 	layout:decorate="layout/default_layout">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>프로필 편집</title>
 <link rel="stylesheet" href="/css/userInformation.css">
 <link rel="stylesheet" href="/css/userInformation2.css">
 
@@ -18,15 +18,36 @@
 			theButton.setAttribute("aria-pressed", "false");
 		}
 	}
-	
-	function removeMember() {
-		if (window.confirm("탈퇴하시겠습니까?")) {
-			location.href = "/settiong/withdrawal";
-		}
-
-	}
 </script>
+<style>
+.modal1 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	background-color: rgba(0, 0, 0, 0.4);
+}
 
+.modal1.show {
+	display: block;
+}
+
+.modal_body {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	height: 500px;
+	padding: 40px;
+	text-align: center;
+	background-color: rgb(255, 255, 255);
+	border-radius: 50px;
+	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+	transform: translateX(-50%) translateY(-50%);
+}
+</style>
 
 </head>
 <body layout:fragment="section">
@@ -39,11 +60,18 @@
 			<legend>개인 정보</legend>
 			<div>
 				<table>
+<<<<<<< HEAD
 						<tr>
 							<th>이름</th>
 							<td th:text="${session.memberLogin.name}"></td>
 						</tr>
 					
+=======
+					<tr>
+						<th>이름</th>
+						<td th:text="${session.memberLogin.name}"></td>
+					</tr>
+>>>>>>> f9459f9a95c24862eac34d88b9a70f4d3880d699
 					<tr>
 						<th>생년월일</th>
 						<td th:text="${session.memberLogin.birth}"></td>
@@ -52,10 +80,17 @@
 						<th>내 계정</th>
 						<td th:text="${session.memberLogin.mail}"></td>
 					</tr>
+<<<<<<< HEAD
 					
 					<tr>
 					<th>비밀번호</th>
 					<td th:text="${session.memberLogin.password}"></td>
+=======
+					<tr>
+						<th>비밀번호</th>
+						<td th:text="${session.memberLogin.password}"></td>
+
+>>>>>>> f9459f9a95c24862eac34d88b9a70f4d3880d699
 					</tr>
 					
 					<tr>
@@ -100,40 +135,68 @@
 			</div>
 
 		</fieldset>
+	</form>
+
+	<form>
+		<fieldset class="toggles">
+			<legend>환경설정</legend>
+			<div>
+
+				<section class="inline-grid">
+					<div style="border-radius: 7px;">디자인</div>
+
+					<strong>디자인 : 밝은 테마</strong> <br> <br>
 
 
-		<form>
-			<fieldset class="toggles">
-				<legend>환경설정</legend>
+					<div style="border-radius: 7px;">언어설정</div>
+
+					<strong> 언어 : 한국어</strong> <br> <br>
+
+					<div style="border-radius: 7px;">고객센터</div>
+					<br> <br>
+
+					<div style="border-radius: 7px;">내용</div>
+					<br> <br>
+
+					<div style="border-radius: 7px;">탈퇴하기</div>
+					<button type="button"
+						onclick="document.querySelector('.modal1').classList.add('show'); document.body.style.overflow = 'hidden';">탈퇴하기</button>
+
+				</section>
+
+			</div>
+		</fieldset>
+	</form>
+
+	<div class="modal1">
+		<div class="modal_body">
+			<form action="/setting/withdrawal" method="post">
+				<h2 class="form-signin-heading">회원탈퇴를 하시겠습니까?</h2>
+				<h3>마지막으로 비밀번호 입력을 부탁드립니다.</h3>
 				<div>
-					<table>
-						<div>
-							<section class="inline-grid">
-								<div style="border-radius: 7px;">디자인</div>
-
-								<strong>디자인 : 밝은 테마</strong> <br>
-								<br>
-
-
-								<div style="border-radius: 7px;">언어설정</div>
-
-								<strong> 언어 : 한국어</strong> <br>
-								<br>
-
-								<div style="border-radius: 7px;">고객센터</div>
-								<br>
-								<br>
-
-								<div style="border-radius: 7px;">내용</div>
-								<br>
-								<br>
-
-								<div style="border-radius: 7px;">탈퇴하기</div>
-								<button type="button" onclick="removeMember();">탈퇴하기</button>
-							</section>
-					</table>
+					<input type="password" class="form-control" name="password"
+						placeholder="Password" required="" />
 				</div>
-			</fieldset>
-		</form>
+				<br>
+				<button type="submit">탈퇴하기</button>
+				<div th:if="${error}">
+					<p th:text="${error}"></p>
+				</div>
+				<button class="btn-close-popup">닫기</button>
+			</form>
+		</div>
+	</div>
+
+	<script>
+		// 모달 닫기 버튼에 이벤트 리스너 등록
+		const btnClosePopup = document.querySelector('.btn-close-popup');
+		btnClosePopup.addEventListener('click', () => {
+			document.querySelector('.modal1').classList.remove('show');
+			document.body.style.overflow = 'auto';
+		});
+	
+	</script>
+
+
 </body>
 </html>
