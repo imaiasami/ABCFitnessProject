@@ -1,83 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script>
-	function test(){
-	var p1 = document.getElementById('password').value;
-	var p2 = document.getElementById('password2').value;
-	if(p1 != p2){
-	alert("비밀번호가 일치하지 않습니다");
-	return false;
-	}else{
-	alert("비밀번호가 일치합니다.");
-	return true;
-	}
-}
-
-
-</script>
+<title>회원가입페이지</title>
 </head>
-<body  layout:fragment="section">
-	
+<script>
+	function test() {
+		var p1 = document.getElementById('password').value;
+		var p2 = document.getElementById('password2').value;
+		if (p1 != p2) {
+			alert("비밀번호가 일치하지 않습니다.");
+			return false;
+		} else {
+			alert("비밀번호가 일치합니다.");
+			return true;
+		}
+	}
+</script>
+<body layout:fragment="section">
 	<h2>회원가입</h2>
 	<form action="join" method="post" th:object="${memberJoin}">
 		<table>
 			<tr>
-				<th>이메일(아이디)(변경 불가)</th>
+				<th>이메일(아이디)</th>
 				<td><input type="text" th:field="*{mail}"></td>
 			</tr>
-
+			
 			<tr>
 				<th>비밀번호</th>
 				<td><input type="password" th:field="*{password}"></td>
 			</tr>
-
+			
 			<tr>
 				<th>비밀번호 확인</th>
-				<td><input type="password" id="password2" >
-				<input type="button" onclick="test()" value="비밀번호 확인"></td>
+				<td><input type="password" id="password2">
+					<input type="button" onclick="test()" value="비밀번호 확인"></td>
 			</tr>
-
+			
 			<tr>
 				<th>이름</th>
-				<td><input type="text"  th:field="*{mem_id}"></td>
+				<td><input type="text" th:field="*{mem_id}"></td>
 			</tr>
-
+			
 			<tr>
 				<th>사용자 이름</th>
-				<td><input type="text"  th:field="*{name}"></td>
+				<td><input type="text" th:field="*{name}"></td>
 			</tr>
-
+			
 			<tr>
-				<th>성별(변경 불가)</th>
-				<td><label> <input type="radio" name="gender"
-						value="male"> Male
-				</label> <label> <input type="radio" name="gender" value="female">
-						Female
-				</label></td>
+				<th>성별</th>
+				<td><label><input type="radio" name="gender" value="male">Male</label>
+				<label><input type="radio" name="gender" value="female">Female</label>
+				</td>
 			</tr>
-
+			
 			<tr>
-				<th>생년월일(변경불가)</th>
-				<td><input type="date" th:field="*{birth}" ></td>
+				<th>생년월일</th>
+				<td><input type="date" th:field="*{birth}"></td>
 			</tr>
-
+			
 			<tr>
 				<th>전화번호</th>
-				<td>
-				<input type="number"  th:field="*{phone}">
-			</td>
+				<td><input type="number" th:field="*{phone}"></td>
 			</tr>
-
 		</table>
-
 		<div>
-			<input type="submit"  value="회원가입">
+			<input type="submit" value="회원가입">
 		</div>
-
-
 	</form>
 </body>
 </html>

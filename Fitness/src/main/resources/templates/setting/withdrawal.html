@@ -4,33 +4,30 @@
 	layout:decorate="layout/default_layout">
 <head>
 <meta charset="UTF-8">
-<title>회원 탈퇴 페이지</title>
-<link rel="stylesheet" href="/css/login.css">
+<title>회원탈퇴페이지</title>
 </head>
 <body layout:fragment="section">
-<div class="form-signin">
-<h2 class="form-signin-heading" >정말 떠나시는 건가요?</h2>
-<h3>한 번 더 생각해 보지 않으시겠어요?</h3>
-<p>계정을 삭제하시려는 이유를 말씀해주세요. <br>사이트 개선에 중요한 자료로 활용하겠습니다.
-<br>
-<label for="delete">개인정보 삭제</label>
-<input  type="radio" name="withdrawal" value="delete" id="delete"><br>
-<label for="failure">이용이 불편하고 장애가 많아서</label>
-<input  type="radio" name="withdrawal" value="failure" id="failure"><br>
-<label for="mirror">다른 사이트가 더 좋아서</label>
-<input  type="radio" name="withdrawal" value="mirror" id="mirror"><br>
-<label for="frequency">사용빈도가 낮아서</label>
-<input  type="radio" name="withdrawal" value="frequency" id="frequency"><br>
-<label for="inconvenience">콘텐츠 불편</label>
-<input  type="radio" name="withdrawal" value="inconvenience" id="inconvenience"><br>
-<label for="etc">기타</label>
-<input  type="radio" name="withdrawal" value="etc" id="etc">
-<input type="text">
-<br>
-<br>
-<input type="submit"  value="회원탈퇴" onclick="location.href='/'">
-</div>
-
-
+	<div class="form-signin">
+		<!-- error 메시지가 있을 경우 출력 -->
+		<div th:if="${error}">
+			<p th:text="${error}"></p>
+		</div>
+		<h2 class="form-signin-heading">정말 떠나시는 건가요?</h2>
+		<h3>한 번 더 생각해 보지 않으시겠어요?</h3>
+		<p>
+			계정을 삭제하시려는 이유를 말씀해주세요. <br> 사이트 개선에 중요한 자료로 활용하겠습니다. <br> <label
+				for="delete">개인정보 삭제</label> <input type="radio" name="withdrawal"
+				value="delete" id="delete"><br> <label for="failure">이용이
+				불편하고 장애가 많아서</label> <input type="radio" name="withdrawal" value="failure"
+				id="failure"><br> <label for="mirror">다른 사이트가 더
+				좋아서</label> <input type="radio" name="withdrawal" value="mirror" id="mirror"><br>
+			<label for="frequency">사용빈도가 낮아서</label> <input type="radio"
+				name="withdrawal" value="frequency" id="frequency"><br>
+			<label for="inconvenience">콘텐츠 불편</label> <input type="radio"
+				name="withdrawal" value="inconvenience" id="inconvenience"><br>
+			<label for="etc">기타</label> <input type="radio" name="withdrawal"
+				value="etc" id="etc"><br> <br> <br> <input
+				type="submit" value="회원탈퇴" onclick="location.href='/'">
+	</div>
 </body>
 </html>

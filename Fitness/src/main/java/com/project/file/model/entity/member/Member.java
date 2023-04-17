@@ -1,7 +1,6 @@
 package com.project.file.model.entity.member;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,27 +27,41 @@ public class Member {
 	private int skill;
 	private int days;
 	private int cardio;
-
-	public Member(long mem_no, String mail, String mem_id, String password, String name, LocalDate birth, String gender) {
+	
+	
+	public Member(long mem_no, String mail, String password, String mem_id, String name, LocalDate birth,
+			String gender) {
 		this.mem_no = mem_no;
 		this.mail = mail;
-		this.mem_id = mem_id;
 		this.password = password;
+		this.mem_id = mem_id;
 		this.name = name;
 		this.birth = birth;
 		this.gender = gender;
 	}
 
+
 	public Member(String mail, String password) {
-		super();
 		this.mail = mail;
 		this.password = password;
 	}
+
 
 	public Member(String mail, String name, String phone) {
 		this.mail = mail;
 		this.name = name;
 		this.phone = phone;
 	}
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
