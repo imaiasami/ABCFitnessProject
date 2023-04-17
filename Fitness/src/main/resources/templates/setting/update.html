@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body layout:fragment="section">
+	
+	<h2>[ 개인정보 수정 ]</h2>
+	<form action="update" method="post" th:object="${member}">
+		<table>
+ 			<tr>
+				<th>이메일(아이디)(변경 불가)</th>
+				<td><input type="text" th:field="*{mail}" disabled="disabled"></td>
+			</tr>
+
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" th:field="*{password}"></td>
+			</tr>
+
+			<tr>
+				<th>비밀번호 확인</th>
+				<td><input type="password" id="password2" >
+				<input type="button" onclick="test()" value="비밀번호 확인"></td>
+			</tr>
+
+			<tr>
+				<th>이름</th>
+				<td><input type="text"  th:field="*{mem_id}"></td>
+			</tr>
+
+			<tr>
+				<th>사용자 이름</th>
+				<td><input type="text"  th:field="*{name}"></td>
+			</tr>
+
+			<tr>
+				<th>성별(변경 불가)</th>
+				<td><input type="text"  th:field="*{gender}" disabled="disabled"></td>
+			</tr>
+
+			<tr>
+				<th>생년월일(변경불가)</th>
+				<td><input type="date" th:field="*{birth}" disabled="disabled"></td>
+			</tr>
+
+			<tr>
+				<th>전화번호</th>
+				<td>
+				<input type="number"  th:field="*{phone}">
+			</td>
+			</tr>
+
+		</table>
+
+		<div>
+			<input type="submit"  value="수정하기" >
+			
+		</div>
+
+
+	</form>
+	</body>
+</html>

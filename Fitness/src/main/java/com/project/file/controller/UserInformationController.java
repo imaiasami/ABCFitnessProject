@@ -28,7 +28,25 @@ public class UserInformationController {
 		return "setting/userInformation";
 	}
 
+	// 회원정보 수정 페이지 이동
+		@GetMapping("update")
 
+		public String update(@SessionAttribute("memberLogin") Member loginMember, Model model) {
+			Member findMember = memberMapper.findMemberByMail(loginMember.getMail());
+			model.addAttribute("member", findMember);
+			log.info("findMember : {}", findMember);
+			return "setting/update";
+		}
+
+		// 회원정보 수정
+		@PostMapping("update")
+		public String update(@SessionAttribute("memberLogin") Member loginMember, @ModelAttribute Member member) {
+			log.info("member : {}", member);
+			member.setMail(loginMember.getMail());
+			log.info("member : {}", member);
+			memberMapper.updateMember(member);
+			return "redirect:/";
+		}
 
 //	@PostMapping("information")
 //	public String myInformation() {

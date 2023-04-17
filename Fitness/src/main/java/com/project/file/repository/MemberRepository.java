@@ -17,5 +17,5 @@ int deleteMember(Member member);
 	
 	List<Member> findAllMembers();
 	
-
+	void updateMember(Member member);
 }
