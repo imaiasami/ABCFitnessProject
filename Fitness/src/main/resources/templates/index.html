@@ -19,6 +19,14 @@
 		</th:block>
 	</div>
 	<br>
+	<h2>가장 인기있는 루틴</h2>
+	<div class="flex-container">
+		<th:block th:each="routine : ${routines}">
+			<a th:href="|/routine/default/${routine.rout_no}|">
+				<div class="flex-item" th:text=${routine.name}></div>
+			</a>
+		</th:block>
+	</div>
 	<br>
 	<br>
 	<br>
