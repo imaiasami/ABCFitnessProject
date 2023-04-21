@@ -1,53 +1,51 @@
+body {
+    background-color: #777;
+    color: #e2e2db;
+}
+
+#root-container {
+    background-color: #1f3a50;
+    box-shadow: 0 0 15px #333;
+}
+
 .modal {
     background-color: #00000080;
 }
 
-/* 스크롤바(크롬) */
-::-webkit-scrollbar-thumb, #sidebar.hosc::-webkit-scrollbar-thumb {
-    background-color: #217af480;
-}
-::-webkit-scrollbar-thumb:hover, #sidebar.hosc::-webkit-scrollbar-thumb:hover {
-    background-color: #217af4c0;
-}
-/* 스크롤바(파폭) */
-* {
-    scrollbar-color: #217af480 transparent;
-}
-
 #topbar {
-    background-color: #bbb;
+    background-color: #1f3a50;
 }
 
 #menu-icon {
-    background-color: #bbf;
+    background-color: #559;
 }
 
 #title-image {
-    background-color: #fbb;
+    background-color: #955;
 }
 
 #etc-btn {
-    background-color: #bbf;
+    background-color: #559;
 }
 
 #login-btn {
-    background-color: #fbb;
+    background-color: #955;
 }
 
 #etc-popup {
-    background-color: #ccc;
+    background-color: #555;
 }
 
 #sidebar {
-    background-color: #ccc;
+    background-color: #1f3a50;
 }
 
 #sidebar > a > div:first-child {
-    background-color: #fbb;
+    background-color: #955;
 }
 
 #sidebar > a > div:last-child {
-    background-color: #bbf;
+    background-color: #559;
 }
 
 #footer {

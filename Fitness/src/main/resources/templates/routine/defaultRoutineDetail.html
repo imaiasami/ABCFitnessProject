@@ -4,13 +4,14 @@
 	<title>루틴 상세 페이지</title>
 </head>
 <body layout:fragment="section">
-	Hello default Routine Detail World
-	<input type="button" value="루틴 목록 페이지" onclick="location.href='routine/default'">
+	<input type="button" value="루틴 목록 페이지" onclick="location.href='/routine/default'">
 	<div th:text="${routine.name}"></div>
 	<div th:text="${routine.guide}"></div>
 	<div>
 		<div th:each="steps : ${routine.getStep()}">
-			<span th:text="|${stepsStat.count}일차|"></span><br>
+			<span th:text="|${stepsStat.count}일차|"></span>
+			<input type="button" th:value="|${stepsStat.count}일차 시작|" th:onclick="|location.href='/routine/run/d/${routine.rout_no}/${stepsStat.count}'|">
+			<br>
 			<th:block th:each="step : ${steps}">
 				<th:block th:each="entry : ${step}">
 					<span th:text="|${exMap[entry.key].name} ${entry.value}세트|"></span><br>

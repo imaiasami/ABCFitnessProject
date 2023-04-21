@@ -3,63 +3,133 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<title>루틴 재생 페이지</title>
+	<title>루틴 재생 페이지</title>
+	<style>
+		#player {
+			text-align: center;
+		}
+		.hide {
+			display: none;
+		}
+		.image {
+			display: inline-block;
+			width: 360px;
+			height: 360px;
+			border: 1px solid;
+		}
+		.bold {
+			font-size: 1.5em;
+			font-weight: 700;
+		}
+		#buttons > div:not(.hide) {
+			display: inline-block;
+			width: 60px;
+			height: 60px;
+			border: 1px solid;
+		}
+	</style>
+	<script>
+		// 시간(초 단위)을 00:00 형식으로 변환
+		function timeFormatting(time) {
+			let hour = parseInt(time / 3600);
+			let min = parseInt((time - (hour * 3600)) / 60);
+			let sec = parseInt(time - (hour * 3600) - (min * 60));
+			let hourS = hour <= 0 ? '' : hour + ':';
+			let minS = (min <= 0 ? '00' : min < 10 ? '0' + min : min) + ':';
+			let secS = sec <= 0 ? '00' : sec < 10 ? '0' + sec : sec;
+			return hourS + minS + secS;
+		}
+
+		$(() => {
+			// 타이머
+			let $timer = {
+				start : function() {
+					$timer.stop();
+					$timer.tid = setInterval($timer.refresh, 1000);
+				},
+				stop : function() {
+					if($timer.tid) {
+						clearInterval($timer.tid);
+						$timer.tid = 0;
+					}
+				},
+				refresh : function() {
+					if (!$timer.time) $timer.time = 1;
+					else $timer.time += 1;
+					$('#timer').text(timeFormatting($timer.time));
+				}
+			};
+
+			$timer.start();
+			$('#player > .hide:first').removeClass('hide');
+			
+			// 이전, 다음 버튼
+			let exs = document.querySelectorAll('div[class^="ex-"]');
+			let exNow = 0;
+			$('#prev').click((e) => {
+				if (exNow <= 0) return;
+				$('div[class^="ex-"]').addClass('hide');
+				exs[exNow-- - 1].classList.remove('hide');
+				$('#next').removeClass('hide');
+				$('#finish').addClass('hide');
+			});
+			$('#next').click((e) => {
+				if (exNow >= exs.length - 1) return;
+				$('div[class^="ex-"]').addClass('hide');
+				exs[exNow++ + 1].classList.remove('hide');
+				if (exNow == exs.length - 1) {
+					$('#next').addClass('hide');
+					$('#finish').removeClass('hide');
+				}
+			});
+			
+			// 재생, 정지 버튼
+			$('#play').click((e) => {
+				$('#play').addClass('hide');
+				$('#stop').removeClass('hide');
+				$timer.start();
+			});
+			$('#stop').click((e) => {
+				$('#stop').addClass('hide');
+				$('#play').removeClass('hide');
+				$timer.stop();
+			});
+
+			// 종료 버튼
+			$('#finish').click((e) => {
+				if (confirm('운동을 완료하시겠습니까?')) {
+					// 이하 서버와 통신
+				}
+			});
+		});
+	</script>
 </head>
 <body layout:fragment="section">
-	Hello Play Routine World
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br> Hello Play Routine World
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br> Hello Play Routine World
+	<div th:if="${routine.getStep().size() < day}">올바르지 않은 접근입니다.</div>
+	<th:block th:unless="${routine.getStep().size() < day}">
+		<th:block th:each="steps : ${routine.getStep()}">
+			<div id="player" th:if="${stepsStat.count == day}">
+				<h1 th:text="|${routine.name} ${stepsStat.count}일차|"></h1>
+				<th:block th:each="step : ${steps}">
+					<th:block th:each="entry : ${step}">
+						<div th:class="|ex-${stepStat.count} hide|">
+							<div class="image" th:text="${exMap[entry.key].image}"></div><br>
+							<span class="bold" th:text="${exMap[entry.key].name}"></span> ([[${stepStat.count}]]/[[${stepStat.size}]])<br>
+							<span class="bold" th:text="|${exMap[entry.key].freq}회 ${entry.value}세트|"></span><br>
+						</div>
+					</th:block>
+				</th:block>
+				<span id="timer" class="bold">00:00</span>
+				<br><br>
+				<div id="buttons">
+					<div id="prev" class="pointer">이전</div>
+					<div id="play" class="pointer hide">재생</div>
+					<div id="stop" class="pointer">정지</div>
+					<div id="next" class="pointer">다음</div>
+					<div id="finish" class="pointer hide">종료</div>
+				</div>
+			</div>
+		</th:block>
+	</th:block>
 </body>
 </html>

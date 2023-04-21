@@ -34,6 +34,7 @@ public class RoutineController {
 	final int countPerPage = 9; // 페이지 당 글의 수
 	final int pagePerGroup = 5; // 페이지 그룹 당 표시할 페이지 수
 
+	// 루틴 페이지 이동 시 자동으로 기본 루틴으로 연결
 	@GetMapping("default")
 	public String defaultRoutine(Model model, @RequestParam(defaultValue = "1") int page) {
 
@@ -49,6 +50,7 @@ public class RoutineController {
 		return "routine/defaultRoutine";
 	}
 
+	// 기본 루틴 상세
 	@GetMapping("default/{rout_no}")
 	public String defaultRoutineDetail(@PathVariable long rout_no, Model model) {
 		RoutineDefault routine = routineMapper.getRoutineDefaultKo(rout_no);
@@ -58,17 +60,35 @@ public class RoutineController {
 		return "routine/defaultRoutineDetail";
 	}
 
-	@GetMapping("themeRoutine")
+	// 테마별 루틴(미구현)
+	@GetMapping("theme")
 	public String themeRoutine() {
 		return "routine/themeRoutine";
 	}
 
-	@GetMapping("themeRoutine/{rout_no}")
+	// 테마별 루틴 상세(미구현)
+	@GetMapping("theme/{rout_no}")
 	public String themeRoutineDetail(@PathVariable long rout_no) {
-
 		return "routine/themeRoutineDetail";
 	}
 
+	// 루틴 재생 페이지 이동
+	@GetMapping("run/{type}/{rout_no}/{day}")
+	public String runRoutine(@PathVariable String type, @PathVariable long rout_no, @PathVariable int day, Model model) {
+		if (type.equals("d")) { // 기본 루틴
+			RoutineDefault routine = routineMapper.getRoutineDefaultKo(rout_no);
+			model.addAttribute("routine", routine);
+			Map<Long, Exercise> exMap = getExMap(routine.getStep());
+			model.addAttribute("exMap", exMap);
+		} else if (type.equals("t")) { // 테마별 루틴
+			
+		} else if (type.equals("g")) { // 생성된 루틴
+			
+		}
+		return "routine/playRoutine";
+	}
+
+	// 루틴에 저장된 운동 번호를 기반으로 각 운동 상세 불러오기
 	public Map<Long, Exercise> getExMap(List<Map<Long, Integer>> step) {
 		Map<Long, Exercise> result = new HashMap<>();
 		for (Map<Long, Integer> map : step) {
