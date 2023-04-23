@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.file.model.dto.exercise.MemberJoinForm;
 import com.project.file.model.entity.member.Member;
@@ -42,9 +43,13 @@ public class MemberController {
 
 	// 로그인 폼으로 이동
 	@GetMapping("login")
-	public String loginMemberForm(Model model) {
-		model.addAttribute("memberLogin", new Member());
-		return "login/login";
+	public String loginMemberForm(@SessionAttribute(name = "memberLogin", required = false) Member loginMember, Model model) {
+		if (loginMember == null) {
+			model.addAttribute("memberLogin", new Member());
+			return "login/login";
+		} else {
+			return "redirect:/";
+		}
 	}
 
 	// 로그인하기
@@ -66,7 +71,7 @@ public class MemberController {
 			HttpSession session = request.getSession();
 			session.setAttribute("memberLogin", findMember);
 		}
-		return "redirect:/" + redirectURL;
+		return "redirect:" + redirectURL;
 	}
 
 	// 로그아웃

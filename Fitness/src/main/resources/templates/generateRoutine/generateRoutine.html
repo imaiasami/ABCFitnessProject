@@ -3,35 +3,94 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<title>루틴 생성 페이지</title>
+	<title>루틴 생성 페이지</title>
+	<style>
+		form {
+			display: none;
+		}
+		.select-btn {
+			display: inline-block;
+			text-align: center;
+			margin: 0 5px 5px 0;
+			border: 1px solid;
+			width: 80px;
+			border-radius: 5px;
+		}
+		.on {
+			background-color: #e2e2db;
+			color: #1f3a50;
+		}
+		#submit-div {
+			background-color: #ea945e;
+			color: #1f3a50;
+		}
+	</style>
+	<script>
+		$(() => {
+			$('div[id$="-div"]').click((e) => {
+				let id = e.target.id.split('-')[0];
+				document.getElementById(id + '-input').click();
+			});
+			$('input:not([id^="submit"])').change((e) => {
+				let id = e.target.id.split('-')[0];
+				if (e.target.checked) {
+					if (e.target.type == 'radio') {
+						$('div[id^="' + id.slice(0, -1) + '"]').removeClass('on');
+					}
+					document.getElementById(id + '-div').classList.add('on');
+				} else {
+					document.getElementById(id + '-div').classList.remove('on');
+				}
+			});
+		});
+	</script>
 </head>
 <body layout:fragment="section">
-	<div>근력 증가</div>
-	<div>체중 감량</div>
-	<h3>운동 레벨을 선택해주세요</h3>
-	<div>초급</div>
-	<div>중급</div>
-	<div>상급</div>
-	<h3>보유 장비를 선택해주세요</h3>
-	<div>덤벨</div>
-	<div>밴드</div>
-	<div>풀업바</div>
-	<div>사이클</div>
-	<div>러닝머신</div>
-	<h3>주당 운동 일수를 선택해주세요</h3>
-	<div>1일</div>
-	<div>2일</div>
-	<div>3일</div>
-	<div>4일</div>
-	<div>5일</div>
-	<div>6일</div>
-	<div>7일</div>
-	<h3>운동분할을 선택해주세요.</h3>
-	<div>무분할</div>
-	<div>2분할</div>
-	<div>3분할</div>
-	<div>4분할</div>
-	<div>5분할</div>
-	<h3>루틴 생성</h3>
+	<h3>운동 목적을 선택해 주세요.</h3>
+	<div id="cardio1-div" class="select-btn pointer">근력 증가</div>
+	<div id="cardio2-div" class="select-btn pointer">체중 감량</div>
+	<br><br>
+	<h3>운동 레벨을 선택해 주세요.</h3>
+	<div id="skill1-div" class="select-btn pointer">초급</div>
+	<div id="skill2-div" class="select-btn pointer">중급</div>
+	<div id="skill3-div" class="select-btn pointer">상급</div>
+	<br><br>
+	<h3>보유 장비를 선택해 주세요.</h3>
+	<div id="equip1-div" class="select-btn pointer">덤벨</div>
+	<div id="equip2-div" class="select-btn pointer">밴드</div>
+	<div id="equip3-div" class="select-btn pointer">풀업바</div>
+	<div id="equip4-div" class="select-btn pointer">사이클</div>
+	<div id="equip5-div" class="select-btn pointer">러닝머신</div>
+	<br><br>
+	<h3>주당 운동 일수를 선택해 주세요.</h3>
+	<div id="days1-div" class="select-btn pointer">1일</div>
+	<div id="days2-div" class="select-btn pointer">2일</div>
+	<div id="days3-div" class="select-btn pointer">3일</div>
+	<div id="days4-div" class="select-btn pointer">4일</div>
+	<div id="days5-div" class="select-btn pointer">5일</div>
+	<div id="days6-div" class="select-btn pointer">6일</div>
+	<div id="days7-div" class="select-btn pointer">7일</div>
+	<br><br><br>
+	<div id="submit-div" class="select-btn pointer">루틴 생성</div>
+	<form action="/routine/generate" method="post">
+		<input id="cardio1-input" type="radio" name="cardio" value="false">
+		<input id="cardio2-input" type="radio" name="cardio" value="true">
+		<input id="skill1-input" type="radio" name="skill" value="1">
+		<input id="skill2-input" type="radio" name="skill" value="2">
+		<input id="skill3-input" type="radio" name="skill" value="3">
+		<input id="equip1-input" type="checkbox" name="dumbbell">
+		<input id="equip2-input" type="checkbox" name="band">
+		<input id="equip3-input" type="checkbox" name="pullup">
+		<input id="equip4-input" type="checkbox" name="cycle">
+		<input id="equip5-input" type="checkbox" name="treadmill">
+		<input id="days1-input" type="radio" name="days" value="1">
+		<input id="days2-input" type="radio" name="days" value="2">
+		<input id="days3-input" type="radio" name="days" value="3">
+		<input id="days4-input" type="radio" name="days" value="4">
+		<input id="days5-input" type="radio" name="days" value="5">
+		<input id="days6-input" type="radio" name="days" value="6">
+		<input id="days7-input" type="radio" name="days" value="7">
+		<input id="submit-input" type="submit" value="generate">
+	</form>
 </body>
 </html>

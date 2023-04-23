@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.RowBounds;
 
+import com.project.file.model.dto.routine.GenerateRoutineForm;
 import com.project.file.model.entity.routine.RoutineDefault;
+import com.project.file.model.entity.routine.RoutineGenerated;
 
 @Mapper
 public interface RoutineRepository {
@@ -21,4 +23,14 @@ public interface RoutineRepository {
 	
 	// 총 루틴 개수
 	int getTotal();
+	
+	
+	// 루틴 생성
+	int createRoutineGenerated(GenerateRoutineForm rout_g);
+	
+	// 루틴 번호로 생성 루틴 가져오기
+	RoutineGenerated getRoutineGeneratedByRoutNo(long rout_no);
+	
+	// 회원 번호로 생성 루틴 가져오기
+	List<RoutineGenerated> getRoutineGeneratedByMemNo(long mem_no);
 }

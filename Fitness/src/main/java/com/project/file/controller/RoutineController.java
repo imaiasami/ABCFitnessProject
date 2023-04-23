@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.project.file.model.entity.exercise.Exercise;
 import com.project.file.model.entity.routine.RoutineDefault;
+import com.project.file.model.entity.routine.RoutineGenerated;
 import com.project.file.repository.ExerciseRepository;
 import com.project.file.repository.RoutineRepository;
 import com.project.file.util.PageNavigator;
@@ -80,10 +81,13 @@ public class RoutineController {
 			model.addAttribute("routine", routine);
 			Map<Long, Exercise> exMap = getExMap(routine.getStep());
 			model.addAttribute("exMap", exMap);
-		} else if (type.equals("t")) { // 테마별 루틴
+		} else if (type.equals("t")) { // 테마별 루틴(미구현)
 			
 		} else if (type.equals("g")) { // 생성된 루틴
-			
+			RoutineGenerated routine = routineMapper.getRoutineGeneratedByRoutNo(rout_no);
+			model.addAttribute("routine", routine);
+			Map<Long, Exercise> exMap = getExMap(routine.getStep());
+			model.addAttribute("exMap", exMap);
 		}
 		return "routine/playRoutine";
 	}

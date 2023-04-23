@@ -184,4 +184,78 @@
 		select count(*) from
 		exercise
 	</select>
+	
+	<!-- 테스트 -->
+	<select id="getExercises" resultType="exercise">
+		select
+			ex.ex_no,
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			<choose>
+				<when test="lang != null and lang.equals('ko')">
+					mu.name_ko muscle,
+					eq.name_ko equip,
+					ex.name_ko name,
+					ex.effect_ko effect,
+					ex.guide_ko guide
+				</when>
+				<when test="lang != null and lang.equals('jp')">
+					mu.name_jp muscle,
+					eq.name_jp equip,
+					ex.name_jp name,
+					ex.effect_jp effect,
+					ex.guide_jp guide
+				</when>
+				<otherwise>
+					mu.name_en muscle,
+					eq.name_en equip,
+					ex.name_en name,
+					ex.effect_en effect,
+					ex.guide_en guide
+				</otherwise>
+			</choose>
+		from exercise ex, muscle mu, equipment eq
+        where ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id
+        <if test="diffs != null">
+	        <foreach item="diff" collection="diffs" open="and ex.diff in (" separator="," close=")">
+	        	#{diff}
+	        </foreach>
+        </if>
+        <if test="equips != null">
+	        <foreach item="equip" collection="equips" open="and ex.equip_id in (" separator="," close=")">
+	        	#{equip}
+	        </foreach>
+        </if>
+	</select>
+	
+	<!-- 근육별 운동 가져오기 -->
+	<select id="getExercisesByMuscle" resultType="exercise">
+		select
+			ex_no,
+			musc_id,
+            equip_id,
+			diff,
+			freq,
+			image
+		from exercise
+        <where>
+        	<if test="musc != null">
+	        	musc_id = #{musc}
+        	</if>
+	        <if test="diffs != null">
+		        <foreach item="diff" collection="diffs" open="and diff in (" separator="," close=")">
+		        	#{diff}
+		        </foreach>
+	        </if>
+	        <if test="equips != null">
+		        <foreach item="equip" collection="equips" open="and equip_id in (" separator="," close=")">
+		        	#{equip}
+		        </foreach>
+	        </if>
+        </where>
+	</select>
 </mapper>

@@ -20,6 +20,6 @@ $(() => {
     });
 
     if ($('#login-btn')) {
-        $('#login-btn > a').attr('href', '/login?redirectURL=' + location.pathname.slice(1));
+        $('#login-btn > a').attr('href', '/login?redirectURL=' + location.pathname);
     }
 });

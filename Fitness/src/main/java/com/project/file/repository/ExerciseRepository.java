@@ -3,6 +3,7 @@ package com.project.file.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import com.project.file.model.dto.exercise.FullExerciseForm;
@@ -29,4 +30,10 @@ public interface ExerciseRepository {
 	
 	// 총 운동 개수
 	int getTotal();
+	
+	// 테스트
+	List<Exercise> getExercises(@Param("diffs") List<Integer> diffs, @Param("equips") List<String> equips, @Param("lang") String lang);
+	
+	// 근육별 운동 가져오기
+	List<Exercise> getExercisesByMuscle(@Param("musc") String musc, @Param("diffs") List<Integer> diffs, @Param("equips") List<String> equips, @Param("lang") String lang);
 }

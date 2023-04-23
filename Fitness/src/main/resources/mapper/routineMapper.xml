@@ -81,4 +81,56 @@
 		select count(*) from
 		rout_default
 	</select>
+	
+	
+	<!-- 루틴 생성 -->
+	<insert id="createRoutineGenerated">
+		<selectKey keyProperty="rout_no"  resultType="long"  order="BEFORE">
+			select seq_rout_g.nextval from dual
+		</selectKey>
+		insert into rout_generated
+		values (
+			#{rout_no},
+			#{mem_no},
+			#{name},
+			#{step},
+			#{equip},
+			#{diff},
+			#{days},
+			#{cardio},
+			sysdate
+		)
+	</insert>
+	
+	<!-- 루틴 번호로 생성 루틴 가져오기 -->
+	<select id="getRoutineGeneratedByRoutNo" resultType="routineGenerated">
+		select 
+			rout_g_no rout_no,
+			mem_no,
+			name,
+			step,
+			equip,
+			diff,
+			days,
+			cardio,
+			time
+		from rout_generated
+		where rout_g_no = #{rout_no}
+	</select>
+	
+	<!-- 회원 번호로 생성 루틴 가져오기 -->
+	<select id="getRoutineGeneratedByMemNo" resultType="routineGenerated">
+		select 
+			rout_g_no rout_no,
+			mem_no,
+			name,
+			step,
+			equip,
+			diff,
+			days,
+			cardio,
+			time
+		from rout_generated
+		where mem_no = #{mem_no}
+	</select>
 </mapper>
