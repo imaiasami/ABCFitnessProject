@@ -1,33 +1,129 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
 <head>
-	<title>운동 상세 페이지</title>
+<title>운동 상세 페이지</title>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<script>
+function addBookmark(exerciseId) {
+    var isBookmarked = $('#bookmark-btn').hasClass('active');
+    $.ajax({
+        url: "/exercise/" + exerciseId,
+        type: "POST",
+        dataType: "json",
+        data: {
+            bookmarkFlag: isBookmarked // 현재 버튼 상태의 반대값 전달
+        },
+        success: function(result) {
+            if (result.status === 'success') {
+                if(isBookmarked) {
+                    alert("북마크가 삭제되었습니다.");
+                    $('#bookmark-btn').removeClass('active'); // 버튼 OFF
+                } else {
+                    alert("북마크에 추가되었습니다.");
+                    $('#bookmark-btn').addClass('active'); // 버튼 ON
+                }
+            } else if (result.status === 'fail') {
+                alert("오류가 발생했습니다.");
+            } else {
+                alert(result.message);
+            }
+        },
+
+        error: function(xhr, status, error) {
+            console.log(xhr);
+            if (xhr.status == 401) {
+                if(confirm(xhr.responseText)) {
+                    location.href = '/login'; // 로그인 페이지로 이동
+                }
+            }
+        }
+    });
+}
+
+
+$(document).ready(function() {
+    var exerciseId =  [[${ex_no}]];; 
+    $("#bookmark-btn").click(function() {
+        addBookmark(exerciseId);
+    });
+});
+
+
+
+
+</script>
+
+
+
+<style>
+#bookmark-btn {
+	background-color: transparent;
+	border: none;
+	color: #000;
+	font-size: 1.5rem;
+	cursor: pointer;
+	outline: none;
+}
+
+#bookmark-btn::before {
+	content: "\2605";
+}
+
+#bookmark-btn.active::before {
+	content: "\2605";
+	color: #F7CB54;
+}
+
+#bookmark-btn {
+	font-size: 2em;
+	line-height: 0.5;
+	padding: 0;
+	border: none;
+	background: transparent;
+	color: #ccc;
+	outline: none;
+}
+</style>
 </head>
 <body layout:fragment="section">
 	Hello Exercise Detail World
-	<input type="button" value="운동 목록 페이지" onclick="location.href='/exercise'">
+	<input type="button" value="운동 목록 페이지"
+		onclick="location.href='/exercise'">
 	<table>
-			<tr>
-				<td th:text="${exercise.name}"></td>
+		<tr>
+			<td th:text="${exercise.name}"></td>
+			<th:block th:unless="${bookmarked == null}">
+				<button type="button" id="bookmark-btn"  class="active"></button>
+			</th:block>
+			<th:block th:if="${bookmarked == null }">
+				<button type="button" id="bookmark-btn" ></button>
+			</th:block>
+			
 			</tr>
-			<tr>
-				<td th:text="${exercise.muscle}"></td>
-			</tr>
-			<tr>
-				<td th:text="${exercise.equip}"></td>
-			</tr>
-			<tr>
-				<td th:text="${exercise.diff}"></td>
-			</tr>
-			<tr>
-				<td th:text="${exercise.image}"></td>
-			</tr>
-			<tr>
-				<td th:text="${exercise.effect}"></td>
-			</tr>
-			<tr>
-				<td th:utext="${exercise.guide}"></td>
-			</tr>
-		</table>
+		<tr>
+			<td th:text="${exercise.muscle}"></td>
+		</tr>
+		<tr>
+			<td th:text="${exercise.equip}"></td>
+		</tr>
+		<tr>
+			<td th:text="${exercise.diff}"></td>
+		</tr>
+		<tr>
+			<td th:text="${exercise.image}"></td>
+		</tr>
+		<tr>
+			<td th:text="${exercise.effect}"></td>
+		</tr>
+		<tr>
+			<td th:utext="${exercise.guide}"></td>
+		</tr>
+	</table>
+
 </body>
 </html>

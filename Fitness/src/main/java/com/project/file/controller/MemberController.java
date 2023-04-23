@@ -1,21 +1,28 @@
 
 package com.project.file.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.file.model.dto.exercise.MemberJoinForm;
+import com.project.file.model.entity.member.Bookmark;
 import com.project.file.model.entity.member.Member;
 import com.project.file.repository.MemberRepository;
 import com.project.file.util.CheckResponse;
@@ -127,4 +134,35 @@ public class MemberController {
 		return count > 0;
 	}
 
+	//북마크 추가/삭제
+	@PostMapping("/exercise/{ex_no}")
+	@ResponseBody
+	public ResponseEntity<?> bookmark(@SessionAttribute(name = "memberLogin", required = false) Member loginMember,
+			@PathVariable("ex_no") long ex_no) {
+		if (loginMember == null) { // 로그인 안한 사용자
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+		} else { // 로그인한 사용자
+			try {
+				Bookmark bookmarkForm = new Bookmark(loginMember.getMem_no(), ex_no);
+				Bookmark bookmark = memberMapper.getBookmark(bookmarkForm);
+				if (bookmark != null && bookmark.getEx_no() == ex_no) { // 북마크 되어 있는 경우
+					log.info("bookmarks : {}", bookmark);
+					memberMapper.deleteBookmark(bookmarkForm);
+				} else {// 북마크추가
+					log.info("bookmarked : {}", bookmarkForm);
+					memberMapper.insertBookmark(bookmarkForm);
+				}
+				Map<String, Object> resultMap = new HashMap<>();
+				resultMap.put("status", "success");
+				return ResponseEntity.ok().body(resultMap);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류가 발생했습니다.");
+			}
+		}
+	}
+	
+	
+	
+	
 }

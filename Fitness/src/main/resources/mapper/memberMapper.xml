@@ -59,22 +59,55 @@
 	<update id="updateMember">
 		update member set
 		password = #{password},
-		name = #{name},
-		mem_id = #{mem_id},
+		mem_id =
+		#{mem_id},
 		phone = #{phone}
 		where mail = #{mail}
 	</update>
 
-	<!-- 이메일 중복 확인 -->
-	<select id="countByEmail" resultType="int">
-		SELECT COUNT(*) FROM member
-		WHERE mail = #{mail}
+	<!-- 나의 북마크 -->
+	<select id="getBookmarkList" resultType="exercise">
+		select
+		bo.ex_no,
+		ex.name_ko name,
+		ex.image
+		from
+		ex_book bo,
+		exercise ex
+		where
+		bo.mem_no =
+		#{mem_no}
+		and bo.ex_no = ex.ex_no
+	</select>
+	
+	<!-- 북마크추가 -->
+	<insert id="insertBookmark">
+		insert into ex_book (
+		ex_no,
+		mem_no
+		)values(
+		#{ex_no},
+		#{mem_no}
+		)
+	</insert>
+	
+	<!-- 북마크가져오기 -->
+	<select id="getBookmark" resultType="bookmark">
+		select * from ex_book
+		where
+		mem_no=#{mem_no} and ex_no=#{ex_no}
 	</select>
 
-	<!-- 사용자 이름 중복 확인 -->
-	<select id="countByMemberId" resultType="int">
-		SELECT COUNT(*) FROM
-		member
-		WHERE mem_id = #{mem_id}
-	</select>
+	<!-- 북마크삭제 -->
+	<delete id="deleteBookmark">
+		delete from ex_book
+		where
+		mem_no = #{mem_no} and ex_no
+		= #{ex_no}
+	</delete>
+
+
+
+
+
 </mapper>

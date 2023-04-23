@@ -8,9 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.file.model.entity.exercise.Exercise;
+import com.project.file.model.entity.member.Bookmark;
+import com.project.file.model.entity.member.Member;
 import com.project.file.repository.ExerciseRepository;
+import com.project.file.repository.MemberRepository;
 import com.project.file.util.PageNavigator;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class ExerciseController {
 	
 	private final ExerciseRepository exerciseMapper;
+	private final MemberRepository memberMapper;
 
 	// 페이징 처리 상수값
 	final int countPerPage = 9; // 페이지 당 글의 수
@@ -41,10 +46,20 @@ public class ExerciseController {
 	}
 
 	@GetMapping("/exercise/{ex_no}")
-	public String exerciseDetail(@PathVariable long ex_no, Model model) {
+	public String exerciseDetail(@PathVariable long ex_no, Model model,
+			@SessionAttribute(name = "memberLogin", required = false) Member loginMember)  {
 		Exercise exercise = exerciseMapper.getExerciseKo(ex_no);
 		exercise.toBrTag();
 		model.addAttribute("exercise", exercise);
+		
+		if (loginMember != null) { // 로그인한 사용자일 경우 북마크 목록 추가
+			Bookmark bookmark = new Bookmark(loginMember.getMem_no(), ex_no);
+			Bookmark bookmarks = memberMapper.getBookmark(bookmark);
+			model.addAttribute("bookmarked", bookmarks);
+			
+		}
+		
+		
 		return "exercise/exerciseDetail";
 	}
 

@@ -1,5 +1,7 @@
 package com.project.file.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.project.file.model.entity.exercise.Exercise;
 import com.project.file.model.entity.member.Member;
 import com.project.file.repository.MemberRepository;
 
@@ -35,6 +38,10 @@ public class ProfileController {
 		// 주소의 {mem_id}와 세션의 mem_id를 비교하여 동일할 경우에 프로필 편집 활성화
 		Member memberProfile = memberMapper.findMemberById(mem_id);
 		model.addAttribute("memberProfile", memberProfile);
+		
+		List<Exercise> bookmarked = memberMapper.getBookmarkList(memberProfile.getMem_no());
+		model.addAttribute("bookmarks", bookmarked);
+	
 		return "profile/profile";
 	}
 

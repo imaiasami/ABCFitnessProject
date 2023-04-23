@@ -22,20 +22,21 @@
 </head>
 
 <body layout:fragment="section">
-	<div id="myProfile">
+	<div id=myProfile>
 		나의 프로필
-		
-			<table>
-				<tr>
-					<td rowspan="2">사진</td>
-					<td th:text="${memberProfile.name}">이름</td>
-				</tr>
-				<tr>
-					<td th:text="|@${memberProfile.mem_id}|"></td>
-				</tr>
-			</table>
-		<div th:if="${memberProfile.mem_id == session.memberLogin.mem_id}">
-			 <input type="button" onclick="location.href='/setting/userInformation'" value="프로필 편집하기">
+
+		<table>
+			<tr>
+				<td rowspan="2">사진</td>
+				<td th:text="${memberProfile.name}">이름</td>
+			</tr>
+			<tr>
+				<td th:text="|@${memberProfile.mem_id}|"></td>
+			</tr>
+		</table>
+		<div th:if="${session.memberLogin != null && memberProfile.mem_id == session.memberLogin.mem_id}">
+			<input type="button"
+				onclick="location.href='/setting/userInformation'" value="프로필 편집하기">
 		</div>
 	</div>
 	<br>
@@ -68,5 +69,30 @@
 			</tbody>
 		</table>
 	</div>
+
+	<br>
+	<div>나의 즐겨찾기</div>
+	<div>운동</div>
+	<table>
+		<tr>
+			<th>NO.</th>
+			<th>운동이름</th>
+			<th>운동사진</th>
+		</tr>
+		<tr th:each="bookmark, bookmarkStat : ${bookmarks}">
+			<td th:text = "${bookmarkStat.count}"></td>
+			<td><a th:text ="${bookmark.name}" th:href="@{/exercise/{ex_no}(ex_no=${bookmark.ex_no})}"></a></td>
+			<td th:text = "${bookmark.image}"></td>
+		</tr>
+	</table>
+
+
+
+	<div>루틴</div>
+
+
+
+
+
 </body>
 </html>

@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.project.file.model.entity.exercise.Exercise;
+import com.project.file.model.entity.member.Bookmark;
 import com.project.file.model.entity.member.Member;
 
 @Mapper
@@ -24,4 +26,15 @@ public interface MemberRepository {
 	int countByEmail(String email);
 	
 	int countByMemberId(String mem_id);
+	
+	// 즐겨찾기
+		int insertBookmark(Bookmark bookmark);
+
+		Bookmark getBookmark(Bookmark bookmark);
+
+		int deleteBookmark(Bookmark bookmark);
+
+		List<Exercise> getBookmarkList(long mem_no);
+
+	
 }
