@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.file.model.dto.exercise.MemberJoinForm;
 import com.project.file.model.entity.member.Member;
 import com.project.file.repository.MemberRepository;
+import com.project.file.util.CheckResponse;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +45,8 @@ public class MemberController {
 
 	// 로그인 폼으로 이동
 	@GetMapping("login")
-	public String loginMemberForm(@SessionAttribute(name = "memberLogin", required = false) Member loginMember, Model model) {
+	public String loginMemberForm(@SessionAttribute(name = "memberLogin", required = false) Member loginMember,
+			Model model) {
 		if (loginMember == null) {
 			model.addAttribute("memberLogin", new Member());
 			return "login/login";
@@ -94,6 +97,34 @@ public class MemberController {
 	public String searchPassword(@ModelAttribute("memberPassword") Member memberPassword) {
 
 		return "login/login";
+	}
+
+	// 이메일 중복 확인
+	@ResponseBody
+	@PostMapping("check-email")
+	public CheckResponse checkEmail(@RequestParam String email) {
+		boolean isDuplicate = isEmailDuplicate(email);
+		return new CheckResponse(isDuplicate);
+	}
+
+	// 이메일 중복 확인
+	private boolean isEmailDuplicate(String email) {
+		int count = memberMapper.countByEmail(email);
+		return count > 0;
+	}
+
+	// 사용자 이름 중복 확인
+	@ResponseBody
+	@PostMapping("check-member_id")
+	public CheckResponse checkMemberId(@RequestParam String mem_id) {
+		boolean isDuplicate = isMemberDuplicate(mem_id);
+		return new CheckResponse(isDuplicate);
+	}
+
+	// 사용자 이름 중복 확인
+	private boolean isMemberDuplicate(String mem_id) {
+		int count = memberMapper.countByMemberId(mem_id);
+		return count > 0;
 	}
 
 }

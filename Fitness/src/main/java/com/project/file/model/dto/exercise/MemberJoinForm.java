@@ -15,8 +15,9 @@ public class MemberJoinForm {
 	private String password;
 	private String mem_id;
 	private String name;
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate birth;
+	private int year;
+	private int month;
+	private int day;
 	private String gender;
 	private String phone1;
 	private String phone2;
@@ -28,7 +29,7 @@ public class MemberJoinForm {
 		member.setPassword(this.password);
 		member.setMem_id(this.mem_id);
 		member.setName(this.name);
-		member.setBirth(this.birth);
+		member.setBirth(LocalDate.of(this.year, this.month, this.day));
 		member.setGender(this.gender);
 		member.setPhone(this.phone1 + "-" + this.phone2 + "-" + this.phone3);
 		return member;

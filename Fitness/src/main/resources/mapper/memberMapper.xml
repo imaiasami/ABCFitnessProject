@@ -41,27 +41,40 @@
 
 	<!-- 회원정보 전체 검색 -->
 
-  <select id="findAllMembers" resultType="member">
-        select * from member 
-    </select> 
-	
+	<select id="findAllMembers" resultType="member">
+		select * from member
+	</select>
+
 
 	<!-- 회원정보 탈퇴 -->
 	<update id="deleteMember" parameterType="member">
 		update member
-		set status = '1' where mem_no=#{mem_no}
+		set status
+		= '1' where mem_no=#{mem_no}
 
 	</update>
 
-<!-- 개인정보 수정 -->	
+	<!-- 개인정보 수정 -->
 
-<update id="updateMember">
-        update member set
-			password = #{password},		
-			mem_id = #{mem_id},
-			phone = #{phone}
+	<update id="updateMember">
+		update member set
+		password = #{password},
+		name = #{name},
+		mem_id = #{mem_id},
+		phone = #{phone}
 		where mail = #{mail}
-    </update>
+	</update>
 
+	<!-- 이메일 중복 확인 -->
+	<select id="countByEmail" resultType="int">
+		SELECT COUNT(*) FROM member
+		WHERE mail = #{mail}
+	</select>
 
+	<!-- 사용자 이름 중복 확인 -->
+	<select id="countByMemberId" resultType="int">
+		SELECT COUNT(*) FROM
+		member
+		WHERE mem_id = #{mem_id}
+	</select>
 </mapper>

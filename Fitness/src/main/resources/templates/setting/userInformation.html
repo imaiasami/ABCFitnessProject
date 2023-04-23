@@ -53,9 +53,6 @@
 <body layout:fragment="section">
 
 	<h1>개인 정보</h1>
-
-	
-	
 		<fieldset class="toggles">
 			<legend>개인 정보</legend>
 			<div>
@@ -89,21 +86,11 @@
 					<tr>
 						<th>전화번호</th>
 						<td th:text="${session.memberLogin.phone}"></td> &#128516;
-					</tr>
-		
-					<tr>
-						<th>키</th>
-
-					</tr>
-					
-					
+					</tr>		
 				</table>
 			<input type="button" value="수정하기" onclick="location.href='/setting/update'">
 			</div>
 		</fieldset>
-
-
-
 		<fieldset class="toggles flip">
 			<legend>나의 프로필</legend>
 			<div>
@@ -129,10 +116,8 @@
 		<fieldset class="toggles">
 			<legend>환경설정</legend>
 			<div>
-
 				<section class="inline-grid">
 					<div style="border-radius: 7px;">디자인</div>
-
 					<strong>디자인 : 밝은 테마</strong> <br> <br>
 
 

@@ -35,12 +35,7 @@ public class ProfileController {
 		// 주소의 {mem_id}와 세션의 mem_id를 비교하여 동일할 경우에 프로필 편집 활성화
 		Member memberProfile = memberMapper.findMemberById(mem_id);
 		model.addAttribute("memberProfile", memberProfile);
-		
 		return "profile/profile";
 	}
-	
-	
-	
-	
 
 }

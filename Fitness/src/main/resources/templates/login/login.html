@@ -1,36 +1,82 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<html xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
 <head>
-    <title>로그인</title>
-    <link rel="stylesheet" href="/css/login.css">
+<title>로그인</title>
+<link rel="stylesheet" href="/css/login.css">
+<script>
+
+$(() => {
+	
+	if (document.querySelector('*[class$="-error"]') && localStorage.getItem("mail")) {
+		localStorage.removeItem("mail");
+	}
+	
+	let email = localStorage.getItem("mail");
+	if(email) {
+		document.getElementById("mail").value = email;
+		document.getElementById("saveId").checked = true;
+	}
+	
+});
+
+
+	// 아이디 정보 저장 및 아이디 저장 미체크 시 저장 정보 삭제
+	function inputId() {
+		
+		const email = document.getElementById("mail").value;
+		const saveId = document.getElementById("saveId").checked; // true or false
+
+		if (saveId) {
+			// 아이디 저장 체크 했으면 저장
+			localStorage.setItem("mail", email);
+		} else if (localStorage.getItem("mail")) {
+			// 아이디 저장 체크 안 했으면 삭제
+			localStorage.removeItem("mail");
+		}
+		
+	}
+	
+	
+	
+</script>
 </head>
 <body layout:fragment="section">
-    <form class="form-signin"
-        th:action="@{/login(redirectURL=${#request.getParameter('redirectURL')})}"
-        method="post" th:object="${memberLogin}">
+	<form class="form-signin"
+		th:action="@{/login(redirectURL=${#request.getParameter('redirectURL')})}"
+		method="post" th:object="${memberLogin}" onsubmit="return inputId()">
+		<div class="wrapper">
 
-        <div class="wrapper">
-            <h2 class="form-signin-heading">Login</h2>
-            <input type="text" class="form-control" th:field="*{mail}"
-                placeholder="Email Address" required="" autofocus="" />
-            <div th:errorClass="field-error" th:errors="*{mail}"></div>
-            <br> <input type="password" class="form-control"
-                th:field="*{password}" placeholder="Password" required="" />
-            <div th:errorClass="field-error" th:errors="*{password}"></div>
-            <label class="checkbox"> </label>
-            <div th:if="${#fields.hasGlobalErrors()}">
-                <p th:each="err : ${#fields.globalErrors()}" th:text="${err}">
-            </div>
+			<h2 class="form-signin-heading">Login</h2>
 
+			<input type="email" class="form-control" name="mail" id="mail"
+				th:field="*{mail}" placeholder="Email Address" required=""
+				autofocus="" /> <input type="checkbox" name="saveId" id="saveId">
+			<label>아이디 저장</label>
 
-            <div class="center">
-                <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-                <button class="btn btn-lg btn-primary btn-block"
-                    onclick="location.href='/join'">회원가입</button>
-                <br> <input type="submit" value="비밀번호를 잊으셨나요?"  onclick="location.href='/login/findPassword'">
-            </div>
-        </div>
-
-    </form>
+			<div th:errorClass="field-error" th:errors="*{mail}"></div>
+			
+			<br> <input type="password" class="form-control"
+				th:field="*{password}" placeholder="Password" required="" />
+				
+			<div th:errorClass="field-error" th:errors="*{password}"></div>
+			
+			<label class="checkbox"> </label>
+			
+			<div class="global-error" th:if="${#fields.hasGlobalErrors()}">
+				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">
+			</div>
+			
+			<div class="center">
+				<input class="btn btn-lg btn-primary btn-block" type="submit"
+					value="로그인"> <input type="button"
+					class="btn btn-lg btn-primary btn-block" value="회원가입"
+					onclick="location.href='/join'"> <br> <input
+					type="button" value="비밀번호를 잊으셨나요?"
+					onclick="location.href='/login/findPassword'">
+			</div>
+		</div>
+	</form>
 </body>
 </html>
