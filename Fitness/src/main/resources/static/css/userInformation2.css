@@ -20,7 +20,7 @@ section > div {
   width:calc(100% / 10);
   height:50%;
   display:inline-block;
-  background-color:black;
+  background-color: #E48C55;
   color:white;
   font-weight:bold;
   text-align:center;

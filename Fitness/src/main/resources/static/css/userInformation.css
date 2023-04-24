@@ -11,8 +11,6 @@ body {
 }
 
 form {
-  background-color: #fff;
-  padding: 1em 2em;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
@@ -64,7 +62,7 @@ fieldset.toggles {
 
 .toggles [aria-pressed]:focus,
 .toggles [aria-pressed]:hover {
-  color: #00f;
+  color: #E48C55;
   outline: none;
 }
 
@@ -110,13 +108,13 @@ fieldset.toggles {
 
 .toggles [aria-pressed=true]::after {
   left: 1.6em;
-  border-color: #36a829;
-  color: #36a829;
+  border-color: #E48C55;
+  color: #E48C55;
 }
 
 .toggles [aria-pressed=true]::before {
-  background-color: #36a829;
-  border-color: #36a829;
+  background-color: #E48C55;
+  border-color: #E48C55;
 }
 
 .toggles [aria-pressed][disabled]::before {

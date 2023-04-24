@@ -27,6 +27,7 @@
 	width: 100%;
 	height: 100%;
 	display: none;
+	color: #1F3A50;
 	background-color: rgba(0, 0, 0, 0.4);
 }
 
@@ -42,7 +43,7 @@
 	height: 500px;
 	padding: 40px;
 	text-align: center;
-	background-color: rgb(255, 255, 255);
+	background-color: #E2E2DB;
 	border-radius: 50px;
 	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 	transform: translateX(-50%) translateY(-50%);
@@ -53,64 +54,65 @@
 <body layout:fragment="section">
 
 	<h1>개인 정보</h1>
-		<fieldset class="toggles">
-			<legend>개인 정보</legend>
-			<div>
-				<table>
+	<fieldset class="toggles">
+		<legend>개인 정보</legend>
+		<div>
+			<table>
 
-						<tr>
-							<th>이름</th>
-							<td th:text="${session.memberLogin.name}"></td>
-						</tr>
+				<tr>
+					<th>이름</th>
+					<td th:text="${session.memberLogin.name}"></td>
+				</tr>
 
-					<tr>
-						<th>생년월일</th>
-						<td th:text="${session.memberLogin.birth}"></td>
-					</tr>
-					<tr>
-						<th>내 계정</th>
-						<td th:text="${session.memberLogin.mail}"></td>
-					</tr>
+				<tr>
+					<th>생년월일</th>
+					<td th:text="${session.memberLogin.birth}"></td>
+				</tr>
+				<tr>
+					<th>내 계정</th>
+					<td th:text="${session.memberLogin.mail}"></td>
+				</tr>
 
-					
-					<tr>
-						<th>비밀번호</th>
-						<td th:text="${session.memberLogin.password}"></td>
-					</tr>
-					
-					<tr>
-						<th>성별</th>
-						<td th:text="${session.memberLogin.gender}"></td>
-					</tr>
-					
-					<tr>
-						<th>전화번호</th>
-						<td th:text="${session.memberLogin.phone}"></td> &#128516;
-					</tr>		
-				</table>
-			<input type="button" value="수정하기" onclick="location.href='/setting/update'">
-			</div>
-		</fieldset>
-		<fieldset class="toggles flip">
-			<legend>나의 프로필</legend>
-			<div>
-				<button type="button" id="Dumb-bal" aria-pressed="false"
-					onclick="toggle(this.id);">덤밸</button>
-			</div>
-			<div>
-				<button type="button" id="bend" aria-pressed="true"
-					onclick="toggle(this.id);">벤드</button>
-			</div>
-			<div>
-				<button type="button" id="pull-up bar" aria-pressed="true"
-					onclick="toggle(this.id);">풀업바</button>
-			</div>
-			<div>
-				<button type="button" id="cycle" aria-pressed="true"
-					onclick="toggle(this.id);">사이클</button>
-			</div>
 
-		</fieldset>
+				<tr>
+					<th>비밀번호</th>
+					<td th:text="${session.memberLogin.password}"></td>
+				</tr>
+
+				<tr>
+					<th>성별</th>
+					<td th:text="${session.memberLogin.gender}"></td>
+				</tr>
+
+				<tr>
+					<th>전화번호</th>
+					<td th:text="${session.memberLogin.phone}"></td> 
+				</tr>
+			</table>
+			<input type="button" value="수정하기"
+				onclick="location.href='/setting/update'">
+		</div>
+	</fieldset>
+	<fieldset class="toggles flip">
+		<legend>나의 프로필</legend>
+		<div>
+			<button type="button" id="Dumb-bal" aria-pressed="false"
+				onclick="toggle(this.id);">덤밸</button>
+		</div>
+		<div>
+			<button type="button" id="bend" aria-pressed="true"
+				onclick="toggle(this.id);">벤드</button>
+		</div>
+		<div>
+			<button type="button" id="pull-up bar" aria-pressed="true"
+				onclick="toggle(this.id);">풀업바</button>
+		</div>
+		<div>
+			<button type="button" id="cycle" aria-pressed="true"
+				onclick="toggle(this.id);">사이클</button>
+		</div>
+
+	</fieldset>
 
 	<form>
 		<fieldset class="toggles">
