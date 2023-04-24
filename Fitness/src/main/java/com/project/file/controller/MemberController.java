@@ -76,6 +76,10 @@ public class MemberController {
 		if (findMember == null || !findMember.getPassword().equals(memberLogin.getPassword())) {
 			result.reject("loginError", "아이디 또는 패스워드가 다릅니다.");
 			return "login/login";
+		} else if (findMember.getStatus() == 1) {
+			result.reject("loginError", "비활성화계정입니다.");
+			return "login/login";
+
 		} else {
 			// 로그인 성공 처리
 			HttpSession session = request.getSession();
@@ -134,7 +138,7 @@ public class MemberController {
 		return count > 0;
 	}
 
-	//북마크 추가/삭제
+	// 북마크 추가/삭제
 	@PostMapping("/exercise/{ex_no}")
 	@ResponseBody
 	public ResponseEntity<?> bookmark(@SessionAttribute(name = "memberLogin", required = false) Member loginMember,
@@ -161,8 +165,5 @@ public class MemberController {
 			}
 		}
 	}
-	
-	
-	
-	
+
 }
