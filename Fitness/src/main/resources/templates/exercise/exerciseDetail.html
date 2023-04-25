@@ -3,127 +3,184 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<title>운동 상세 페이지</title>
+	<title>운동 상세</title>
+	<script th:inline="javascript">
+		function addBookmark(exerciseId) {
+			let isBookmarked = $('#bookmark-btn').hasClass('active');
+			$.ajax({
+				url: "/exercise/" + exerciseId,
+				type: "POST",
+				dataType: "json",
+				data: {
+					bookmarkFlag: isBookmarked // 현재 버튼 상태의 반대값 전달
+				},
+				success: function(result) {
+					if (result.status === 'success') {
+						if(isBookmarked) {
+							alert("북마크가 삭제되었습니다.");
+							$('#bookmark-btn').removeClass('active'); // 버튼 OFF
+						} else {
+							alert("북마크에 추가되었습니다.");
+							$('#bookmark-btn').addClass('active'); // 버튼 ON
+						}
+					} else if (result.status === 'fail') {
+						alert("오류가 발생했습니다.");
+					} else {
+						alert(result.message);
+					}
+				},
+				error: function(xhr, status, error) {
+					console.log(xhr);
+					if (xhr.status == 401) {
+						if(confirm(xhr.responseText)) {
+							location.href = '/login'; // 로그인 페이지로 이동
+						}
+					}
+				}
+			});
+		}
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+		$(() => {
+			let exerciseId =  [[${ex_no}]];
+			$("#bookmark-btn").click(function() {
+				addBookmark(exerciseId);
+			});
+		});
+	</script>
+	<style>
+		.image {
+			width:360px;
+			height: 360px;
+			border-radius: 20px;
+			overflow: hidden;
+			margin: 1.5em 0;
+			background-color: #fff;
+		}
+		.image img {
+			max-width: 360px;
+			max-height: 360px;
+		}
+		#section h1, #section h3 {
+			word-break: keep-all;
+		}
+		#section h2 {
+			display: inline;
+		}
 
-<script>
-function addBookmark(exerciseId) {
-    var isBookmarked = $('#bookmark-btn').hasClass('active');
-    $.ajax({
-        url: "/exercise/" + exerciseId,
-        type: "POST",
-        dataType: "json",
-        data: {
-            bookmarkFlag: isBookmarked // 현재 버튼 상태의 반대값 전달
-        },
-        success: function(result) {
-            if (result.status === 'success') {
-                if(isBookmarked) {
-                    alert("북마크가 삭제되었습니다.");
-                    $('#bookmark-btn').removeClass('active'); // 버튼 OFF
-                } else {
-                    alert("북마크에 추가되었습니다.");
-                    $('#bookmark-btn').addClass('active'); // 버튼 ON
-                }
-            } else if (result.status === 'fail') {
-                alert("오류가 발생했습니다.");
-            } else {
-                alert(result.message);
-            }
-        },
+		#bookmark-btn {
+			height: 1em;
+			padding: 0;
+			border: none;
+			outline: none;
+			background: transparent;
+			font-size: 1em;
+			line-height: 0.5;
+			color: #ccc;
+			cursor: pointer;
+		}
 
-        error: function(xhr, status, error) {
-            console.log(xhr);
-            if (xhr.status == 401) {
-                if(confirm(xhr.responseText)) {
-                    location.href = '/login'; // 로그인 페이지로 이동
-                }
-            }
-        }
-    });
-}
+		#bookmark-btn::before {
+			content: "\2605";
+		}
+		#bookmark-btn.active::before {
+			content: "\2605";
+			color: #F7CB54;
+		}
 
+		#box {
+			width: 100%;
+		}
+		#box > div {
+			width: 90px;
+			border-radius: 10px;
+			border: 1px solid;
+			margin: 1.5em 5px 0 5px;
+		}
+		#box hr {
+			margin: 0;
+			border-color: #e2e2db80;
+		}
 
-$(document).ready(function() {
-    var exerciseId =  [[${ex_no}]];; 
-    $("#bookmark-btn").click(function() {
-        addBookmark(exerciseId);
-    });
-});
-
-
-
-
-</script>
-
-
-
-<style>
-#bookmark-btn {
-	background-color: transparent;
-	border: none;
-	color: #000;
-	font-size: 1.5rem;
-	cursor: pointer;
-	outline: none;
-}
-
-#bookmark-btn::before {
-	content: "\2605";
-}
-
-#bookmark-btn.active::before {
-	content: "\2605";
-	color: #F7CB54;
-}
-
-#bookmark-btn {
-	font-size: 2em;
-	line-height: 0.5;
-	padding: 0;
-	border: none;
-	background: transparent;
-	color: #ccc;
-	outline: none;
-}
-</style>
+		@media screen and (max-width: 400px) {
+			.image {
+				width: calc(100vw - 30px);
+				height: calc(100vw - 30px);
+			}
+			.image > img {
+				max-width: calc(100vw - 30px);
+				max-height: calc(100vw - 30px);
+			}
+		}
+	</style>
 </head>
 <body layout:fragment="section">
-	Hello Exercise Detail World
-	<input type="button" value="운동 목록 페이지"
-		onclick="location.href='/exercise'">
-	<table>
-		<tr>
-			<td th:text="${exercise.name}"></td>
+	<div class="text-center">
+		<h1>
 			<th:block th:unless="${bookmarked == null}">
-				<button type="button" id="bookmark-btn"  class="active"></button>
+				<button id="bookmark-btn" class="active"></button>
 			</th:block>
 			<th:block th:if="${bookmarked == null }">
-				<button type="button" id="bookmark-btn" ></button>
+				<button id="bookmark-btn" ></button>
 			</th:block>
-			
-			</tr>
-		<tr>
-			<td th:text="${exercise.muscle}"></td>
-		</tr>
-		<tr>
-			<td th:text="${exercise.equip}"></td>
-		</tr>
-		<tr>
-			<td th:text="${exercise.diff}"></td>
-		</tr>
-		<tr>
-			<td th:text="${exercise.image}"></td>
-		</tr>
-		<tr>
-			<td th:text="${exercise.effect}"></td>
-		</tr>
-		<tr>
-			<td th:utext="${exercise.guide}"></td>
-		</tr>
-	</table>
-
+			[[${exercise.name}]]
+		</h1>
+		<h3 th:text="${exercise.effect}"></h3>
+		<div id="box" class="flex-center">
+			<div class="text-center">
+				<th:block th:switch="${exercise.diff}">
+					<th:block th:case="0">
+						운동 종류
+						<hr>
+						스트레칭
+					</th:block>
+					<th:block th:case="1">
+						난이도
+						<hr>
+						초급
+					</th:block>
+					<th:block th:case="2">
+						난이도
+						<hr>
+						초~중급
+					</th:block>
+					<th:block th:case="3">
+						난이도
+						<hr>
+						중급
+					</th:block>
+					<th:block th:case="4">
+						난이도
+						<hr>
+						중~상급
+					</th:block>
+					<th:block th:case="5">
+						난이도
+						<hr>
+						상급
+					</th:block>
+					<th:block th:case="6">
+						운동 종류
+						<hr>
+						유산소
+					</th:block>
+				</th:block>
+			</div>
+			<div class="text-center">
+				운동 부위
+				<hr>
+				[[${exercise.muscle}]]
+			</div>
+			<div class="text-center">
+				사용 장비
+				<hr>
+				[[${exercise.equip}]]
+			</div>
+		</div>
+		<br>
+		<div class="image flex-center">
+			<img th:src="${exercise.image}">
+		</div>
+	</div>
+	<span th:utext="${#strings.replace(#strings.replace(exercise.guide,'[','<h2>'),']','</h2>')}"></span>
 </body>
 </html>

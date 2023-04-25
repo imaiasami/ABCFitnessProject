@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>루틴 재생 페이지</title>
+	<title>루틴 재생</title>
 	<style>
 		#player {
 			text-align: center;
@@ -12,20 +12,68 @@
 			display: none;
 		}
 		.image {
-			display: inline-block;
 			width: 360px;
 			height: 360px;
-			border: 1px solid;
+			border-radius: 20px;
+			overflow: hidden;
+			margin: 0 auto;
+			background-color: #fff;
+		}
+		.image > img {
+			max-width: 360px;
+			max-height: 360px;
 		}
 		.bold {
 			font-size: 1.5em;
 			font-weight: 700;
 		}
-		#buttons > div:not(.hide) {
-			display: inline-block;
+		#timer {
+			font-size: 2em;
+			font-weight: 500;
+		}
+		#buttons {
+			display: flex;
+			justify-content: center;
+		}
+		#buttons > div {
+			align-items: center;
+			justify-content: center;
 			width: 60px;
 			height: 60px;
-			border: 1px solid;
+			margin: 0 10px;
+		}
+		#buttons > div:not(.hide) {
+			display: flex;
+		}
+		#buttons > div > img {
+			max-width: 60px;
+			max-height: 60px;
+		}
+		#buttons > div:not(#finish) > img {
+			filter: invert(98%) sepia(15%) saturate(122%) hue-rotate(359deg) brightness(94%) contrast(88%); /* #e2e2db */
+		}
+		#buttons > div#finish > img {
+			filter: invert(69%) sepia(97%) saturate(474%) hue-rotate(316deg) brightness(96%) contrast(91%); /* #ea945e */
+		}
+		#buttons > div:hover:not(.disabled) {
+			filter: brightness(150%);
+		}
+		#buttons > div.disabled {
+			filter: brightness(60%);
+		}
+		#prev > img, #next > img, #finish > img {
+			width: 50px;
+		}
+
+		@media screen and (max-width: 400px) {
+			.image {
+				width: calc(100vw - 30px);
+				height: calc(100vw - 30px);
+			}
+			.image > img {
+				max-width: calc(100vw - 30px);
+				max-height: calc(100vw - 30px);
+			}
 		}
 	</style>
 	<script>
@@ -40,26 +88,32 @@
 			return hourS + minS + secS;
 		}
 
-		$(() => {
-			// 타이머
-			let $timer = {
-				start : function() {
-					$timer.stop();
-					$timer.tid = setInterval($timer.refresh, 1000);
-				},
-				stop : function() {
-					if($timer.tid) {
-						clearInterval($timer.tid);
-						$timer.tid = 0;
-					}
-				},
-				refresh : function() {
-					if (!$timer.time) $timer.time = 1;
-					else $timer.time += 1;
-					$('#timer').text(timeFormatting($timer.time));
+		// 타이머
+		let $timer = {
+			start : function() {
+				if (!$timer.stime) {
+					$timer.stime = Date.now();
+				} else if ($timer.ptime) {
+					$timer.stime = $timer.stime - $timer.ptime + Date.now();
+					$timer.ptime = 0;
 				}
-			};
+				$timer.stop();
+				$timer.refresh();
+				$timer.tid = setInterval($timer.refresh, 1000);
+			},
+			stop : function() {
+				if($timer.tid) {
+					clearInterval($timer.tid);
+					$timer.tid = 0;
+					$timer.ptime = Date.now();
+				}
+			},
+			refresh : function() {
+				$('#timer').text(timeFormatting(parseInt((Date.now() - $timer.stime) / 1000)));
+			}
+		};
 
+		$(() => {
 			$timer.start();
 			$('#player > .hide:first').removeClass('hide');
 			
@@ -70,6 +124,10 @@
 				if (exNow <= 0) return;
 				$('div[class^="ex-"]').addClass('hide');
 				exs[exNow-- - 1].classList.remove('hide');
+				if (exNow == 0) {
+					$('#prev').removeClass('pointer');
+					$('#prev').addClass('disabled');
+				}
 				$('#next').removeClass('hide');
 				$('#finish').addClass('hide');
 			});
@@ -77,6 +135,8 @@
 				if (exNow >= exs.length - 1) return;
 				$('div[class^="ex-"]').addClass('hide');
 				exs[exNow++ + 1].classList.remove('hide');
+				$('#prev').addClass('pointer');
+				$('#prev').removeClass('disabled');
 				if (exNow == exs.length - 1) {
 					$('#next').addClass('hide');
 					$('#finish').removeClass('hide');
@@ -98,8 +158,14 @@
 			// 종료 버튼
 			$('#finish').click((e) => {
 				if (confirm('운동을 완료하시겠습니까?')) {
+					$(window).off('beforeunload');
 					// 이하 서버와 통신
 				}
+			});
+
+			// 페이지를 벗어날 것인지 확인
+			$(window).on('beforeunload', function(){
+				return "Any changes will be lost";
 			});
 		});
 	</script>
@@ -110,23 +176,39 @@
 		<th:block th:each="steps : ${routine.getStep()}">
 			<div id="player" th:if="${stepsStat.count == day}">
 				<h1 th:text="|${routine.name} ${stepsStat.count}일차|"></h1>
+				<br>
 				<th:block th:each="step : ${steps}">
 					<th:block th:each="entry : ${step}">
 						<div th:class="|ex-${stepStat.count} hide|">
-							<div class="image" th:text="${exMap[entry.key].image}"></div><br>
-							<span class="bold" th:text="${exMap[entry.key].name}"></span> ([[${stepStat.count}]]/[[${stepStat.size}]])<br>
-							<span class="bold" th:text="|${exMap[entry.key].freq}회 ${entry.value}세트|"></span><br>
+							<div class="image flex-center">
+								<img th:src="${exMap[entry.key].image}">
+							</div>
+							<br>
+							<span class="bold" th:text="${exMap[entry.key].name}"></span> ([[${stepStat.count}]]/[[${stepStat.size}]])
+							<br>
+							<span class="bold" th:text="|${exMap[entry.key].freq}회 ${entry.value}세트|"></span>
+							<br>
 						</div>
 					</th:block>
 				</th:block>
-				<span id="timer" class="bold">00:00</span>
+				<span id="timer">00:00</span>
 				<br><br>
 				<div id="buttons">
-					<div id="prev" class="pointer">이전</div>
-					<div id="play" class="pointer hide">재생</div>
-					<div id="stop" class="pointer">정지</div>
-					<div id="next" class="pointer">다음</div>
-					<div id="finish" class="pointer hide">종료</div>
+					<div id="prev" class="disabled">
+						<img src="/images/icons/before.png">
+					</div>
+					<div id="play" class="pointer hide">
+						<img src="/images/icons/play.png">
+					</div>
+					<div id="stop" class="pointer">
+						<img src="/images/icons/pause.png">
+					</div>
+					<div id="next" class="pointer">
+						<img src="/images/icons/after.png">
+					</div>
+					<div id="finish" class="pointer hide">
+						<img src="/images/icons/after.png">
+					</div>
 				</div>
 			</div>
 		</th:block>

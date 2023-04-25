@@ -8,22 +8,29 @@
 </head>
 <body layout:fragment="section">
 	<h1>
-		운동이 쉬워진다.<br>MK FITNESS
+		운동이 쉬워진다.<br>ABC FITNESS
 	</h1>
-	<h2>가장 인기있는 운동</h2>
+	<br>
+	<h2>가장 인기 있는 운동</h2>
 	<div class="flex-container">
 		<th:block th:each="exercise : ${exercises}">
 			<a th:href="|/exercise/${exercise.ex_no}|">
-				<div class="flex-item" th:text=${exercise.name}></div>
+				<div class="flex-item">
+					<img th:src="${#strings.replace(exercise.image,'.gif','.png')}" th:alt="${exercise.name}">
+					<div class="item-name flex-center" th:text="${exercise.name}"></div>
+				</div>
 			</a>
 		</th:block>
 	</div>
 	<br>
-	<h2>가장 인기있는 루틴</h2>
+	<h2>가장 인기 있는 루틴</h2>
 	<div class="flex-container">
 		<th:block th:each="routine : ${routines}">
 			<a th:href="|/routine/default/${routine.rout_no}|">
-				<div class="flex-item" th:text=${routine.name}></div>
+				<div class="flex-item">
+					<!-- <img th:src="${routine.image}" th:alt="${routine.name}"> -->
+					<div class="item-name flex-center" th:text="${routine.name}"></div>
+				</div>
 			</a>
 		</th:block>
 	</div>

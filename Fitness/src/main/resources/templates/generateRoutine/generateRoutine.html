@@ -3,26 +3,38 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>루틴 생성 페이지</title>
+	<title>루틴 생성</title>
 	<style>
 		form {
 			display: none;
 		}
-		.select-btn {
-			display: inline-block;
+		#section {
 			text-align: center;
-			margin: 0 5px 5px 0;
+		}
+		.select-btn {
+			display: inline-flex;
+			text-align: center;
+			margin: 0 3px 10px 3px;
 			border: 1px solid;
-			width: 80px;
-			border-radius: 5px;
+			width: 100px;
+			height: 35px;
+			font-size: 18px;
+			border-radius: 15px;
+		}
+		.select-btn:hover:not(.on) {
+			background-color: #e2e2db40;
 		}
 		.on {
 			background-color: #e2e2db;
 			color: #1f3a50;
 		}
 		#submit-div {
+			width: 140px;
+			height: 45px;
+			font-size: 22px;
+			font-weight: 700;
+			text-shadow: 0 0 1px #1f3a50, 0 0 1px #1f3a50;
 			background-color: #ea945e;
-			color: #1f3a50;
 		}
 	</style>
 	<script>
@@ -46,32 +58,36 @@
 	</script>
 </head>
 <body layout:fragment="section">
-	<h3>운동 목적을 선택해 주세요.</h3>
-	<div id="cardio1-div" class="select-btn pointer">근력 증가</div>
-	<div id="cardio2-div" class="select-btn pointer">체중 감량</div>
-	<br><br>
-	<h3>운동 레벨을 선택해 주세요.</h3>
-	<div id="skill1-div" class="select-btn pointer">초급</div>
-	<div id="skill2-div" class="select-btn pointer">중급</div>
-	<div id="skill3-div" class="select-btn pointer">상급</div>
-	<br><br>
-	<h3>보유 장비를 선택해 주세요.</h3>
-	<div id="equip1-div" class="select-btn pointer">덤벨</div>
-	<div id="equip2-div" class="select-btn pointer">밴드</div>
-	<div id="equip3-div" class="select-btn pointer">풀업바</div>
-	<div id="equip4-div" class="select-btn pointer">사이클</div>
-	<div id="equip5-div" class="select-btn pointer">러닝머신</div>
-	<br><br>
-	<h3>주당 운동 일수를 선택해 주세요.</h3>
-	<div id="days1-div" class="select-btn pointer">1일</div>
-	<div id="days2-div" class="select-btn pointer">2일</div>
-	<div id="days3-div" class="select-btn pointer">3일</div>
-	<div id="days4-div" class="select-btn pointer">4일</div>
-	<div id="days5-div" class="select-btn pointer">5일</div>
-	<div id="days6-div" class="select-btn pointer">6일</div>
-	<div id="days7-div" class="select-btn pointer">7일</div>
+	<h2>운동 목적을 선택해 주세요.</h2>
+	<br>
+	<div id="cardio1-div" class="select-btn flex-center pointer">근력 증가</div>
+	<div id="cardio2-div" class="select-btn flex-center pointer">체중 감량</div>
 	<br><br><br>
-	<div id="submit-div" class="select-btn pointer">루틴 생성</div>
+	<h2>운동 레벨을 선택해 주세요.</h2>
+	<br>
+	<div id="skill1-div" class="select-btn flex-center pointer">초급</div>
+	<div id="skill2-div" class="select-btn flex-center pointer">중급</div>
+	<div id="skill3-div" class="select-btn flex-center pointer">상급</div>
+	<br><br><br>
+	<h2>보유 장비를 선택해 주세요.</h2>
+	<br>
+	<div id="equip1-div" class="select-btn flex-center pointer">덤벨</div>
+	<div id="equip2-div" class="select-btn flex-center pointer">밴드</div>
+	<div id="equip3-div" class="select-btn flex-center pointer">풀업바</div>
+	<div id="equip4-div" class="select-btn flex-center pointer">사이클</div>
+	<div id="equip5-div" class="select-btn flex-center pointer">러닝머신</div>
+	<br><br><br>
+	<h2>주당 운동 일수를 선택해 주세요.</h2>
+	<br>
+	<div id="days1-div" class="select-btn flex-center pointer">1일</div>
+	<div id="days2-div" class="select-btn flex-center pointer">2일</div>
+	<div id="days3-div" class="select-btn flex-center pointer">3일</div>
+	<div id="days4-div" class="select-btn flex-center pointer">4일</div>
+	<div id="days5-div" class="select-btn flex-center pointer">5일</div>
+	<div id="days6-div" class="select-btn flex-center pointer">6일</div>
+	<div id="days7-div" class="select-btn flex-center pointer">7일</div>
+	<br><br><br>
+	<div id="submit-div" class="select-btn flex-center pointer">루틴 생성</div>
 	<form action="/routine/generate" method="post">
 		<input id="cardio1-input" type="radio" name="cardio" value="false">
 		<input id="cardio2-input" type="radio" name="cardio" value="true">

@@ -1,23 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="headerFragment">
 	<div id="topbar">
-		<div id="menu-icon" class="pointer">btn</div>
-		<div id="title-image">
-			<a href="/">image</a>
+		<div id="menu-icon" class="pointer flex-center">
+			<img src="/images/icons/menu.png">
 		</div>
-		<div id="etc-btn" class="pointer">etc</div>
-		<div id="login-btn" th:if="${session.memberLogin == null}">
-			<a href="/login">login</a>
+		<div id="title-image" class="flex-center">
+			<a href="/">
+				<img src="/images/icons/logo.png">
+			</a>
+		</div>
+		<div id="etc-btn" class="pointer flex-center">
+			<img src="/images/icons/drop_dowrn.png">
+		</div>
+		<div id="login-btn" class="flex-center" th:if="${session.memberLogin == null}">
+			<a href="/login">
+				<div class="flex-center">
+					<img src="/images/icons/profile2.png">
+					<span>Login</span>
+				</div>
+			</a>
 		</div>
 		<div id="etc-popup">
 			<th:block th:if="${session.memberLogin != null}">
 				<div th:text="${session.memberLogin.mail}"></div>
-				<div class="pointer" onclick="location.href='/logout'">Logout</div>
+				<div class="pointer" onclick="location.href='/logout'">
+					Logout
+				</div>
+				<hr>
 			</th:block>
-			<div id="etc-theme">Theme</div>
-			<div id="etc-lang">Language</div>
-			<div id="etc-setting">Setting</div>
-			<div id="etc-support">Support</div>
+			<div id="etc-lang" class="pointer">Language</div>
+			<div class="pointer" onclick="location.href='/setting/userInformation'">
+				Setting
+			</div>
 		</div>
 	</div>
 </html>

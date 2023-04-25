@@ -1,53 +1,92 @@
+/* 전역 */
 body {
     background-color: #777;
     color: #e2e2db;
 }
 
-#root-container {
-    background-color: #1f3a50;
-    box-shadow: 0 0 15px #333;
+a {
+    color: inherit;
+}
+a:hover {
+    color: #fff;
+}
+
+hr {
+    border-color: #e2e2db40;
 }
 
 .modal {
     background-color: #00000080;
 }
 
+
+/* 스크롤바(크롬) */
+::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(180,180,180,0.58);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(130,130,130,0.67);
+}
+/* 스크롤바(파폭) */
+* {
+    scrollbar-color: rgba(180,180,180,0.58) transparent;
+}
+
+
+/* 전체 레이아웃 */
+#root-container {
+    background-color: #1f3a50;
+    box-shadow: 0 0 15px #333;
+}
+
+
+/* 상단바 */
 #topbar {
     background-color: #1f3a50;
+    border-bottom: 1px solid #e2e2db40;
 }
 
-#menu-icon {
-    background-color: #559;
+#menu-icon > img, #etc-btn > img {
+    filter: invert(98%) sepia(15%) saturate(122%) hue-rotate(359deg) brightness(94%) contrast(88%);
+}
+#menu-icon:hover, #etc-btn:hover, #sidebar > a:hover {
+    filter: brightness(150%);
+    background-color: rgb(15, 29, 40);
 }
 
-#title-image {
-    background-color: #955;
+#login-btn div {
+    border-color: #ea945e;
+    color: #ea945e;
 }
-
-#etc-btn {
-    background-color: #559;
+#login-btn div:hover {
+    background-color: #ea945e40;
 }
-
-#login-btn {
-    background-color: #955;
+#login-btn img {
+    filter: invert(69%) sepia(97%) saturate(474%) hue-rotate(316deg) brightness(96%) contrast(91%);
 }
 
 #etc-popup {
-    background-color: #555;
+    background-color: #444;
 }
 
+#etc-popup > .pointer:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+
+/* 사이드바 */
 #sidebar {
     background-color: #1f3a50;
+    border-right: 1px solid #e2e2db40;
 }
 
-#sidebar > a > div:first-child {
-    background-color: #955;
+#sidebar > a > div:first-child > img {
+    filter: invert(98%) sepia(15%) saturate(122%) hue-rotate(359deg) brightness(94%) contrast(88%);
 }
 
-#sidebar > a > div:last-child {
-    background-color: #559;
-}
 
-#footer {
-    background-color: #bbb;
-}
+/* 본문 영역 */

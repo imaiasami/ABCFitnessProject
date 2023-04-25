@@ -1,5 +1,6 @@
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+/* 전역 */
 :root {
     --topbar-height: 50px;
     --nav-width-full: 200px;
@@ -12,13 +13,25 @@ body {
     overflow-y: scroll;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
 a {
-    color: inherit;
     text-decoration: none;
+}
+
+hr {
+    border-top: 1px solid;
+    border-bottom: 0;
 }
 
 .pointer {
     cursor: pointer;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .modal {
@@ -28,31 +41,32 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
+    backdrop-filter: blur(2px);
 }
+
+.flex-center {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 
 /* 스크롤바(크롬) */
 ::-webkit-scrollbar {
     width: 9px;
     height: 9px;
 }
-::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-}
-::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-#sidebar::-webkit-scrollbar-thumb {
-    background-color: transparent;
-}
+
 /* 스크롤바(파폭) */
 * {
     scrollbar-width: thin;
 }
-
 #sidebar {
     scrollbar-width: none;
 }
 
+
+/* 전체 레이아웃 */
 #root-container {
     display: flex;
     position: relative;
@@ -60,10 +74,8 @@ a {
     margin: 0 auto;
 }
 
-#topbar > div:not([id*="popup"]), #sidebar > a > div {
-    display: inline-block;
-}
 
+/* 상단바 */
 #topbar {
     display: flex;
     align-items: center;
@@ -75,25 +87,48 @@ a {
     max-width: 1200px;
 }
 
-#menu-icon {
-    width: var(--nav-width-small);
+#menu-icon, #etc-btn {
+    width: var(--topbar-height);
     height: var(--topbar-height);
+    margin: 0 5px;
+}
+#menu-icon, #etc-btn {
+    width: calc(var(--topbar-height) - 4px);
+    height: calc(var(--topbar-height) - 4px);
+    border-radius: 100px;
+}
+#menu-icon > img, #etc-btn > img {
+    max-width: calc(var(--topbar-height) - 30px);
+    max-height: calc(var(--topbar-height) - 30px);
 }
 
 #title-image {
     margin-right: auto;
-    width: 150px;
     height: var(--topbar-height);
 }
-
-#etc-btn {
-    width: var(--topbar-height);
-    height: var(--topbar-height);
+#title-image img {
+    margin-top: 5px;
+    width: 130px;
 }
 
 #login-btn {
-    width: 100px;
     height: var(--topbar-height);
+    margin-right: 5px;
+}
+#login-btn div {
+    width: 90px;
+    height: 32px;
+    border: 1px solid;
+    border-radius: 100px;
+}
+#login-btn img {
+    max-width: 18px;
+    max-height: 18px;
+}
+#login-btn span {
+    width: 46px;
+    font-size: 16px;
+    text-align: right;
 }
 
 #etc-popup {
@@ -102,16 +137,20 @@ a {
     top: var(--topbar-height);
     right: 0;
     z-index: 1;
+    padding: 10px 0;
+    border-radius: 10px;
 }
-
 #etc-popup.open {
     display: block;
 }
 
 #etc-popup > div {
     width: 200px;
+    padding: 4px 15px;
 }
 
+
+/* 사이드바 */
 #sidemodal {
     z-index: 1;
 }
@@ -122,6 +161,7 @@ a {
     z-index: 1;
     width: var(--nav-width-full);
     height: calc(100vh - var(--topbar-height));
+    font-size: 18px;
     overflow-x: hidden;
     overflow-y: overlay;
     transition: all 0.3s;
@@ -129,7 +169,10 @@ a {
 
 #sidebar > a {
     display: flex;
-    margin-top: 30px;
+    margin-bottom: 5px;
+}
+#sidebar > a:first-child {
+    margin-top: 20px;
 }
 
 #sidebar > a > div:first-child {
@@ -138,13 +181,21 @@ a {
     height: var(--nav-width-small);
 }
 
-#sidebar > a > div:last-child {
-    display: flex;
-    align-items: center;
-    width: calc(var(--nav-width-full) - var(--nav-width-small));
-    height: var(--nav-width-small);
+#sidebar > a > div:first-child > img {
+    max-width: calc(var(--nav-width-small) - 24px);
+    max-height: calc(var(--nav-width-small) - 24px);
 }
 
+#sidebar > a > div:last-child {
+    box-sizing: border-box;
+    padding-left: 10px;
+    width: calc(var(--nav-width-full) - var(--nav-width-small));
+    height: var(--nav-width-small);
+    font-weight: 500;
+}
+
+
+/* 본문 영역 */
 #contents {
     display: flex;
     flex-direction: column;
@@ -158,6 +209,12 @@ a {
     padding: 10px;
 }
 
+#footer {
+    text-align: center;
+}
+
+
+/* 반응형 */
 @media screen and (max-width: 425px) {
     #sidemodal.open {
         display: block;
@@ -171,6 +228,10 @@ a {
         left: 0;
     }
 
+    #sidebar > a > div:last-child {
+        justify-content: flex-start;
+    }
+
     #contents {
         width: 100%;
     }
@@ -181,8 +242,13 @@ a {
         display: block;
     }
 
+    #sidebar.open > a > div:last-child {
+        justify-content: flex-start;
+    }
+
     #sidebar:not(.open) {
         width: var(--nav-width-small);
+        font-size: 14px;
     }
 
     #sidebar:not(.open) > a {
@@ -193,6 +259,8 @@ a {
         justify-content: center;
         width: var(--nav-width-small);
         height: 25px;
+        padding-left: 0;
+        transform: translate(0, -10px);
     }
 
     #contents {
@@ -204,6 +272,10 @@ a {
 @media not screen and (max-width: 820px) {
     #root-container {
         max-width: 1200px;
+    }
+
+    #sidebar > a > div:last-child {
+        justify-content: flex-start;
     }
 
     #contents {

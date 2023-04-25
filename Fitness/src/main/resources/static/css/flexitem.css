@@ -1,13 +1,127 @@
 .flex-container {
-	padding: 20px;
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
+	margin: 20px 0;
 }
 
 .flex-item {
-	display: inline-block;
-	width: 260px;
-	height: 260px;
-	border: 1px solid;
+	position: relative;
+	display: flex;
+	align-items: center;
+    justify-content: center;
+	width: 230px;
+	height: 230px;
 	margin: 5px;
+	border-radius: 15px;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+.flex-item > img {
+	max-width: 230px;
+	max-height: 230px;
+	opacity: 0.5;
+	transition: 0.25s;
+}
+.flex-item:hover > img {
+	opacity: 1;
+	transform: scale(1.2);
+}
+
+.item-name {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 210px;
+	height: 210px;
+	padding: 10px;
+	text-align: center;
+	word-break: keep-all;
+	font-size: 30px;
+	font-weight: 700;
+	color: #e2e2db;
+	text-shadow: 0 0 10px #000, 0 0 5px #000;
+}
+.item-name:hover {
+	color: #fff;
+}
+
+.navigator {
+	text-align: center;
+	font-size: 1.2em;
+	font-weight: 500;
+}
+
+/* 화면이 너무 작을 경우, 이미지 크기 줄이기 */
+@media screen and (max-width: 425px) {
+	.flex-item {
+		width: calc((100vw - 50px) / 2);
+		height: calc((100vw - 50px) / 2);
+	}
+	
+	.flex-item > img {
+		max-width: calc((100vw - 50px) / 2);
+		max-height: calc((100vw - 50px) / 2);
+	}
+
+	.item-name {
+		width: calc(((100vw - 50px) / 2) - 20px);
+		height: calc(((100vw - 50px) / 2) - 20px);
+		font-size: calc(((100vw - 50px) / 2) * 0.13);
+	}
+}
+
+@media screen and (min-width: 426px) and (max-width: 580px) {
+	.flex-item {
+		width: calc((100vw - 50px - var(--nav-width-small)) / 2);
+		height: calc((100vw - 50px - var(--nav-width-small)) / 2);
+	}
+	
+	.flex-item > img {
+		max-width: calc((100vw - 50px - var(--nav-width-small)) / 2);
+		max-height: calc((100vw - 50px - var(--nav-width-small)) / 2);
+	}
+
+	.item-name {
+		width: calc(((100vw - 50px - var(--nav-width-small)) / 2) - 20px);
+		height: calc(((100vw - 50px - var(--nav-width-small)) / 2) - 20px);
+		font-size: calc(((100vw - 50px - var(--nav-width-small)) / 2) * 0.13);
+	}
+}
+
+@media screen and (min-width: 581px) and (max-width: 820px) {
+	.flex-item {
+		width: calc((100vw - 60px - var(--nav-width-small)) / 3);
+		height: calc((100vw - 60px - var(--nav-width-small)) / 3);
+	}
+	
+	.flex-item > img {
+		max-width: calc((100vw - 60px - var(--nav-width-small)) / 3);
+		max-height: calc((100vw - 60px - var(--nav-width-small)) / 3);
+	}
+
+	.item-name {
+		width: calc(((100vw - 60px - var(--nav-width-small)) / 3) - 20px);
+		height: calc(((100vw - 60px - var(--nav-width-small)) / 3) - 20px);
+		font-size: calc(((100vw - 60px - var(--nav-width-small)) / 3) * 0.13);
+	}
+}
+
+@media screen and (min-width: 821px) and (max-width: 950px) {
+	.flex-item {
+		width: calc((100vw - 60px - var(--nav-width-full)) / 3);
+		height: calc((100vw - 60px - var(--nav-width-full)) / 3);
+	}
+	
+	.flex-item > img {
+		max-width: calc((100vw - 60px - var(--nav-width-full)) / 3);
+		max-height: calc((100vw - 60px - var(--nav-width-full)) / 3);
+	}
+
+	.item-name {
+		width: calc(((100vw - 60px - var(--nav-width-full)) / 3) - 20px);
+		height: calc(((100vw - 60px - var(--nav-width-full)) / 3) - 20px);
+		font-size: calc(((100vw - 60px - var(--nav-width-full)) / 3) * 0.13);
+	}
 }
