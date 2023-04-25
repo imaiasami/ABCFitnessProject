@@ -1,8 +1,13 @@
 @charset "UTF-8";
+
 @import "bourbon";
 
 #contents {
-	background: #eee !important;	
+	background: #1F3A50 !important;
+}
+
+.form-signin {
+	color: #1F3A50;
 }
 
 .wrapper {
@@ -14,12 +19,11 @@
 	max-width: 380px;
 	padding: 15px 35px 45px;
 	margin: 40px auto 0 auto;
-	background-color: #fff;
-	border: 1px solid rgba(0,0,0,0.1);  
+	background-color: #E2E2DB;
+	border: 1px solid #1F3A50;
 }
 
-.form-signin .form-signin-heading,
-.form-signin .checkbox {
+.form-signin .form-signin-heading, .form-signin .checkbox {
 	margin-bottom: 30px;
 }
 

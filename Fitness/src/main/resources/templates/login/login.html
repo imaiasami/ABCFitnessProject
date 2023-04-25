@@ -52,22 +52,24 @@ $(() => {
 
 			<input type="email" class="form-control" name="mail" id="mail"
 				th:field="*{mail}" placeholder="Email Address" required=""
-				autofocus="" /> <input type="checkbox" name="saveId" id="saveId">
-			<label>아이디 저장</label>
+				autofocus="" /> 
+			
 
 			<div th:errorClass="field-error" th:errors="*{mail}"></div>
-			
+
 			<br> <input type="password" class="form-control"
 				th:field="*{password}" placeholder="Password" required="" />
-				
+
 			<div th:errorClass="field-error" th:errors="*{password}"></div>
-			
-			<label class="checkbox"> </label>
-			
+			<br>
+			<input type="checkbox" name="saveId" id="saveId">
+			<label>아이디 저장</label> <label class="checkbox"> </label>
+			<br>
+			<br>
 			<div class="global-error" th:if="${#fields.hasGlobalErrors()}">
 				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">
 			</div>
-			
+
 			<div class="center">
 				<input class="btn btn-lg btn-primary btn-block" type="submit"
 					value="로그인"> <input type="button"
