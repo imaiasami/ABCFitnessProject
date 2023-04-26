@@ -9,6 +9,8 @@ import com.project.file.model.entity.exercise.Equipment;
 import com.project.file.model.entity.exercise.Exercise;
 import com.project.file.model.entity.member.Bookmark;
 import com.project.file.model.entity.member.Member;
+import com.project.file.model.entity.member.RoutineBookmark;
+import com.project.file.model.entity.routine.Routine;
 
 @Mapper
 public interface MemberRepository {
@@ -25,30 +27,35 @@ public interface MemberRepository {
 	void updateMember(Member member);
 
 	int countByEmail(String email);
-	
+
 	int countByMemberId(String mem_id);
-	
-	// 즐겨찾기
-		int insertBookmark(Bookmark bookmark);
 
-		Bookmark getBookmark(Bookmark bookmark);
+	// 운동 즐겨찾기
+	int insertBookmark(Bookmark bookmark);
 
-		int deleteBookmark(Bookmark bookmark);
+	Bookmark getBookmark(Bookmark bookmark);
 
-		List<Exercise> getBookmarkList(long mem_no);
-		
-		
-		//운동기구
-		
-				int insertEquipment(Equipment equipment);
-				
-				int deleteEquipment(Equipment equipment);
-				
-				Equipment getEquipment(Equipment equipment);
-				
-				List<String> getEquipmentList (long mem_no);
-				
-			
+	int deleteBookmark(Bookmark bookmark);
 
-	
+	List<Exercise> getBookmarkList(long mem_no);
+
+	// 루틴 즐겨찾기
+	int insertRoutineBookmark(RoutineBookmark routineBookmark);
+
+	RoutineBookmark getRoutineBookmark(RoutineBookmark routineBookmark);
+
+	int deleteRoutineBookmark(RoutineBookmark routineBookmark);
+
+	List<Routine> getRoutineBookmarkList(long mem_no);
+
+	// 운동기구
+
+	int insertEquipment(Equipment equipment);
+
+	int deleteEquipment(Equipment equipment);
+
+	Equipment getEquipment(Equipment equipment);
+
+	List<String> getEquipmentList(long mem_no);
+
 }

@@ -1,23 +1,150 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/default_layout">
 <head>
-	<title>루틴 상세</title>
+<title>루틴 상세</title>
+<script th:inline="javascript">
+		function addroutineBookmark(routineId) {
+			let isRoutineBookmarked = $('#bookmark-btn').hasClass('active');
+			$.ajax({
+				url: "/default/" + routineId,
+				type: "POST",
+				dataType: "json",
+				data: {
+					bookmarkFlag: isRoutineBookmarked // 현재 버튼 상태의 반대값 전달
+				},
+				success: function(result) {
+					if (result.status === 'success') {
+						if(isRoutineBookmarked) {
+							alert("북마크가 삭제되었습니다.");
+							$('#bookmark-btn').removeClass('active'); // 버튼 OFF
+						} else {
+							alert("북마크에 추가되었습니다.");
+							$('#bookmark-btn').addClass('active'); // 버튼 ON
+						}
+					} else if (result.status === 'fail') {
+						alert("오류가 발생했습니다.");
+					} else {
+						alert(result.message);
+					}
+				},
+				error: function(xhr, status, error) {
+					console.log(xhr);
+					if (xhr.status == 401) {
+						if(confirm(xhr.responseText)) {
+							location.href = '/login'; // 로그인 페이지로 이동
+						}
+					}
+				}
+			});
+		}
+
+		$(() => {
+			let routineId =  [[${rout_no}]];
+			$("#bookmark-btn").click(function() {
+				addroutineBookmark(routineId);
+			});
+		});
+	</script>
+<style>
+style>.image {
+	width: 360px;
+	height: 360px;
+	border-radius: 20px;
+	overflow: hidden;
+	margin: 1.5em 0;
+	background-color: #fff;
+}
+
+.image img {
+	max-width: 360px;
+	max-height: 360px;
+}
+
+#section h1, #section h3 {
+	word-break: keep-all;
+}
+
+#section h2 {
+	display: inline;
+}
+
+#bookmark-btn {
+	height: 1em;
+	padding: 0;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-size: 1em;
+	line-height: 0.5;
+	color: #ccc;
+	cursor: pointer;
+}
+
+#bookmark-btn::before {
+	content: "\2605";
+}
+
+#bookmark-btn.active::before {
+	content: "\2605";
+	color: #F7CB54;
+}
+
+#box {
+	width: 100%;
+}
+
+#box>div {
+	width: 90px;
+	border-radius: 10px;
+	border: 1px solid;
+	margin: 1.5em 5px 0 5px;
+}
+
+#box hr {
+	margin: 0;
+	border-color: #e2e2db80;
+}
+
+@media screen and (max-width: 400px) {
+	.image {
+		width: calc(100vw - 30px);
+		height: calc(100vw - 30px);
+	}
+	.image>img {
+		max-width: calc(100vw - 30px);
+		max-height: calc(100vw - 30px);
+	}
+}
+</style>
 </head>
 <body layout:fragment="section">
-	<input type="button" value="루틴 목록 페이지" onclick="location.href='/routine/default'">
+	<input type="button" value="루틴 목록 페이지"
+		onclick="location.href='/routine/default'">
 	<div th:text="${routine.name}"></div>
 	<div th:text="${routine.guide}"></div>
 	<div>
 		<div th:each="steps : ${routine.getStep()}">
-			<span th:text="|${stepsStat.count}일차|"></span>
-			<input type="button" th:value="|${stepsStat.count}일차 시작|" th:onclick="|location.href='/routine/run/d/${routine.rout_no}/${stepsStat.count}'|">
+			<span th:text="|${stepsStat.count}일차|"></span> <input type="button"
+				th:value="|${stepsStat.count}일차 시작|"
+				th:onclick="|location.href='/routine/run/d/${routine.rout_no}/${stepsStat.count}'|">
 			<br>
 			<th:block th:each="step : ${steps}">
 				<th:block th:each="entry : ${step}">
-					<span th:text="|${exMap[entry.key].name} ${entry.value}세트|"></span><br>
+					<span th:text="|${exMap[entry.key].name} ${entry.value}세트|"></span>
+					<br>
 				</th:block>
 			</th:block>
 		</div>
 	</div>
+	<h1>
+		<th:block th:unless="${routineBookmarked == null}">
+			<button id="bookmark-btn" class="active"></button>
+		</th:block>
+		<th:block th:if="${routineBookmarked == null }">
+			<button id="bookmark-btn"></button>
+		</th:block>
+	</h1>
 </body>
 </html>

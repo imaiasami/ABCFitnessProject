@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.project.file.model.dto.exercise.MemberJoinForm;
 import com.project.file.model.entity.member.Bookmark;
 import com.project.file.model.entity.member.Member;
+import com.project.file.model.entity.member.RoutineBookmark;
 import com.project.file.repository.MemberRepository;
 import com.project.file.util.CheckResponse;
 
@@ -155,6 +156,34 @@ public class MemberController {
 				} else {// 북마크추가
 					log.info("bookmarked : {}", bookmarkForm);
 					memberMapper.insertBookmark(bookmarkForm);
+				}
+				Map<String, Object> resultMap = new HashMap<>();
+				resultMap.put("status", "success");
+				return ResponseEntity.ok().body(resultMap);
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("오류가 발생했습니다.");
+			}
+		}
+	}
+	
+	// 루틴 북마크 추가/삭제
+	@PostMapping("/default/{rout_no}")
+	@ResponseBody
+	public ResponseEntity<?> routineBookmark(@SessionAttribute(name = "memberLogin", required = false) Member loginMember,
+			@PathVariable("rout_no") long rout_no) {
+		if (loginMember == null) { // 로그인 안한 사용자
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+		} else { // 로그인한 사용자
+			try {
+				RoutineBookmark routineBookmarkForm = new RoutineBookmark(loginMember.getMem_no(), rout_no);
+				RoutineBookmark routineBookmark = memberMapper.getRoutineBookmark(routineBookmarkForm);
+				if (routineBookmark != null && routineBookmark.getRout_d_no() == rout_no) { // 북마크 되어 있는 경우
+					log.info("routineBookmarks : {}", routineBookmark);
+					memberMapper.deleteRoutineBookmark(routineBookmarkForm);
+				} else {// 루틴 북마크 추가
+					log.info("routineBookmarked : {}", routineBookmarkForm);
+					memberMapper.insertRoutineBookmark(routineBookmarkForm);
 				}
 				Map<String, Object> resultMap = new HashMap<>();
 				resultMap.put("status", "success");

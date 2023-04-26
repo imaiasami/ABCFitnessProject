@@ -65,7 +65,7 @@
 		where mail = #{mail}
 	</update>
 
-	<!-- 나의 북마크 -->
+	<!-- 나의 운동 북마크 -->
 	<select id="getBookmarkList" resultType="exercise">
 		select
 		bo.ex_no,
@@ -79,8 +79,8 @@
 		#{mem_no}
 		and bo.ex_no = ex.ex_no
 	</select>
-	
-	<!-- 북마크추가 -->
+
+	<!-- 운동 북마크 추가 -->
 	<insert id="insertBookmark">
 		insert into ex_book (
 		ex_no,
@@ -90,20 +90,62 @@
 		#{mem_no}
 		)
 	</insert>
-	
-	<!-- 북마크가져오기 -->
+
+	<!-- 운동 북마크 가져오기 -->
 	<select id="getBookmark" resultType="bookmark">
 		select * from ex_book
 		where
 		mem_no=#{mem_no} and ex_no=#{ex_no}
 	</select>
 
-	<!-- 북마크삭제 -->
+	<!-- 운동 북마크 삭제 -->
 	<delete id="deleteBookmark">
 		delete from ex_book
 		where
 		mem_no = #{mem_no} and ex_no
 		= #{ex_no}
+	</delete>
+
+	<!-- 나의 루틴 북마크 -->
+	<select id="getRoutineBookmarkList" resultType="routine">
+		select
+		bo.rout_d_no,
+		ex.name_ko name
+		from
+		rout_d_book bo,
+		rout_default ex
+		where
+		bo.mem_no =
+		#{mem_no}
+		and bo.rout_d_no = ex.rout_d_no
+	</select>
+
+	<!-- 루틴 북마크 추가 -->
+	<insert id="insertRoutineBookmark">
+		insert into rout_d_book (
+		mem_no,
+		rout_d_no
+		)values(
+		#{mem_no},
+		#{rout_d_no}
+		)
+	</insert>
+
+	<!-- 루틴 북마크 가져오기 -->
+	<select id="getRoutineBookmark" resultType="routineBookmark">
+		select * from
+		rout_d_book
+		where
+		mem_no=#{mem_no} and rout_d_no=#{rout_d_no}
+	</select>
+
+	<!-- 루틴 북마크 삭제 -->
+	<delete id="deleteRoutineBookmark">
+		delete from rout_d_book
+		where
+		mem_no = #{mem_no} and
+		rout_d_no
+		= #{rout_d_no}
 	</delete>
 
 	<!-- 운동기구추가 -->
@@ -143,7 +185,7 @@
 		= #{equip_id}
 	</delete>
 
-	
+
 
 
 

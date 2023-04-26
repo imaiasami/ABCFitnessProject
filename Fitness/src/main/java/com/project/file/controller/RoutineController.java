@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.file.model.entity.exercise.Exercise;
+import com.project.file.model.entity.member.Member;
+import com.project.file.model.entity.member.RoutineBookmark;
 import com.project.file.model.entity.routine.RoutineDefault;
 import com.project.file.model.entity.routine.RoutineGenerated;
 import com.project.file.repository.ExerciseRepository;
+import com.project.file.repository.MemberRepository;
 import com.project.file.repository.RoutineRepository;
 import com.project.file.util.PageNavigator;
 
@@ -30,6 +34,7 @@ public class RoutineController {
 
 	private final RoutineRepository routineMapper;
 	private final ExerciseRepository exerciseMapper;
+	private final MemberRepository memberMapper;
 
 	// 페이징 처리 상수값
 	final int countPerPage = 9; // 페이지 당 글의 수
@@ -53,11 +58,20 @@ public class RoutineController {
 
 	// 기본 루틴 상세
 	@GetMapping("default/{rout_no}")
-	public String defaultRoutineDetail(@PathVariable long rout_no, Model model) {
+	public String defaultRoutineDetail(@PathVariable long rout_no, Model model,
+			@SessionAttribute(name = "memberLogin", required = false) Member loginMember) {
 		RoutineDefault routine = routineMapper.getRoutineDefaultKo(rout_no);
 		model.addAttribute("routine", routine);
 		Map<Long, Exercise> exMap = getExMap(routine.getStep());
 		model.addAttribute("exMap", exMap);
+
+		if (loginMember != null) { // 로그인한 사용자일 경우 북마크 목록 추가
+			RoutineBookmark routineBookmark = new RoutineBookmark(loginMember.getMem_no(), rout_no);
+			RoutineBookmark routineBookmarks = memberMapper.getRoutineBookmark(routineBookmark);
+			model.addAttribute("routineBookmarked", routineBookmarks);
+
+		}
+
 		return "routine/defaultRoutineDetail";
 	}
 
