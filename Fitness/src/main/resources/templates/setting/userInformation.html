@@ -9,16 +9,57 @@
 <link rel="stylesheet" href="/css/userInformation2.css">
 
 
-<script type="text/javascript">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+	  $('button').click(function() {
+		 
+	    var buttonId = $(this).attr('id');
+	    var ariaPressed = $(this).attr('aria-pressed');
+	    var data = {
+	    	    equip_id: buttonId,
+	    	    status: ariaPressed === 'false'
+	    	  };
+	    
+	    $.ajax({
+	      type: 'POST',
+	      url: "/setting/userInformation",
+	      dataType: "json",
+	      data: data,
+	      success: function(result) {
+	    	  if (result.status === 'success') {
+	              if (ariaPressed === 'true') {
+	        		    alert("추가되었습니다.");
+	        		    
+	        		    $('#' + buttonId).attr('aria-pressed', 'true');
+	        		  } else {
+	        		    alert("해제되었습니다.");
+	        		    
+	        		    $('#' + buttonId).attr('aria-pressed', 'false');
+	        		  }
+	        		} else if (result.status === 'fail') {
+	        		  alert("오류가 발생했습니다.");
+	        		}
+	      },
+	      error: function() {
+	        alert('오류가 발생했습니다.');
+	      }
+	    });
+	  });
+	});
+
+
 	function toggle(btnID) {
-		var theButton = document.getElementById(btnID);
-		if (theButton.getAttribute("aria-pressed") == "false") {
-			theButton.setAttribute("aria-pressed", "true");
-		} else {
-			theButton.setAttribute("aria-pressed", "false");
-		}
+	  var theButton = document.getElementById(btnID);
+	  if (theButton.getAttribute("aria-pressed") == "false") {
+	    theButton.setAttribute("aria-pressed", "true");
+	  } else {
+	    theButton.setAttribute("aria-pressed", "false");
+	  }
 	}
+
 </script>
+
 <style>
 .modal1 {
 	position: absolute;
@@ -58,12 +99,10 @@
 		<legend>개인 정보</legend>
 		<div>
 			<table>
-
 				<tr>
 					<th>이름</th>
 					<td th:text="${session.memberLogin.name}"></td>
 				</tr>
-
 				<tr>
 					<th>생년월일</th>
 					<td th:text="${session.memberLogin.birth}"></td>
@@ -72,44 +111,67 @@
 					<th>내 계정</th>
 					<td th:text="${session.memberLogin.mail}"></td>
 				</tr>
-
-
 				<tr>
 					<th>비밀번호</th>
 					<td th:text="${session.memberLogin.password}"></td>
 				</tr>
-
 				<tr>
 					<th>성별</th>
 					<td th:text="${session.memberLogin.gender}"></td>
 				</tr>
-
 				<tr>
 					<th>전화번호</th>
-					<td th:text="${session.memberLogin.phone}"></td> 
+					<td th:text="${session.memberLogin.phone}"></td>
 				</tr>
 			</table>
-			<input type="button" value="수정하기"
-				onclick="location.href='/setting/update'">
 		</div>
+
+		<input type="button" value="수정하기"
+			onclick="location.href='/setting/update'">
+
 	</fieldset>
+
 	<fieldset class="toggles flip">
 		<legend>나의 프로필</legend>
 		<div>
-			<button type="button" id="Dumb-bal" aria-pressed="false"
-				onclick="toggle(this.id);">덤밸</button>
+			<th:block th:unless="${#lists.contains(equipmented, 'dumbbell')}">
+				<button type="button" id="dumbbell" aria-pressed="false"
+					onclick="toggle(this.id);">덤밸</button>
+			</th:block>
+			<th:block th:if="${#lists.contains(equipmented, 'dumbbell')}">
+				<button type="button" id="dumbbell" aria-pressed="true"
+					onclick="toggle(this.id);">덤밸</button>
+			</th:block>
 		</div>
 		<div>
-			<button type="button" id="bend" aria-pressed="true"
-				onclick="toggle(this.id);">벤드</button>
+			<th:block th:unless="${#lists.contains(equipmented, 'band')}">
+				<button type="button" id="band" aria-pressed="false"
+					onclick="toggle(this.id);">밴드</button>
+			</th:block>
+			<th:block th:if="${#lists.contains(equipmented, 'band')}">
+				<button type="button" id="band" aria-pressed="true"
+					onclick="toggle(this.id);" >밴드</button>
+			</th:block>
 		</div>
 		<div>
-			<button type="button" id="pull-up bar" aria-pressed="true"
-				onclick="toggle(this.id);">풀업바</button>
+			<th:block th:unless="${#lists.contains(equipmented, 'pullup')}">
+				<button type="button" id="pullup" aria-pressed="false"
+					onclick="toggle(this.id);">풀업바</button>
+			</th:block>
+			<th:block th:if="${#lists.contains(equipmented, 'pullup')}">
+				<button type="button" id="pullup" aria-pressed="true"
+					onclick="toggle(this.id);" >풀업바</button>
+			</th:block>
 		</div>
 		<div>
-			<button type="button" id="cycle" aria-pressed="true"
-				onclick="toggle(this.id);">사이클</button>
+			<th:block th:unless="${#lists.contains(equipmented, 'cycle')}">
+				<button type="button" id="cycle" aria-pressed="false"
+					onclick="toggle(this.id);">사이클</button>
+			</th:block>
+			<th:block th:if="${#lists.contains(equipmented, 'cycle')}">
+				<button type="button" id="cycle" aria-pressed="true"
+					onclick="toggle(this.id);" >사이클</button>
+			</th:block>
 		</div>
 
 	</fieldset>

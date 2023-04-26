@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import com.project.file.model.entity.exercise.Equipment;
 import com.project.file.model.entity.exercise.Exercise;
 import com.project.file.model.entity.member.Bookmark;
 import com.project.file.model.entity.member.Member;
@@ -35,6 +36,19 @@ public interface MemberRepository {
 		int deleteBookmark(Bookmark bookmark);
 
 		List<Exercise> getBookmarkList(long mem_no);
+		
+		
+		//운동기구
+		
+				int insertEquipment(Equipment equipment);
+				
+				int deleteEquipment(Equipment equipment);
+				
+				Equipment getEquipment(Equipment equipment);
+				
+				List<String> getEquipmentList (long mem_no);
+				
+			
 
 	
 }

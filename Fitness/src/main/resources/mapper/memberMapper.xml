@@ -106,7 +106,44 @@
 		= #{ex_no}
 	</delete>
 
+	<!-- 운동기구추가 -->
+	<insert id="insertEquipment">
+		insert into equip_list (
+		mem_no,
+		equip_id
+		)values(
+		#{mem_no},
+		#{equip_id}
+		)
+	</insert>
 
+	<!-- 선택한운동기구 가져오기 -->
+	<select id="getEquipment" resultType="equipment">
+		select * from equip_list
+		where
+		mem_no = #{mem_no} and equip_id = #{equip_id}
+	</select>
+
+
+
+	<!-- 모든 선택한 운동기구 리스트 -->
+	<select id="getEquipmentList" resultType="string">
+		select equip_id from
+		equip_list
+		where
+		mem_no=#{mem_no}
+	</select>
+
+	<!-- 운동기구삭제 -->
+	<delete id="deleteEquipment">
+		delete from equip_list
+		where
+		mem_no = #{mem_no} and
+		equip_id
+		= #{equip_id}
+	</delete>
+
+	
 
 
 
