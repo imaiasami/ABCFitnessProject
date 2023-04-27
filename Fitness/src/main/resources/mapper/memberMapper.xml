@@ -39,6 +39,19 @@
 		where mem_id = #{mem_id}
 	</select>
 
+	<!-- 이메일 중복 확인 -->
+	<select id="countByEmail" resultType="int">
+		SELECT COUNT(*) FROM member
+		WHERE mail = #{mail}
+	</select>
+
+	<!-- 사용자 이름 중복 확인 -->
+	<select id="countByMemberId" resultType="int">
+		SELECT COUNT(*) FROM
+		member
+		WHERE mem_id = #{mem_id}
+	</select>
+
 	<!-- 회원정보 전체 검색 -->
 
 	<select id="findAllMembers" resultType="member">

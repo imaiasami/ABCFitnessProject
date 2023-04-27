@@ -26,8 +26,11 @@ public interface MemberRepository {
 
 	void updateMember(Member member);
 
+	// 이메일 중복 확인
+
 	int countByEmail(String email);
 
+	// 사용자 이름 중복 확인
 	int countByMemberId(String mem_id);
 
 	// 운동 즐겨찾기
