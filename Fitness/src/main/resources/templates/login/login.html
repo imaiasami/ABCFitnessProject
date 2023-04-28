@@ -46,14 +46,15 @@ $(() => {
 	<form class="form-signin"
 		th:action="@{/login(redirectURL=${#request.getParameter('redirectURL')})}"
 		method="post" th:object="${memberLogin}" onsubmit="return inputId()">
+		
 		<div class="wrapper">
 
-			<h2 class="form-signin-heading">Login</h2>
+			<h1 class="form-signin-heading">Login</h1>
 
 			<input type="email" class="form-control" name="mail" id="mail"
 				th:field="*{mail}" placeholder="Email Address" required=""
-				autofocus="" /> 
-			
+				autofocus="" />
+
 
 			<div th:errorClass="field-error" th:errors="*{mail}"></div>
 
@@ -61,22 +62,18 @@ $(() => {
 				th:field="*{password}" placeholder="Password" required="" />
 
 			<div th:errorClass="field-error" th:errors="*{password}"></div>
-			<br>
-			<input type="checkbox" name="saveId" id="saveId">
-			<label>아이디 저장</label> <label class="checkbox"> </label>
-			<br>
-			<br>
+			<br> <input type="checkbox" name="saveId" id="saveId"> <label>아이디
+				저장</label> <label class="checkbox"> </label> <br> <br>
 			<div class="global-error" th:if="${#fields.hasGlobalErrors()}">
 				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">
 			</div>
 
 			<div class="center">
-				<input class="btn btn-lg btn-primary btn-block" type="submit"
-					value="로그인"> <input type="button"
-					class="btn btn-lg btn-primary btn-block" value="회원가입"
-					onclick="location.href='/join'"> <br> <input
-					type="button" value="비밀번호를 잊으셨나요?"
-					onclick="location.href='/login/findPassword'">
+				<input type="submit" class="btn btn-lg btn-primary btn-block"
+					value="로그인">
+				<p class="text--center">
+					Not a member? <a href="/join">Sign up</a>
+				</p>
 			</div>
 		</div>
 	</form>

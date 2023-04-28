@@ -19,9 +19,7 @@ public class MemberJoinForm {
 	private int month;
 	private int day;
 	private String gender;
-	private String phone1;
-	private String phone2;
-	private String phone3;
+	private String phone;
 
 	public Member toMember() {
 		Member member = new Member();
@@ -31,7 +29,7 @@ public class MemberJoinForm {
 		member.setName(this.name);
 		member.setBirth(LocalDate.of(this.year, this.month, this.day));
 		member.setGender(this.gender);
-		member.setPhone(this.phone1 + "-" + this.phone2 + "-" + this.phone3);
+		member.setPhone(this.phone);
 		return member;
 	}
 
