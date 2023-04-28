@@ -25,9 +25,9 @@ public class HomeController {
 	@GetMapping("/")
 	public String home(Model model) {
 		RowBounds rowBounds = new RowBounds(0, 9);		// 0번째부터 9개
-		List<Exercise> exercises = exerciseMapper.getExercisesKo(rowBounds);
+		List<Exercise> exercises = exerciseMapper.getExercises(null, null, null, null, "ko", rowBounds);
 		model.addAttribute("exercises", exercises);
-		List<RoutineDefault> routines = routineMapper.getRoutineDefaultsKo(rowBounds);
+		List<RoutineDefault> routines = routineMapper.getRoutineDefaults(null, null, null, "ko", rowBounds);
 		model.addAttribute("routines", routines);
 		return "index";
 	}

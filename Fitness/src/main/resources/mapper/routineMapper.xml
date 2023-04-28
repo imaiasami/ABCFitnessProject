@@ -3,83 +3,122 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.file.repository.RoutineRepository">
-	<!-- 전체 기본 루틴 가져오기 -->
-	<select id="getRoutineDefaultsKo" resultType="routineDefault">
-		select 
-			rout_d_no rout_no,
-			step,
-			equip,
-			diff,
-			runtime,
-			name_ko name,
-			guide_ko guide
+	<!-- 총 기본 루틴 개수(난이도, 시간, 이름, 언어 순) -->
+	<select id="getDefaultTotal" resultType="int">
+		select count(*)
 		from rout_default
-	</select>
-	<select id="getRoutineDefaultsJp" resultType="routineDefault">
-		select 
-			rout_d_no rout_no,
-			step,
-			equip,
-			diff,
-			runtime,
-			name_jp name,
-			guide_jp guide
-		from rout_default
-	</select>
-	<select id="getRoutineDefaultsEn" resultType="routineDefault">
-		select 
-			rout_d_no rout_no,
-			step,
-			equip,
-			diff,
-			runtime,
-			name_en name,
-			guide_en guide
-		from rout_default
+		<where>
+	        <if test="diffs != null">
+		        <foreach item="diff" collection="diffs" open="and diff in (" separator="," close=")">
+		        	#{diff}
+		        </foreach>
+	        </if>
+	        <if test="runtimes != null">
+		        <foreach item="runtime" collection="runtimes" open="and runtime in (" separator="," close=")">
+		        	#{runtime}
+		        </foreach>
+	        </if>
+	        <if test="search != null">
+		        <choose>
+		        	<when test="lang != null and lang.equals('ko')">
+		        		and name_ko like '%' || #{search} || '%'
+		        	</when>
+		        	<when test="lang != null and lang.equals('jp')">
+		        		and name_jp like '%' || #{search} || '%'
+		        	</when>
+		        	<otherwise>
+		        		and name_en like '%' || #{search} || '%'
+		        	</otherwise>
+		        </choose>
+	        </if>
+        </where>
 	</select>
 	
-	<!-- 개별 기본 루틴 가져오기 -->
-	<select id="getRoutineDefaultKo" resultType="routineDefault">
+	<!-- 기본 루틴 가져오기(난이도, 시간, 이름, 언어 순) -->
+	<select id="getRoutineDefaults" resultType="routineDefault">
 		select 
 			rout_d_no rout_no,
 			step,
 			equip,
 			diff,
 			runtime,
-			name_ko name,
-			guide_ko guide
+			<choose>
+				<when test="lang != null and lang.equals('ko')">
+					name_ko name,
+					guide_ko guide
+				</when>
+				<when test="lang != null and lang.equals('jp')">
+					name_jp name,
+					guide_jp guide
+				</when>
+				<otherwise>
+					name_en name,
+					guide_en guide
+				</otherwise>
+			</choose>
 		from rout_default
-		where rout_d_no = #{rout_no}
-	</select>
-	<select id="getRoutineDefaultJp" resultType="routineDefault">
-		select 
-			rout_d_no rout_no,
-			step,
-			equip,
-			diff,
-			runtime,
-			name_jp name,
-			guide_jp guide
-		from rout_default
-		where rout_d_no = #{rout_no}
-	</select>
-	<select id="getRoutineDefaultEn" resultType="routineDefault">
-		select 
-			rout_d_no rout_no,
-			step,
-			equip,
-			diff,
-			runtime,
-			name_en name,
-			guide_en guide
-		from rout_default
-		where rout_d_no = #{rout_no}
+		<where>
+	        <if test="diffs != null">
+		        <foreach item="diff" collection="diffs" open="and diff in (" separator="," close=")">
+		        	#{diff}
+		        </foreach>
+	        </if>
+	        <if test="runtimes != null">
+		        <foreach item="runtime" collection="runtimes" open="and runtime in (" separator="," close=")">
+		        	#{runtime}
+		        </foreach>
+	        </if>
+	        <if test="search != null">
+		        <choose>
+		        	<when test="lang != null and lang.equals('ko')">
+		        		and name_ko like '%' || #{search} || '%'
+		        	</when>
+		        	<when test="lang != null and lang.equals('jp')">
+		        		and name_jp like '%' || #{search} || '%'
+		        	</when>
+		        	<otherwise>
+		        		and name_en like '%' || #{search} || '%'
+		        	</otherwise>
+		        </choose>
+	        </if>
+        </where>
+        <choose>
+	       	<when test="lang != null and lang.equals('ko')">
+	       		order by name_ko asc
+	       	</when>
+	       	<when test="lang != null and lang.equals('jp')">
+	       		order by name_jp asc
+	       	</when>
+	       	<otherwise>
+	       		order by name_en asc
+	       	</otherwise>
+        </choose>
 	</select>
 	
-	<!-- 총 루틴 개수 -->
-	<select id="getTotal" resultType="int">
-		select count(*) from
-		rout_default
+	<!-- 루틴 번호로 기본 루틴 가져오기 -->
+	<select id="getRoutineDefaultByNo" resultType="routineDefault">
+		select 
+			rout_d_no rout_no,
+			step,
+			equip,
+			diff,
+			runtime,
+			<choose>
+				<when test="lang != null and lang.equals('ko')">
+					name_ko name,
+					guide_ko guide
+				</when>
+				<when test="lang != null and lang.equals('jp')">
+					name_jp name,
+					guide_jp guide
+				</when>
+				<otherwise>
+					name_en name,
+					guide_en guide
+				</otherwise>
+			</choose>
+		from rout_default
+		where rout_d_no = #{rout_no}
 	</select>
 	
 	

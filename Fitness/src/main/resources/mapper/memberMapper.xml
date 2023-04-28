@@ -4,28 +4,27 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.project.file.repository.MemberRepository">
 	<insert id="joinMember" parameterType="member">
-		<selectKey keyProperty="mem_no" resultType="long"
-			order="BEFORE">
+		<selectKey keyProperty="mem_no" resultType="long" order="BEFORE">
 			select seq_member.nextval from dual
 		</selectKey>
 		insert into member (
-		mem_no,
-		mail,
-		password,
-		mem_id,
-		name,
-		birth,
-		gender,
-		phone
+			mem_no,
+			mail,
+			password,
+			mem_id,
+			name,
+			birth,
+			gender,
+			phone
 		) values (
-		#{mem_no},
-		#{mail},
-		#{password},
-		#{mem_id},
-		#{name},
-		#{birth},
-		#{gender},
-		#{phone}
+			#{mem_no},
+			#{mail},
+			#{password},
+			#{mem_id},
+			#{name},
+			#{birth},
+			#{gender},
+			#{phone}
 		)
 	</insert>
 
@@ -47,8 +46,7 @@
 
 	<!-- 사용자 이름 중복 확인 -->
 	<select id="countByMemberId" resultType="int">
-		SELECT COUNT(*) FROM
-		member
+		SELECT COUNT(*) FROM member
 		WHERE mem_id = #{mem_id}
 	</select>
 
@@ -62,144 +60,147 @@
 	<!-- 회원정보 탈퇴 -->
 	<update id="deleteMember" parameterType="member">
 		update member
-		set status
-		= '1' where mem_no=#{mem_no}
+		set status = '1'
+		where mem_no = #{mem_no}
 
 	</update>
-
+	
 	<!-- 개인정보 수정 -->
-
 	<update id="updateMember">
-		update member set
-		password = #{password},
-		mem_id =
-		#{mem_id},
-		phone = #{phone}
+		update member
+		set
+			password = #{password},
+			mem_id = #{mem_id},
+			phone = #{phone}
 		where mail = #{mail}
+	</update>
+
+	<!-- 루틴정보 수정 -->
+	<update id="updateMemberConditions">
+		update member
+		set
+			skill = #{skill},
+			days = #{days},
+			cardio = #{cardio}
+		where mem_no = #{mem_no}
+	</update>
+	
+	<!-- 언어설정 수정 -->
+	<update id="updateMemberLanguage">
+		update member
+		set language = #{language}
+		where mem_no = #{mem_no}
 	</update>
 
 	<!-- 나의 운동 북마크 -->
 	<select id="getBookmarkList" resultType="exercise">
 		select
-		bo.ex_no,
-		ex.name_ko name,
-		ex.image
-		from
-		ex_book bo,
-		exercise ex
-		where
-		bo.mem_no =
-		#{mem_no}
+			bo.ex_no,
+			ex.name_ko name,
+			ex.image
+			from
+			ex_book bo,
+			exercise ex
+		where bo.mem_no = #{mem_no}
 		and bo.ex_no = ex.ex_no
 	</select>
 
 	<!-- 운동 북마크 추가 -->
 	<insert id="insertBookmark">
 		insert into ex_book (
-		ex_no,
-		mem_no
-		)values(
-		#{ex_no},
-		#{mem_no}
+			ex_no,
+			mem_no
+		) values (
+			#{ex_no},
+			#{mem_no}
 		)
 	</insert>
 
 	<!-- 운동 북마크 가져오기 -->
 	<select id="getBookmark" resultType="bookmark">
 		select * from ex_book
-		where
-		mem_no=#{mem_no} and ex_no=#{ex_no}
+		where mem_no=#{mem_no} and ex_no=#{ex_no}
 	</select>
 
 	<!-- 운동 북마크 삭제 -->
 	<delete id="deleteBookmark">
 		delete from ex_book
-		where
-		mem_no = #{mem_no} and ex_no
-		= #{ex_no}
+		where mem_no = #{mem_no}
+		and ex_no = #{ex_no}
 	</delete>
 
 	<!-- 나의 루틴 북마크 -->
 	<select id="getRoutineBookmarkList" resultType="routine">
 		select
-		bo.rout_d_no,
-		ex.name_ko name
-		from
-		rout_d_book bo,
-		rout_default ex
-		where
-		bo.mem_no =
-		#{mem_no}
+			bo.rout_d_no,
+			ex.name_ko name
+			from
+			rout_d_book bo,
+			rout_default ex
+		where bo.mem_no = #{mem_no}
 		and bo.rout_d_no = ex.rout_d_no
 	</select>
 
 	<!-- 루틴 북마크 추가 -->
 	<insert id="insertRoutineBookmark">
 		insert into rout_d_book (
-		mem_no,
-		rout_d_no
-		)values(
-		#{mem_no},
-		#{rout_d_no}
+			mem_no,
+			rout_d_no
+		) values (
+			#{mem_no},
+			#{rout_d_no}
 		)
 	</insert>
 
 	<!-- 루틴 북마크 가져오기 -->
 	<select id="getRoutineBookmark" resultType="routineBookmark">
-		select * from
-		rout_d_book
-		where
-		mem_no=#{mem_no} and rout_d_no=#{rout_d_no}
+		select * from rout_d_book
+		where mem_no=#{mem_no}
+		and rout_d_no=#{rout_d_no}
 	</select>
 
 	<!-- 루틴 북마크 삭제 -->
 	<delete id="deleteRoutineBookmark">
 		delete from rout_d_book
-		where
-		mem_no = #{mem_no} and
-		rout_d_no
-		= #{rout_d_no}
+		where mem_no = #{mem_no}
+		and rout_d_no = #{rout_d_no}
 	</delete>
 
 	<!-- 운동기구추가 -->
 	<insert id="insertEquipment">
 		insert into equip_list (
-		mem_no,
-		equip_id
-		)values(
-		#{mem_no},
-		#{equip_id}
+			mem_no,
+			equip_id
+		) values (
+			#{mem_no},
+			#{equip_id}
 		)
 	</insert>
 
 	<!-- 선택한운동기구 가져오기 -->
 	<select id="getEquipment" resultType="equipment">
 		select * from equip_list
-		where
-		mem_no = #{mem_no} and equip_id = #{equip_id}
+		where mem_no = #{mem_no}
+		and equip_id = #{equip_id}
 	</select>
-
-
 
 	<!-- 모든 선택한 운동기구 리스트 -->
 	<select id="getEquipmentList" resultType="string">
-		select equip_id from
-		equip_list
-		where
-		mem_no=#{mem_no}
+		select equip_id
+		from equip_list
+		where mem_no = #{mem_no}
 	</select>
 
-	<!-- 운동기구삭제 -->
+	<!-- 운동기구 삭제 -->
 	<delete id="deleteEquipment">
 		delete from equip_list
-		where
-		mem_no = #{mem_no} and
-		equip_id
-		= #{equip_id}
+		where mem_no = #{mem_no}
+		and equip_id = #{equip_id}
 	</delete>
-
-
-
-
-
+	
+	<!-- 한 회원의 모든 운동기구 삭제 -->
+	<delete id="deleteAllEquipments">
+		delete from equip_list
+		where mem_no = #{mem_no}
+	</delete>
 </mapper>

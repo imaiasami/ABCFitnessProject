@@ -3,7 +3,14 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>운동 상세</title>
+	<title>
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">운동 상세</th:block>
+			<th:block th:case="jp">運動詳細</th:block>
+			<th:block th:case="*">Exercise Detail</th:block>
+		</th:block>
+	</title>
+	<link rel="stylesheet" href="/css/detailpage.css">
 	<script th:inline="javascript">
 		function addBookmark(exerciseId) {
 			let isBookmarked = $('#bookmark-btn').hasClass('active');
@@ -47,71 +54,6 @@
 			});
 		});
 	</script>
-	<style>
-		.image {
-			width:360px;
-			height: 360px;
-			border-radius: 20px;
-			overflow: hidden;
-			margin: 1.5em 0;
-			background-color: #fff;
-		}
-		.image img {
-			max-width: 360px;
-			max-height: 360px;
-		}
-		#section h1, #section h3 {
-			word-break: keep-all;
-		}
-		#section h2 {
-			display: inline;
-		}
-
-		#bookmark-btn {
-			height: 1em;
-			padding: 0;
-			border: none;
-			outline: none;
-			background: transparent;
-			font-size: 1em;
-			line-height: 0.5;
-			color: #ccc;
-			cursor: pointer;
-		}
-
-		#bookmark-btn::before {
-			content: "\2605";
-		}
-		#bookmark-btn.active::before {
-			content: "\2605";
-			color: #F7CB54;
-		}
-
-		#box {
-			width: 100%;
-		}
-		#box > div {
-			width: 90px;
-			border-radius: 10px;
-			border: 1px solid;
-			margin: 1.5em 5px 0 5px;
-		}
-		#box hr {
-			margin: 0;
-			border-color: #e2e2db80;
-		}
-
-		@media screen and (max-width: 400px) {
-			.image {
-				width: calc(100vw - 30px);
-				height: calc(100vw - 30px);
-			}
-			.image > img {
-				max-width: calc(100vw - 30px);
-				max-height: calc(100vw - 30px);
-			}
-		}
-	</style>
 </head>
 <body layout:fragment="section">
 	<div class="text-center">
@@ -129,49 +71,71 @@
 			<div class="text-center">
 				<th:block th:switch="${exercise.diff}">
 					<th:block th:case="0">
-						운동 종류
-						<hr>
-						스트레칭
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>운동 종류</h4><hr>스트레칭</th:block>
+							<th:block th:case="jp"><h4>運動種類</h4><hr>ストレッチ</th:block>
+							<th:block th:case="*"><h4>Type</h4><hr>Stretch</th:block>
+						</th:block>
 					</th:block>
 					<th:block th:case="1">
-						난이도
-						<hr>
-						초급
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
+						</th:block>
 					</th:block>
 					<th:block th:case="2">
-						난이도
-						<hr>
-						초~중급
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
+						</th:block>
 					</th:block>
 					<th:block th:case="3">
-						난이도
-						<hr>
-						중급
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
+						</th:block>
 					</th:block>
 					<th:block th:case="4">
-						난이도
-						<hr>
-						중~상급
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
+						</th:block>
 					</th:block>
 					<th:block th:case="5">
-						난이도
-						<hr>
-						상급
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>상급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>上級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Advanced</th:block>
+						</th:block>
 					</th:block>
 					<th:block th:case="6">
-						운동 종류
-						<hr>
-						유산소
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>운동 종류</h4><hr>유산소</th:block>
+							<th:block th:case="jp"><h4>運動種類</h4><hr>有酸素</th:block>
+							<th:block th:case="*"><h4>Type</h4><hr>Cardio</th:block>
+						</th:block>
 					</th:block>
 				</th:block>
 			</div>
 			<div class="text-center">
-				운동 부위
+				<th:block th:switch="${lang}">
+					<h4 th:case="ko">운동 부위</h4>
+					<h4 th:case="jp">運動部位</h4>
+					<h4 th:case="*">Muscle</h4>
+				</th:block>
 				<hr>
 				[[${exercise.muscle}]]
 			</div>
 			<div class="text-center">
-				사용 장비
+				<th:block th:switch="${lang}">
+					<h4 th:case="ko">사용 장비</h4>
+					<h4 th:case="jp">装備</h4>
+					<h4 th:case="*">Equipment</h4>
+				</th:block>
 				<hr>
 				[[${exercise.equip}]]
 			</div>
@@ -181,6 +145,8 @@
 			<img th:src="${exercise.image}">
 		</div>
 	</div>
-	<span th:utext="${#strings.replace(#strings.replace(exercise.guide,'[','<h2>'),']','</h2>')}"></span>
+	<div id="exercise">
+		<span th:utext="${#strings.replace(#strings.replace(exercise.guide,'[','<h2>'),']','</h2>')}"></span>
+	</div>
 </body>
 </html>

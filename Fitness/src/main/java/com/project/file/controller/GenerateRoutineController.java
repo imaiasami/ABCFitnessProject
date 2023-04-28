@@ -17,13 +17,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.project.file.model.dto.exercise.ExerciseNoSet;
 import com.project.file.model.dto.routine.GenerateRoutineConditions;
 import com.project.file.model.dto.routine.GenerateRoutineForm;
+import com.project.file.model.entity.exercise.Equipment;
 import com.project.file.model.entity.exercise.Exercise;
 import com.project.file.model.entity.member.Member;
 import com.project.file.model.entity.routine.RoutineGenerated;
 import com.project.file.repository.ExerciseRepository;
+import com.project.file.repository.MemberRepository;
 import com.project.file.repository.RoutineRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -36,10 +40,17 @@ import lombok.extern.slf4j.Slf4j;
 public class GenerateRoutineController {
 	public final ExerciseRepository exerciseMapper;
 	public final RoutineRepository routineMapper;
+	public final MemberRepository memberMapper;
 
 	// 루틴 생성 페이지로 이동
 	@GetMapping("generate")
-	public String selectConditions(Model model) {
+	public String selectConditions(@SessionAttribute(name = "memberLogin", required = false) Member memberLogin, Model model) {
+		if (memberLogin != null) {
+			List<String> equips = memberMapper.getEquipmentList(memberLogin.getMem_no());
+			model.addAttribute("equips", equips);
+		} else {
+			model.addAttribute("equips", null);
+		}
 		return "generateRoutine/generateRoutine";
 	}
 	
@@ -52,6 +63,7 @@ public class GenerateRoutineController {
 		if (conditions.getSkill() < 1) conditions.setSkill(1);
 		if (conditions.getDays() < 1) conditions.setDays(1);
 		
+		// 루틴 내 운동 순서(step) 생성
 		Random rd = new Random();
 		String step = "";
 		List<List<String>> weeklyMuscle = getWeeklyMuscle(conditions.getDays());
@@ -73,6 +85,7 @@ public class GenerateRoutineController {
 			}
 		}
 		
+		// DB에 루틴 저장
 		GenerateRoutineForm rout_g = new GenerateRoutineForm();
 		rout_g.setMem_no(memberLogin.getMem_no());
 		rout_g.setName("Personal Routine");
@@ -83,6 +96,22 @@ public class GenerateRoutineController {
 		rout_g.setCardio(conditions.getCardio());
 		routineMapper.createRoutineGenerated(rout_g);
 		
+		// 회원 정보에 선택사항 저장
+		memberLogin.setCardio(conditions.getCardio() ? 1 : 0);
+		memberLogin.setSkill(conditions.getSkill());
+		memberLogin.setDays(conditions.getDays());
+		memberMapper.updateMemberConditions(memberLogin);
+		session.setAttribute("memberLogin", memberLogin);
+		
+		List<String> equips = conditions.getEquip();
+		memberMapper.deleteAllEquipments(memberLogin.getMem_no());
+		if (equips != null) {
+			equips.remove("cali");
+			for (String equip : equips) {
+				memberMapper.insertEquipment(new Equipment(memberLogin.getMem_no(), equip));
+			}
+		}
+		
 		return "redirect:/routine/generate/" + rout_g.getRout_no();
 	}
 	
@@ -90,10 +119,9 @@ public class GenerateRoutineController {
 	@GetMapping("generate/{rout_no}")
 	public String defaultRoutineDetail(@PathVariable long rout_no, Model model) {
 		RoutineGenerated routine = routineMapper.getRoutineGeneratedByRoutNo(rout_no);
-		log.info("routine: {}", routine);
+		setStep(routine.getStep(), "ko");
+		routine.changeEquip(exerciseMapper.getEquipNames(routine.getEquip(), "ko"));
 		model.addAttribute("routine", routine);
-		Map<Long, Exercise> exMap = getExMap(routine.getStep());
-		model.addAttribute("exMap", exMap);
 		return "generateRoutine/generateRoutineDetail";
 	}
 	
@@ -104,6 +132,15 @@ public class GenerateRoutineController {
 		case 1 : return new ArrayList<Integer>(Arrays.asList(1, 2));
 		case 2 : return new ArrayList<Integer>(Arrays.asList(2 ,3, 4));
 		case 3 : return new ArrayList<Integer>(Arrays.asList(4, 5));
+		}
+	}
+	
+	// 루틴에 저장된 운동 번호를 기반으로 각 운동 상세 불러오기
+	public void setStep(List<List<ExerciseNoSet>> step, String lang) {
+		for (List<ExerciseNoSet> daily : step) {
+			for (ExerciseNoSet ex : daily) {
+				ex.setInfo(exerciseMapper.getExerciseByNo(ex.getEx_no(), lang));
+			}
 		}
 	}
 	
@@ -155,17 +192,5 @@ public class GenerateRoutineController {
 		}
 		return result;
 	}
-	
-	// 루틴에 저장된 운동 번호를 기반으로 각 운동 상세 불러오기
-		public Map<Long, Exercise> getExMap(List<Map<Long, Integer>> step) {
-			Map<Long, Exercise> result = new HashMap<>();
-			for (Map<Long, Integer> map : step) {
-				for (Long longKey : map.keySet()) {
-					Exercise exercise = exerciseMapper.getExerciseKo(longKey);
-					result.put(longKey, exercise);
-				}
-			}
-			return result;
-		}
 
 }

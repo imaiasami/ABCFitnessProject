@@ -1,0 +1,87 @@
+#bookmark-btn {
+	height: 1em;
+	padding: 0;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-size: 1em;
+	line-height: 0.5;
+	color: #ccc;
+	cursor: pointer;
+}
+#bookmark-btn::before {
+	content: "\2605";
+}
+#bookmark-btn.active::before {
+	content: "\2605";
+	color: #F7CB54;
+}
+
+#exercise h2, #routine h3 {
+	display: inline;
+}
+
+.image {
+	width:360px;
+	height: 360px;
+	border-radius: 20px;
+	overflow: hidden;
+	margin: 1.5em 0;
+	background-color: #fff;
+}
+.image img {
+	max-width: 360px;
+	max-height: 360px;
+}
+
+#box {
+	flex-wrap: wrap;
+	width: 100%;
+	margin-top: 1.5em;
+}
+#box > div {
+	min-width: 100px;
+	border-radius: 10px;
+	border: 1px solid;
+	margin: 0 5px 10px 5px;
+}
+#box hr, #routine hr {
+	margin: 0;
+	border-color: #e2e2db80;
+}
+
+#exercise {
+	margin-top: 10px;
+}
+
+#routine {
+	align-items: stretch;
+	flex-wrap: wrap;
+	width: 100%;
+	margin-top: 1.5em;
+}
+#routine > div {
+	width: 300px;
+	border-radius: 10px;
+	border: 1px solid;
+	margin: 0 5px 10px 5px;
+}
+#routine input {
+	border: 0;
+	border-radius: 100px;
+	margin-left: 10px;
+	transform: translateY(-2px);
+	background-color: #ea945e;
+	color: #1f3a50;
+}
+
+@media screen and (max-width: 400px) {
+	.image {
+		width: calc(100vw - 30px);
+		height: calc(100vw - 30px);
+	}
+	.image > img {
+		max-width: calc(100vw - 30px);
+		max-height: calc(100vw - 30px);
+	}
+}

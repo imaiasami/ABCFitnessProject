@@ -178,18 +178,16 @@
 				<h1 th:text="|${routine.name} ${stepsStat.count}일차|"></h1>
 				<br>
 				<th:block th:each="step : ${steps}">
-					<th:block th:each="entry : ${step}">
-						<div th:class="|ex-${stepStat.count} hide|">
-							<div class="image flex-center">
-								<img th:src="${exMap[entry.key].image}">
-							</div>
-							<br>
-							<span class="bold" th:text="${exMap[entry.key].name}"></span> ([[${stepStat.count}]]/[[${stepStat.size}]])
-							<br>
-							<span class="bold" th:text="|${exMap[entry.key].freq}회 ${entry.value}세트|"></span>
-							<br>
+					<div th:class="|ex-${stepStat.count} hide|">
+						<div class="image flex-center">
+							<img th:src="${step.info.image}">
 						</div>
-					</th:block>
+						<br>
+						<span class="bold" th:text="${step.info.name}"></span> ([[${stepStat.count}]]/[[${stepStat.size}]])
+						<br>
+						<span class="bold" th:text="|${step.info.freq}회 ${step.set}세트|"></span>
+						<br>
+					</div>
 				</th:block>
 				<span id="timer">00:00</span>
 				<br><br>

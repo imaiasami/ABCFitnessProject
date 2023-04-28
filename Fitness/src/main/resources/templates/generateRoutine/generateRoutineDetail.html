@@ -3,19 +3,99 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>루틴 상세</title>
+	<title>
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">루틴 상세</th:block>
+			<th:block th:case="jp">ルーチン詳細</th:block>
+			<th:block th:case="*">Routine Detail</th:block>
+		</th:block>
+	</title>
+	<link rel="stylesheet" href="/css/detailpage.css">
 </head>
 <body layout:fragment="section">
-	<h1 th:text="${routine.name}"></h1>
-	<div>
-		<div th:each="steps : ${routine.getStep()}">
-			<span th:text="|${stepsStat.count}일차|"></span>
-			<input type="button" th:value="|${stepsStat.count}일차 시작|" th:onclick="|location.href='/routine/run/g/${routine.rout_no}/${stepsStat.count}'|">
-			<br>
-			<th:block th:each="step : ${steps}">
-				<th:block th:each="entry : ${step}">
-					<span th:text="|${exMap[entry.key].name} ${entry.value}세트|"></span><br>
+	<div class="text-center">
+		<h1 th:text="${routine.name}"></h1>
+		<div id="box" class="flex-center">
+			<div class="text-center">
+				<th:block th:if="${routine.cardio}">
+					<th:block th:switch="${lang}">
+						<th:block th:case="ko"><h4>운동 목적</h4><hr>체중 감량</th:block>
+						<th:block th:case="jp"><h4>運動目的</h4><hr>体重減量</th:block>
+						<th:block th:case="*"><h4>Goal</h4><hr>Lose Weight</th:block>
+					</th:block>
 				</th:block>
+				<th:block th:unless="${routine.cardio}">
+					<th:block th:switch="${lang}">
+						<th:block th:case="ko"><h4>운동 목적</h4><hr>근력 증가</th:block>
+						<th:block th:case="jp"><h4>運動目的</h4><hr>筋力増加</th:block>
+						<th:block th:case="*"><h4>Goal</h4><hr>Gain Muscle</th:block>
+					</th:block>
+				</th:block>
+			</div>
+			<div class="text-center">
+				<th:block th:switch="${routine.diff}">
+					<th:block th:case="1">
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
+						</th:block>
+					</th:block>
+					<th:block th:case="2">
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
+						</th:block>
+					</th:block>
+					<th:block th:case="3">
+						<th:block th:switch="${lang}">
+							<th:block th:case="ko"><h4>난이도</h4><hr>상급</th:block>
+							<th:block th:case="jp"><h4>難度</h4><hr>上級</th:block>
+							<th:block th:case="*"><h4>Difficulty</h4><hr>Advanced</th:block>
+						</th:block>
+					</th:block>
+				</th:block>
+			</div>
+			<div class="text-center">
+				<th:block th:switch="${lang}">
+					<h4 th:case="ko">사용 장비</h4>
+					<h4 th:case="jp">装備</h4>
+					<h4 th:case="*">Equipment</h4>
+				</th:block>
+				<hr>
+				[[${#strings.replace(#strings.replace(routine.equip,'[','&nbsp;'),']','&nbsp;')}]]
+			</div>
+			<div class="text-center">
+				<th:block th:switch="${lang}">
+					<h4 th:case="ko">운동 일수</h4>
+					<h4 th:case="jp">運動日数</h4>
+					<h4 th:case="*">Days</h4>
+				</th:block>
+				<hr>
+				[[${routine.days}]]
+			</div>
+		</div>
+	</div>
+	<div id="routine" class="flex-center">
+		<div class="text-center" th:each="steps : ${routine.getStep()}">
+			<th:block th:switch="${lang}">
+				<h3 th:case="ko">[[${stepsStat.count}]]일차</h3>
+				<h3 th:case="jp">[[${stepsStat.count}]]日目</h3>
+				<h3 th:case="*">Day [[${stepsStat.count}]]</h3>
+			</th:block>
+			<input type="button" class="pointer" value="▶" th:onclick="|location.href='/routine/run/g/${routine.rout_no}/${stepsStat.count}'|">
+			<hr>
+			<th:block th:each="step : ${steps}">
+				<span>
+					[[${step.info.name}]] :
+					<th:block th:switch="${lang}">
+						<th:block th:case="ko">[[${step.set}]]세트</th:block>
+						<th:block th:case="jp">[[${step.set}]]セット</th:block>
+						<th:block th:case="*">[[${step.set}]]set</th:block>
+					</th:block>
+				</span>
+				<br>
 			</th:block>
 		</div>
 	</div>

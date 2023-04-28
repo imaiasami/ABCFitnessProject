@@ -24,10 +24,13 @@ public interface MemberRepository {
 
 	List<Member> findAllMembers();
 
-	void updateMember(Member member);
+	int updateMember(Member member);
+	
+	int updateMemberConditions(Member member);
+	
+	int updateMemberLanguage(Member member);
 
 	// 이메일 중복 확인
-
 	int countByEmail(String email);
 
 	// 사용자 이름 중복 확인
@@ -52,13 +55,14 @@ public interface MemberRepository {
 	List<Routine> getRoutineBookmarkList(long mem_no);
 
 	// 운동기구
-
 	int insertEquipment(Equipment equipment);
-
-	int deleteEquipment(Equipment equipment);
 
 	Equipment getEquipment(Equipment equipment);
 
 	List<String> getEquipmentList(long mem_no);
+	
+	int deleteEquipment(Equipment equipment);
+	
+	int deleteAllEquipments(long mem_no);
 
 }

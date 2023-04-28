@@ -37,7 +37,6 @@
 	height: 210px;
 	padding: 10px;
 	text-align: center;
-	word-break: keep-all;
 	font-size: 30px;
 	font-weight: 700;
 	color: #e2e2db;
@@ -51,6 +50,12 @@
 	text-align: center;
 	font-size: 1.2em;
 	font-weight: 500;
+}
+.navigator > span {
+	color: #ea945e;
+}
+.navigator > span, .navigator > a {
+	margin: 0 0.25em;
 }
 
 /* 화면이 너무 작을 경우, 이미지 크기 줄이기 */

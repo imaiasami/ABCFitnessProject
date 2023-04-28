@@ -3,7 +3,13 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>루틴 생성</title>
+	<title>
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">루틴 생성</th:block>
+			<th:block th:case="jp">ルーチン生成</th:block>
+			<th:block th:case="*">Generate Routine</th:block>
+		</th:block>
+	</title>
 	<style>
 		form {
 			display: none;
@@ -18,7 +24,7 @@
 			border: 1px solid;
 			width: 100px;
 			height: 35px;
-			font-size: 18px;
+			font-size: 16px;
 			border-radius: 15px;
 		}
 		.select-btn:hover:not(.on) {
@@ -37,8 +43,9 @@
 			background-color: #ea945e;
 		}
 	</style>
-	<script>
+	<script th:inline="javascript">
 		$(() => {
+			/* 각 버튼과 input 연동 */
 			$('div[id$="-div"]').click((e) => {
 				let id = e.target.id.split('-')[0];
 				document.getElementById(id + '-input').click();
@@ -54,40 +61,149 @@
 					document.getElementById(id + '-div').classList.remove('on');
 				}
 			});
+
+			/* 이용자 정보에 따라 버튼 자동 선택 */
+			let member = [[${session.memberLogin}]]; // Object
+			if (member.cardio == 1) {
+				document.getElementById('cardio2-input').click();
+			} else {
+				document.getElementById('cardio1-input').click();
+			}
+			if (member.skill >= 1 && member.skill <= 3) {
+				document.getElementById('skill' + member.skill + '-input').click();
+			} else {
+				document.getElementById('skill1-input').click();
+			}
+			if (member.days >= 1 && member.days <= 7) {
+				document.getElementById('days' + member.days + '-input').click();
+			} else {
+				document.getElementById('days1-input').click();
+			}
+
+			let equips = [[${equips}]]; // Array
+			if (equips) {
+				for (let equip of equips) {
+					document.querySelector('input[name="' + equip + '"]').click();
+				}
+			}
 		});
 	</script>
 </head>
 <body layout:fragment="section">
-	<h2>운동 목적을 선택해 주세요.</h2>
+	<th:block th:switch="${lang}">
+		<h2 th:case="ko">운동 목적을 선택해 주세요.</h2>
+		<h2 th:case="jp">運動の目的を選択してください。</h2>
+		<h2 th:case="*">Select Your Goal for Exercise</h2>
+	</th:block>
 	<br>
-	<div id="cardio1-div" class="select-btn flex-center pointer">근력 증가</div>
-	<div id="cardio2-div" class="select-btn flex-center pointer">체중 감량</div>
+	<div id="cardio1-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">근력 증가</th:block>
+			<th:block th:case="jp">筋力増加</th:block>
+			<th:block th:case="*">Gain Muscle</th:block>
+		</th:block>
+	</div>
+	<div id="cardio2-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">체중 감량</th:block>
+			<th:block th:case="jp">体重減量</th:block>
+			<th:block th:case="*">Lose Weight</th:block>
+		</th:block>
+	</div>
 	<br><br><br>
-	<h2>운동 레벨을 선택해 주세요.</h2>
+	<th:block th:switch="${lang}">
+		<h2 th:case="ko">운동 레벨을 선택해 주세요.</h2>
+		<h2 th:case="jp">運動の難度を選択してください。</h2>
+		<h2 th:case="*">Select Your Level of Exercise</h2>
+	</th:block>
 	<br>
-	<div id="skill1-div" class="select-btn flex-center pointer">초급</div>
-	<div id="skill2-div" class="select-btn flex-center pointer">중급</div>
-	<div id="skill3-div" class="select-btn flex-center pointer">상급</div>
+	<div id="skill1-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">초급</th:block>
+			<th:block th:case="jp">初級</th:block>
+			<th:block th:case="*">Beginner</th:block>
+		</th:block>
+	</div>
+	<div id="skill2-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">중급</th:block>
+			<th:block th:case="jp">中級</th:block>
+			<th:block th:case="*">Intermediate</th:block>
+		</th:block>
+	</div>
+	<div id="skill3-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">상급</th:block>
+			<th:block th:case="jp">上級</th:block>
+			<th:block th:case="*">Advanced</th:block>
+		</th:block>
+	</div>
 	<br><br><br>
-	<h2>보유 장비를 선택해 주세요.</h2>
+	<th:block th:switch="${lang}">
+		<h2 th:case="ko">보유 장비를 선택해 주세요.</h2>
+		<h2 th:case="jp">使える装備を選択してください。</h2>
+		<h2 th:case="*">Select Your Equipment</h2>
+	</th:block>
 	<br>
-	<div id="equip1-div" class="select-btn flex-center pointer">덤벨</div>
-	<div id="equip2-div" class="select-btn flex-center pointer">밴드</div>
-	<div id="equip3-div" class="select-btn flex-center pointer">풀업바</div>
-	<div id="equip4-div" class="select-btn flex-center pointer">사이클</div>
-	<div id="equip5-div" class="select-btn flex-center pointer">러닝머신</div>
+	<div id="equip1-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">덤벨</th:block>
+			<th:block th:case="jp">ダンベル</th:block>
+			<th:block th:case="*">Dumbbell</th:block>
+		</th:block>
+	</div>
+	<div id="equip2-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">밴드</th:block>
+			<th:block th:case="jp">バンド</th:block>
+			<th:block th:case="*">Band</th:block>
+		</th:block>
+	</div>
+	<div id="equip3-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">풀업바</th:block>
+			<th:block th:case="jp">懸垂バー</th:block>
+			<th:block th:case="*">Pull-Up Bar</th:block>
+		</th:block>
+	</div>
+	<div id="equip4-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">사이클</th:block>
+			<th:block th:case="jp">サイクル</th:block>
+			<th:block th:case="*">Cycle</th:block>
+		</th:block>
+	</div>
+	<div id="equip5-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">러닝머신</th:block>
+			<th:block th:case="jp">トレッドミル</th:block>
+			<th:block th:case="*">Treadmill</th:block>
+		</th:block>
+	</div>
 	<br><br><br>
-	<h2>주당 운동 일수를 선택해 주세요.</h2>
+	<th:block th:switch="${lang}">
+		<h2 th:case="ko">주당 운동 일수를 선택해 주세요.</h2>
+		<h2 th:case="jp">週間運動日数を選択してください。</h2>
+		<h2 th:case="*">Select the Number of Exercise Days per Week</h2>
+	</th:block>
 	<br>
-	<div id="days1-div" class="select-btn flex-center pointer">1일</div>
-	<div id="days2-div" class="select-btn flex-center pointer">2일</div>
-	<div id="days3-div" class="select-btn flex-center pointer">3일</div>
-	<div id="days4-div" class="select-btn flex-center pointer">4일</div>
-	<div id="days5-div" class="select-btn flex-center pointer">5일</div>
-	<div id="days6-div" class="select-btn flex-center pointer">6일</div>
-	<div id="days7-div" class="select-btn flex-center pointer">7일</div>
+	<th:block th:each="num : ${#numbers.sequence(1,7)}">
+		<div th:id="|days${num}-div|" class="select-btn flex-center pointer">
+			<th:block th:switch="${lang}">
+				<th:block th:case="ko">[[${num}]]일</th:block>
+				<th:block th:case="jp">[[${num}]]日</th:block>
+				<th:block th:case="*">[[${num}]]day</th:block>
+			</th:block>
+		</div>
+	</th:block>
 	<br><br><br>
-	<div id="submit-div" class="select-btn flex-center pointer">루틴 생성</div>
+	<div id="submit-div" class="select-btn flex-center pointer">
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">루틴 생성</th:block>
+			<th:block th:case="jp">ルーチン生成</th:block>
+			<th:block th:case="*">Generate</th:block>
+		</th:block>
+	</div>
 	<form action="/routine/generate" method="post">
 		<input id="cardio1-input" type="radio" name="cardio" value="false">
 		<input id="cardio2-input" type="radio" name="cardio" value="true">

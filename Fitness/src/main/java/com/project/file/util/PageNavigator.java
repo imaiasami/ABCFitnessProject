@@ -13,6 +13,7 @@ public class PageNavigator {
 	private int currentPage; // 현재 페이지 (최근 글이 1부터 시작)
 	private int totalRecordsCount; // 전체 글 수
 	private int totalPageCount; // 전체 페이지 수
+	private int totalGroupCount; // 전체 그룹 수
 	private int currentGroup; // 현재 그룹 (최근 그룹이 0부터 시작)
 	private int startPageGroup; // 현재 그룹의 첫 페이지
 	private int endPageGroup; // 현재 그룹의 마지막 페이지
@@ -29,6 +30,8 @@ public class PageNavigator {
 
 		// 전체 페이지 수
 		totalPageCount = (totalRecordsCount + countPerPage - 1) / countPerPage;
+		// 전체 그룹 수
+		totalGroupCount = (totalPageCount + pagePerGroup - 1) / pagePerGroup;
 
 		// 전달된 현재 페이지가 1보다 작으면 현재페이지를 1페이지로 지정
 		if (currentPage < 1)

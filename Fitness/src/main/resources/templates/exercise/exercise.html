@@ -19,17 +19,23 @@
 		</th:block>
 	</div>
 	<div class="navigator">
-		<!--  이전 그룹 이동 -->
-		<a th:href="@{/exercise(page=${navigator.currentPage - navigator.pagePerGroup})}"><<</a>&nbsp;&nbsp;
-		<!--  이전 페이지 이동 -->
-		<a th:href="@{/exercise(page=${navigator.currentPage - 1})}"><</a>&nbsp;&nbsp;
-		<th:block th:each="counter : ${#numbers.sequence(navigator.startPageGroup, navigator.endPageGroup)}">
-			<a th:href="@{/exercise/(page=${counter})}" th:text="${counter}"></a>&nbsp;&nbsp;
+		<th:block th:if="${navigator.currentGroup != 0}">
+			<!-- 첫 페이지로 이동 -->
+			<a th:href="@{/exercise(page=1)}">&lt;&lt;</a>
+			<!-- 이전 그룹 이동 -->
+			<a th:href="@{/exercise(page=${navigator.endPageGroup - navigator.pagePerGroup})}">&lt;</a>
 		</th:block>
-		<!--  다음 페이지 이동 -->
-		<a th:href="@{/exercise(page=${navigator.currentPage + 1})}">></a>&nbsp;&nbsp;
-		<!--  다음 그룹 이동 -->
-		<a th:href="@{/exercise(page=${navigator.currentPage + navigator.pagePerGroup})}">>></a>&nbsp;&nbsp;
+		<!-- 페이지 표시 -->
+		<th:block th:each="counter : ${#numbers.sequence(navigator.startPageGroup, navigator.endPageGroup)}">
+			<span th:if="${navigator.currentPage == counter}" th:text="${counter}"></span>
+			<a th:unless="${navigator.currentPage == counter}" th:href="@{/exercise/(page=${counter})}" th:text="${counter}"></a>
+		</th:block>
+		<th:block th:if="${navigator.currentGroup < navigator.totalGroupCount - 1}">
+			<!-- 다음 그룹 이동 -->
+			<a th:href="@{/exercise(page=${navigator.startPageGroup + navigator.pagePerGroup})}">&gt;</a>
+			<!-- 마지막 페이지로 이동 -->
+			<a th:href="@{/exercise(page=${navigator.totalPageCount})}">&gt;&gt;</a>
+		</th:block>
 	</div>
 </body>
 </html>
