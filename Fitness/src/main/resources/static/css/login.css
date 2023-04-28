@@ -8,6 +8,7 @@
 
 .form-signin {
 	color: #1F3A50;
+	font-size: 20px;
 }
 
 .wrapper {
@@ -18,9 +19,11 @@
 .form-signin {
 	max-width: 380px;
 	padding: 15px 35px 45px;
-	margin: 40px auto 0 auto;
+	margin: 100px auto 0 auto;
 	background-color: #E2E2DB;
-	border: 1px solid #1F3A50;
+	border: 3px solid #1F3A50;
+	border-radius: 20px;
+
 }
 
 .form-signin .form-signin-heading, .form-signin .checkbox {
@@ -32,20 +35,25 @@
 }
 
 .form-signin .form-control {
+	width: 100%;
 	position: relative;
-	font-size: 16px;
-	height: auto;
-	padding: 10px;
+	font-size: 20px;
+	height: 60px;
+	padding: 20px;
 	box-sizing: border-box;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	background-color: #E2E2DB;
 }
 
 .form-signin .form-control:focus {
-	z-index: 2;
+	z-index: 0;
 }
 
 .form-signin input[type="text"] {
 	margin-bottom: -1px;
-	border-bottom-left-radius: 0;
+	border-bottom-left-radius: 50px;
 	border-bottom-right-radius: 0;
 }
 
@@ -53,4 +61,38 @@
 	margin-bottom: 20px;
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
+}
+
+.btn {
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 10px;
+	width: 100%;
+	height: 50px;
+	background: #E48C55;
+	background-size: 200%;
+	color: #e2e2db;
+	text-shadow: 0 0 1px #1f3a50, 0 0 1px #1f3a50;
+	font-weight: bold;
+	border: none;
+	font-size: 20px;
+	cursor: pointer;
+	transition: 0.4s;
+	display: inline;
+}
+
+.btn:hover {
+	background-position: right;
+}
+
+.text--center {
+	font-size: 15px;
+	color: #1F3A50;
+	text-align: center;
+}
+
+.text--center >a {
+	font-size: 20px;
+	color: #E48C55;
 }
