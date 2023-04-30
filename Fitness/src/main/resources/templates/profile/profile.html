@@ -22,6 +22,7 @@
 	});
 </script>
 <style>
+
 #myProfile table {
 	border-collapse: collapse;
 	border: 1px solid #ccc
@@ -48,29 +49,142 @@
 .hide {
 	display: none;
 }
+
+.img {
+	display: block;
+}
+
+.profileContainer {
+	max-width: 93.5rem;
+	margin: 0 auto;
+	padding: 0 2rem;
+}
+
+.btn {
+	display: inline-block;
+	font: inherit;
+	background: none;
+	border: none;
+	color: inherit;
+	padding: 0;
+	cursor: pointer;
+}
+
+.btn:focus {
+	outline: 0.5rem auto #4d90fe;
+}
+
+.visually-hidden {
+	position: absolute !important;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+	clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Profile Section */
+.profile {
+	padding: 2rem 0;
+}
+
+.profile::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.profile-image {
+	float: left;
+	width: calc(25% - 1rem);
+	/* 칸의 너비를 조절하려면 이 부분을 수정합니다. 예를 들어, 'width: 25%;'로 변경하면 칸의 너비가 25%가 됩니다. */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: 1rem;
+	/* 칸 사이의 공간(오른쪽 여백)을 조절하려면 이 부분을 수정합니다. 예를 들어, 'margin-right: 2rem;'로 변경하면 오른쪽 여백이 2rem이 됩니다. */
+	vertical-align: middle;
+}
+
+.profile-image img {
+	border-radius: 50%;
+	width: 100px; /* 이미지의 너비를 설정합니다. */
+	height: 100px; /* 이미지의 높이를 설정합니다. */
+	vertical-align: middle;
+}
+
+.profile-user-settings {
+	margin-top: 1.1rem;
+	float: left;
+	width: calc(66.666% - 2rem);
+}
+
+.profile-user-name {
+	display: inline-block;
+	font-size: 2.0rem; /* 폰트 크기를 3.2rem에서 2.5rem으로 줄입니다. */
+	font-weight: 600;
+	vertical-align: middle; /* 프로필 이름과 버튼이 같은 수준에서 정렬되도록 합니다. */
+}
+
+.profile-edit-btn {
+	display: inline-block; /* 버튼을 인라인 요소로 설정합니다. */
+	font-size: 0.8rem; /* 폰트 크기를 1.4rem에서 1rem으로 줄입니다. */
+	line-height: 1.5; /* line-height를 1.8에서 1.5로 줄입니다. */
+	border: 0.1rem solid #dbdbdb;
+	border-radius: 0.3rem;
+	padding: 0.1rem 0.5rem; /* padding을 조절하여 버튼 크기를 유동적으로 변경합니다. */
+	margin-left: 1rem; /* margin-left를 2rem에서 1rem으로 줄입니다. */
+	background-color: #1F3A50;
+	color: #E48C55;
+	border: 1px solid #E48C55;
+	border-radius: 15px;
+	vertical-align: middle; /* 프로필 이름과 버튼이 같은 수준에서 정렬되도록 합니다. */
+	font-weight: 600;
+}
+
+.profile-settings-btn {
+	font-size: 1rem;
+	margin-left: 1rem;
+}
+
+.profile-real-name {
+	font-size: 1.0rem; /* 폰트 크기를 1.4rem에서 1rem으로 줄입니다. */
+	font-weight: 400;
+}
+
+.inline-element {
+	display: inline-block;
+	vertical-align: middle; /* 수직 정렬을 위해 추가 */
+}
+
 </style>
 </head>
 <body layout:fragment="section">
-	<div id=myProfile>
-		나의 프로필
-		<table>
-			<tr>
-				<td rowspan="2">사진</td>
-				<td th:text="${memberProfile.name}">이름</td>
-			</tr>
-			<tr>
-				<td th:text="|@${memberProfile.mem_id}|"></td>
-			</tr>
-		</table>
-		<div
-			th:if="${session.memberLogin != null && memberProfile.mem_id == session.memberLogin.mem_id}">
-			<input type="button"
-				th:onclick="|location.href='@{/{lang}/setting/userInformation(lang=${lang})}'|"
-				value="프로필 편집하기">
+	<div class="profileContainer">
+
+		<div class="profile">
+
+			<div class="profile-image" id="profile-image">
+				<img
+					src="https://cdn.vox-cdn.com/thumbor/u7jCCxWCVBktYRsDMeeKrI91rl8=/0x0:1920x1080/920x613/filters:focal(807x387:1113x693):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/72009235/captain_pikachu.6.jpg"
+					alt="">
+			</div>
+
+			<div class="profile-user-settings" id="profile-user-settings">
+				<h1 class="profile-user-name inline-element"
+					th:text="|${memberProfile.mem_id}|"></h1>
+				<div class="inline-element"
+					th:if="${session.memberLogin != null && memberProfile.mem_id == session.memberLogin.mem_id}">
+
+					<button class="btn profile-edit-btn"
+						th:onclick="|location.href='@{/{lang}/setting/userInformation(lang=${lang})}'|"
+						aria-label="profile settings">프로필 편집</button>
+				</div>
+				<h1 class="profile-real-name" th:text="${memberProfile.name}"></h1>
+			</div>
 		</div>
 	</div>
-	<br>
-	<br>
+	<!-- End of container -->
+	<hr>
 	<div>나의 운동루틴</div>
 	<br>
 	<div class="header">
@@ -157,8 +271,7 @@
 				<td th:text="${bookmark.image}"></td>
 			</tr>
 		</table>
-		<br>
-		<br>
+		<br> <br>
 		<div>루틴즐겨찾기</div>
 		<table>
 			<tr>
@@ -172,8 +285,7 @@
 					th:href="@{/{lang}/routine/default/{rout_no}(lang=${lang}, rout_no=${routineBookmark.rout_no})}"></a></td>
 			</tr>
 		</table>
-		<br>
-		<br>
+		<br> <br>
 		<div>생성한 루틴</div>
 		<table>
 			<tr>

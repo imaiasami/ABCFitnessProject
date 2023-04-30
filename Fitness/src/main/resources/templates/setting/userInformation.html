@@ -129,7 +129,7 @@ $(document).ready(function() {
 		</div>
 
 		<input type="button" value="수정하기"
-			onclick="location.href='/setting/update'">
+			th:onclick="|location.href='@{/{lang}/setting/update(lang=${lang})}'|">
 
 	</fieldset>
 
