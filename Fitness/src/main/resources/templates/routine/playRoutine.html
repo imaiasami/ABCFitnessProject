@@ -3,7 +3,13 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>루틴 재생</title>
+	<title>
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">루틴 재생</th:block>
+			<th:block th:case="jp">ルーチン再生</th:block>
+			<th:block th:case="*">Play Routine</th:block>
+		</th:block>
+	</title>
 	<style>
 		#player {
 			text-align: center;
@@ -175,7 +181,11 @@
 	<th:block th:unless="${routine.getStep().size() < day}">
 		<th:block th:each="steps : ${routine.getStep()}">
 			<div id="player" th:if="${stepsStat.count == day}">
-				<h1 th:text="|${routine.name} ${stepsStat.count}일차|"></h1>
+				<h1 th:switch="${lang}">
+					<th:block th:case="ko">[[${routine.name}]] [[${stepsStat.count}]]일차</th:block>
+					<th:block th:case="jp">[[${routine.name}]] [[${stepsStat.count}]]日目</th:block>
+					<th:block th:case="*">[[${routine.name}]] Day [[${stepsStat.count}]]</th:block>
+				</h1>
 				<br>
 				<th:block th:each="step : ${steps}">
 					<div th:class="|ex-${stepStat.count} hide|">

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -31,42 +32,43 @@ import com.project.file.util.CheckResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
+@RequestMapping("{lang}")
 @Controller
 public class MemberController {
 	private final MemberRepository memberMapper;
 
 	// 회원가입 폼 이동
 	@GetMapping("join")
-	public String joinMemberForm(Model model) {
+	public String joinMemberForm(@PathVariable String lang, Model model) {
 		model.addAttribute("memberJoin", new MemberJoinForm());
 		return "login/join";
 	}
 
 	// 회원가입
 	@PostMapping("join")
-	public String joinMember(@ModelAttribute("memberJoin") MemberJoinForm member) {
+	public String joinMember(@ModelAttribute("memberJoin") MemberJoinForm member, @PathVariable String lang) {
 		memberMapper.joinMember(member.toMember());
-		return "redirect:/";
+		return "redirect:/" + lang + "/";
 	}
 
 	// 로그인 폼으로 이동
 	@GetMapping("login")
 	public String loginMemberForm(@SessionAttribute(name = "memberLogin", required = false) Member loginMember,
-			Model model) {
+			@PathVariable String lang, Model model) {
 		if (loginMember == null) {
 			model.addAttribute("memberLogin", new Member());
 			return "login/login";
 		} else {
-			return "redirect:/";
+			return "redirect:/" + lang + "/";
 		}
 	}
 
 	// 로그인하기
 	@PostMapping("login")
 	public String loginMember(@Validated @ModelAttribute("memberLogin") Member memberLogin, BindingResult result,
-			HttpServletRequest request, @RequestParam String redirectURL) {
+			HttpServletRequest request, @RequestParam String redirectURL, @PathVariable String lang) {
 		// 로그인 폼 유효성 검사
 		if (result.hasErrors()) {
 			return "login/login";
@@ -91,23 +93,22 @@ public class MemberController {
 
 	// 로그아웃
 	@GetMapping("logout")
-	public String logoutMember(HttpServletRequest request) {
+	public String logoutMember(HttpServletRequest request, @PathVariable String lang) {
 		HttpSession session = request.getSession();
 		session.setAttribute("memberLogin", null);
-		return "redirect:/";
+		return "redirect:/" + lang + "/";
 	}
 
 	// 비밀번호 찾기폼으로 이동
 	@GetMapping("password")
-	public String searchPasswordForm(Model model) {
+	public String searchPasswordForm(@PathVariable String lang, Model model) {
 		model.addAttribute("memberPassword", new Member());
 		return "login/findPassword";
 	}
 
-	// 비밀번호 찾기
+	// 비밀번호 찾기(미구현)
 	@PostMapping("password")
 	public String searchPassword(@ModelAttribute("memberPassword") Member memberPassword) {
-
 		return "login/login";
 	}
 
@@ -139,13 +140,16 @@ public class MemberController {
 		return count > 0;
 	}
 
-	// 북마크 추가/삭제
+	// 운동 북마크 추가&삭제
 	@PostMapping("/exercise/{ex_no}")
 	@ResponseBody
 	public ResponseEntity<?> bookmark(@SessionAttribute(name = "memberLogin", required = false) Member loginMember,
-			@PathVariable("ex_no") long ex_no) {
-		if (loginMember == null) { // 로그인 안한 사용자
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+			@PathVariable("ex_no") long ex_no, @PathVariable String lang) {
+		if (loginMember == null) { // 로그인 안 한 사용자
+			String message = "You need to log on.";
+			if (lang.equals("ko")) message = "로그인이 필요합니다.";
+			else if (lang.equals("jp")) message = "ログインが必要です。";
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
 		} else { // 로그인한 사용자
 			try {
 				Bookmark bookmarkForm = new Bookmark(loginMember.getMem_no(), ex_no);
@@ -153,7 +157,7 @@ public class MemberController {
 				if (bookmark != null && bookmark.getEx_no() == ex_no) { // 북마크 되어 있는 경우
 					log.info("bookmarks : {}", bookmark);
 					memberMapper.deleteBookmark(bookmarkForm);
-				} else {// 북마크추가
+				} else {// 운동 북마크추가
 					log.info("bookmarked : {}", bookmarkForm);
 					memberMapper.insertBookmark(bookmarkForm);
 				}
@@ -167,13 +171,16 @@ public class MemberController {
 		}
 	}
 	
-	// 루틴 북마크 추가/삭제
+	// 루틴 북마크 추가&삭제
 	@PostMapping("/default/{rout_no}")
 	@ResponseBody
 	public ResponseEntity<?> routineBookmark(@SessionAttribute(name = "memberLogin", required = false) Member loginMember,
-			@PathVariable("rout_no") long rout_no) {
-		if (loginMember == null) { // 로그인 안한 사용자
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인이 필요합니다.");
+			@PathVariable("rout_no") long rout_no, @PathVariable String lang) {
+		if (loginMember == null) { // 로그인 안 한 사용자
+			String message = "You need to log on.";
+			if (lang.equals("ko")) message = "로그인이 필요합니다.";
+			else if (lang.equals("jp")) message = "ログインが必要です。";
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(message);
 		} else { // 로그인한 사용자
 			try {
 				RoutineBookmark routineBookmarkForm = new RoutineBookmark(loginMember.getMem_no(), rout_no);

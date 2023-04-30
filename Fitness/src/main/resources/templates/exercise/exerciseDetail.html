@@ -4,18 +4,16 @@
 	layout:decorate="layout/default_layout">
 <head>
 	<title>
-		<th:block th:switch="${lang}">
-			<th:block th:case="ko">운동 상세</th:block>
-			<th:block th:case="jp">運動詳細</th:block>
-			<th:block th:case="*">Exercise Detail</th:block>
-		</th:block>
+		[[${exercise.name}]]
 	</title>
 	<link rel="stylesheet" href="/css/detailpage.css">
 	<script th:inline="javascript">
+		var lang = location.pathname.substr(0, 3);
+
 		function addBookmark(exerciseId) {
 			let isBookmarked = $('#bookmark-btn').hasClass('active');
 			$.ajax({
-				url: "/exercise/" + exerciseId,
+				url: lang + "/exercise/" + exerciseId,
 				type: "POST",
 				dataType: "json",
 				data: {
@@ -24,10 +22,10 @@
 				success: function(result) {
 					if (result.status === 'success') {
 						if(isBookmarked) {
-							alert("북마크가 삭제되었습니다.");
+							// alert("북마크가 삭제되었습니다.");
 							$('#bookmark-btn').removeClass('active'); // 버튼 OFF
 						} else {
-							alert("북마크에 추가되었습니다.");
+							// alert("북마크에 추가되었습니다.");
 							$('#bookmark-btn').addClass('active'); // 버튼 ON
 						}
 					} else if (result.status === 'fail') {
@@ -40,7 +38,7 @@
 					console.log(xhr);
 					if (xhr.status == 401) {
 						if(confirm(xhr.responseText)) {
-							location.href = '/login'; // 로그인 페이지로 이동
+							location.href = lang + '/login?redirectURL=' + location.pathname; // 로그인 페이지로 이동
 						}
 					}
 				}
@@ -52,90 +50,77 @@
 			$("#bookmark-btn").click(function() {
 				addBookmark(exerciseId);
 			});
+
+			$("#go-menu").click(function() {
+				// location.href = location.href.replace(/(?<=exercise\/)\d*/, ''); // 웹킷 엔진에서 (?<=)를 인식 못 하는 듯?
+				let path = location.pathname.split('/');
+				location.href = location.origin + '/' + path[1] + '/' + path[2] + '/' + location.search;
+			});
 		});
 	</script>
 </head>
 <body layout:fragment="section">
 	<div class="text-center">
 		<h1>
-			<th:block th:unless="${bookmarked == null}">
-				<button id="bookmark-btn" class="active"></button>
-			</th:block>
-			<th:block th:if="${bookmarked == null }">
-				<button id="bookmark-btn" ></button>
-			</th:block>
+			<button id="bookmark-btn" class="active" th:unless="${bookmarked == null}"></button>
+			<button id="bookmark-btn" th:if="${bookmarked == null}"></button>
 			[[${exercise.name}]]
 		</h1>
 		<h3 th:text="${exercise.effect}"></h3>
 		<div id="box" class="flex-center">
 			<div class="text-center">
-				<th:block th:switch="${exercise.diff}">
-					<th:block th:case="0">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>운동 종류</h4><hr>스트레칭</th:block>
-							<th:block th:case="jp"><h4>運動種類</h4><hr>ストレッチ</th:block>
-							<th:block th:case="*"><h4>Type</h4><hr>Stretch</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="1">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="2">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="3">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="4">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="5">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>상급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>上級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Advanced</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="6">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>운동 종류</h4><hr>유산소</th:block>
-							<th:block th:case="jp"><h4>運動種類</h4><hr>有酸素</th:block>
-							<th:block th:case="*"><h4>Type</h4><hr>Cardio</th:block>
-						</th:block>
-					</th:block>
+				<th:block th:if="${exercise.diff == 0}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>운동 종류</h4><hr>스트레칭</th:block>
+					<th:block th:case="jp"><h4>運動種類</h4><hr>ストレッチ</th:block>
+					<th:block th:case="*"><h4>Type</h4><hr>Stretch</th:block>
+				</th:block>
+				<th:block th:if="${exercise.diff == 1}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
+				</th:block>
+				<th:block th:if="${exercise.diff == 2}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
+				</th:block>
+				<th:block th:if="${exercise.diff == 3}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
+				</th:block>
+				<th:block th:if="${exercise.diff == 4}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
+				</th:block>
+				<th:block th:if="${exercise.diff == 5}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>상급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>上級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Advanced</th:block>
+				</th:block>
+				<th:block th:if="${exercise.diff == 6}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>운동 종류</h4><hr>유산소</th:block>
+					<th:block th:case="jp"><h4>運動種類</h4><hr>有酸素</th:block>
+					<th:block th:case="*"><h4>Type</h4><hr>Cardio</th:block>
+				</th:block>
 				</th:block>
 			</div>
 			<div class="text-center">
-				<th:block th:switch="${lang}">
-					<h4 th:case="ko">운동 부위</h4>
-					<h4 th:case="jp">運動部位</h4>
-					<h4 th:case="*">Muscle</h4>
-				</th:block>
+				<h4 th:switch="${lang}">
+					<th:block th:case="ko">운동 부위</th:block>
+					<th:block th:case="jp">運動部位</th:block>
+					<th:block th:case="*">Muscle</th:block>
+				</h4>
 				<hr>
 				[[${exercise.muscle}]]
 			</div>
 			<div class="text-center">
-				<th:block th:switch="${lang}">
-					<h4 th:case="ko">사용 장비</h4>
-					<h4 th:case="jp">装備</h4>
-					<h4 th:case="*">Equipment</h4>
-				</th:block>
+				<h4 th:switch="${lang}">
+					<th:block th:case="ko">사용 장비</th:block>
+					<th:block th:case="jp">装備</th:block>
+					<th:block th:case="*">Equipment</th:block>
+				</h4>
 				<hr>
 				[[${exercise.equip}]]
 			</div>
@@ -147,6 +132,13 @@
 	</div>
 	<div id="exercise">
 		<span th:utext="${#strings.replace(#strings.replace(exercise.guide,'[','<h2>'),']','</h2>')}"></span>
+	</div>
+	<div class="text-center">
+		<div id="go-menu" class="flex-center pointer" th:switch="${lang}">
+			<th:block th:case="ko">뒤로 가기</th:block>
+			<th:block th:case="jp">戻る</th:block>
+			<th:block th:case="*">Backward</th:block>
+		</div>
 	</div>
 </body>
 </html>

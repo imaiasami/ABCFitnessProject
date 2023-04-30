@@ -49,7 +49,7 @@ hr {
     border-bottom: 1px solid #e2e2db40;
 }
 
-#menu-icon > img, #etc-btn > img {
+#menu-icon > img, #etc-btn > img, #etc-popup img {
     filter: invert(98%) sepia(15%) saturate(122%) hue-rotate(359deg) brightness(94%) contrast(88%);
 }
 #menu-icon:hover, #etc-btn:hover, #sidebar > a:hover {
@@ -71,10 +71,12 @@ hr {
 #etc-popup {
     background-color: #444;
 }
-
-#etc-popup > .pointer:hover {
+#etc-popup .pointer:hover {
     background-color: #333;
-    color: #fff;
+    filter: brightness(150%);
+}
+#etc-popup table {
+    background-color: #333;
 }
 
 

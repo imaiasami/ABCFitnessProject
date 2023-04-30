@@ -3,66 +3,56 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="/css/calendar.css">
-<title>달력</title>
-<script src="/js/calendar.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('#calendar-header').click(function() {
-			$('#calendarDI').removeClass('hide');
-			$('#bookmark').addClass('hide');
-			$('#routineBookmark').addClass('hide');
+	<title>달력</title>
+	<link rel="stylesheet" href="/css/calendar.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="/js/calendar.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#calendar-header').click(function() {
+				$('#calendarDI').removeClass('hide');
+				$('#bookmark').addClass('hide');
 
+			});
+
+			$('#bookmark-header').click(function() {
+				$('#bookmark').removeClass('hide');
+				$('#calendarDI').addClass('hide');
+			});
 		});
+	</script>
+	<style>
+		#myProfile table {
+			border-collapse: collapse;
+			border: 1px solid #ccc
+		}
 
-		$('#bookmark-header').click(function() {
-			$('#bookmark').removeClass('hide');
-			$('#routineBookmark').removeClass('hide');
-			$('#calendarDI').addClass('hide');
+		#myProfile td {
+			padding: 5px;
+			border: 1px solid #ccc;
+		}
 
-		});
-	});
-</script>
+		.header div {
+			display: inline-block;
+			padding: 10px 20px;
+			margin: 0 10px;
+			border: 1px solid #E2E2DB;
+			border-radius: 2px;
+			cursor: pointer;
+		}
 
+		.header div:hover {
+			background-color: #E48C55;
+		}
 
-
-<style>
-#myProfile table {
-	border-collapse: collapse;
-	border: 1px solid #ccc
-}
-
-#myProfile td {
-	padding: 5px;
-	border: 1px solid #ccc;
-}
-
-.header div {
-	display: inline-block;
-	padding: 10px 20px;
-	margin: 0 10px;
-	border: 1px solid #E2E2DB;
-	border-radius: 2px;
-	cursor: pointer;
-}
-
-.header div:hover {
-	background-color: #E48C55;
-}
-
-.hide {
-	display: none;
-}
-</style>
-
+		.hide {
+			display: none;
+		}
+	</style>
 </head>
-
 <body layout:fragment="section">
 	<div id=myProfile>
 		나의 프로필
-
 		<table>
 			<tr>
 				<td rowspan="2">사진</td>
@@ -72,28 +62,24 @@
 				<td th:text="|@${memberProfile.mem_id}|"></td>
 			</tr>
 		</table>
-		<div
-			th:if="${session.memberLogin != null && memberProfile.mem_id == session.memberLogin.mem_id}">
-			<input type="button"
-				onclick="location.href='/setting/userInformation'" value="프로필 편집하기">
+		<div th:if="${session.memberLogin != null && memberProfile.mem_id == session.memberLogin.mem_id}">
+			<input type="button" th:onclick="|location.href='@{/{lang}/setting/userInformation(lang=${lang})}'|" value="프로필 편집하기">
 		</div>
 	</div>
 	<br>
 	<br>
 	<div>나의 운동루틴</div>
 	<br>
-	<header class="header">
+	<div class="header">
 		<div id="calendar-header" class="pointer">캘린더</div>
 		<div id="bookmark-header" class="pointer">나의 즐겨찾기</div>
-	</header>
-
+	</div>
 	<div id="calendarDI">
 		<table class="Calendar">
 			<thead>
 				<tr>
 					<td onClick="prevCalendar();" style="cursor: pointer;">&#60;</td>
-					<td colspan="5"><span id="calYear"></span>년 <span
-						id="calMonth"></span>월</td>
+					<td colspan="5"><span id="calYear"></span>년 <span id="calMonth"></span>월</td>
 					<td onClick="nextCalendar();" style="cursor: pointer;">&#62;</td>
 				</tr>
 				<tr>
@@ -106,14 +92,11 @@
 					<td>토</td>
 				</tr>
 			</thead>
-
 			<tbody>
 			</tbody>
 		</table>
 	</div>
-
 	<br>
-
 	<div id="bookmark" class="hide">
 		<div>운동즐겨찾기</div>
 		<table>
@@ -124,27 +107,34 @@
 			</tr>
 			<tr th:each="bookmark, bookmarkStat : ${bookmarks}">
 				<td th:text="${bookmarkStat.count}"></td>
-				<td><a th:text="${bookmark.name}"
-					th:href="@{/exercise/{ex_no}(ex_no=${bookmark.ex_no})}"></a></td>
+				<td><a th:text="${bookmark.name}" th:href="@{/{lang}/exercise/{ex_no}(lang=${lang}, ex_no=${bookmark.ex_no})}"></a></td>
 				<td th:text="${bookmark.image}"></td>
 			</tr>
 		</table>
-		<br> <br>
-		<div id="routineBookmark" class="hide">
-			<div>루틴즐겨찾기</div>
-			<table>
-				<tr>
-					<th>NO.</th>
-					<th>루틴 이름</th>
-				</tr>
-				<tr
-					th:each="routineBookmark, routineBookmarkStat : ${routineBookmarks}">
-					<td th:text="${routineBookmarkStat.count}"></td>
-					<td><a th:text="${routineBookmark.name}"
-						th:href="@{/default/{rout_no}(rout_no=${routineBookmark.rout_no})}"></a></td>
-				</tr>
-			</table>
-
-		</div>
+		<br><br>
+		<div>루틴즐겨찾기</div>
+		<table>
+			<tr>
+				<th>NO.</th>
+				<th>루틴 이름</th>
+			</tr>
+			<tr th:each="routineBookmark, routineBookmarkStat : ${routineBookmarks}">
+				<td th:text="${routineBookmarkStat.count}"></td>
+				<td><a th:text="${routineBookmark.name}" th:href="@{/{lang}/routine/default/{rout_no}(lang=${lang}, rout_no=${routineBookmark.rout_no})}"></a></td>
+			</tr>
+		</table>
+		<br><br>
+		<div>생성한 루틴</div>
+		<table>
+			<tr>
+				<th>NO.</th>
+				<th>루틴 이름</th>
+			</tr>
+			<tr th:each="routine : ${generateRoutines}">
+				<td th:text="${routineStat.count}"></td>
+				<td><a th:text="${routine.name}" th:href="@{/{lang}/routine/generate/{rout_no}(lang=${lang}, rout_no=${routine.rout_no})}"></a></td>
+			</tr>
+		</table>
+	</div>
 </body>
 </html>

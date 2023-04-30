@@ -204,7 +204,7 @@
 			<th:block th:case="*">Generate</th:block>
 		</th:block>
 	</div>
-	<form action="/routine/generate" method="post">
+	<form th:action="|/${lang}/routine/generate|" method="post">
 		<input id="cardio1-input" type="radio" name="cardio" value="false">
 		<input id="cardio2-input" type="radio" name="cardio" value="true">
 		<input id="skill1-input" type="radio" name="skill" value="1">

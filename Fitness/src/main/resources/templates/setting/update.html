@@ -21,7 +21,7 @@
 </head>
 <body layout:fragment="section">
 	<h2>[ 개인정보 수정 ]</h2>
-	<form action="update" method="post" th:object="${member}">
+	<form th:action="|/${lang}/update|" method="post" th:object="${member}">
 		<table>
 			<tr>
 				<td><input type="email" th:field="*{mail}" disabled="disabled"></td>

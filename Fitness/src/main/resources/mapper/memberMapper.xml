@@ -96,13 +96,43 @@
 	<select id="getBookmarkList" resultType="exercise">
 		select
 			bo.ex_no,
-			ex.name_ko name,
-			ex.image
-			from
+			ex.musc_id,
+            ex.equip_id,
+			ex.diff,
+			ex.freq,
+			ex.image,
+			<choose>
+				<when test="lang != null and lang.equals('ko')">
+					mu.name_ko muscle,
+					eq.name_ko equip,
+					ex.name_ko name,
+					ex.effect_ko effect,
+					ex.guide_ko guide
+				</when>
+				<when test="lang != null and lang.equals('jp')">
+					mu.name_jp muscle,
+					eq.name_jp equip,
+					ex.name_jp name,
+					ex.effect_jp effect,
+					ex.guide_jp guide
+				</when>
+				<otherwise>
+					mu.name_en muscle,
+					eq.name_en equip,
+					ex.name_en name,
+					ex.effect_en effect,
+					ex.guide_en guide
+				</otherwise>
+			</choose>
+		from
 			ex_book bo,
-			exercise ex
+			exercise ex,
+			muscle mu,
+			equipment eq
 		where bo.mem_no = #{mem_no}
 		and bo.ex_no = ex.ex_no
+		and ex.musc_id = mu.musc_id
+        and ex.equip_id = eq.equip_id
 	</select>
 
 	<!-- 운동 북마크 추가 -->
@@ -132,9 +162,26 @@
 	<!-- 나의 루틴 북마크 -->
 	<select id="getRoutineBookmarkList" resultType="routine">
 		select
-			bo.rout_d_no,
-			ex.name_ko name
-			from
+			bo.rout_d_no rout_no,
+			ex.step,
+			ex.equip,
+			ex.diff,
+			ex.runtime,
+			<choose>
+				<when test="lang != null and lang.equals('ko')">
+					ex.name_ko name,
+					ex.guide_ko guide
+				</when>
+				<when test="lang != null and lang.equals('jp')">
+					ex.name_jp name,
+					ex.guide_jp guide
+				</when>
+				<otherwise>
+					ex.name_en name,
+					ex.guide_en guide
+				</otherwise>
+			</choose>
+		from
 			rout_d_book bo,
 			rout_default ex
 		where bo.mem_no = #{mem_no}

@@ -116,19 +116,19 @@ hr {
     margin-right: 5px;
 }
 #login-btn div {
-    width: 90px;
     height: 32px;
     border: 1px solid;
     border-radius: 100px;
+    padding: 0 10px;
 }
 #login-btn img {
-    max-width: 18px;
-    max-height: 18px;
+    max-width: 16px;
+    max-height: 16px;
+    margin-right: 4px;
 }
 #login-btn span {
-    width: 46px;
-    font-size: 16px;
-    text-align: right;
+    max-width: 60px;
+    font-size: 14px;
 }
 
 #etc-popup {
@@ -137,16 +137,52 @@ hr {
     top: var(--topbar-height);
     right: 0;
     z-index: 1;
+    max-height: calc(100vh - var(--topbar-height));
     padding: 10px 0;
     border-radius: 10px;
 }
 #etc-popup.open {
     display: block;
 }
-
+#etc-popup .hide {
+    display: none;
+}
 #etc-popup > div {
     width: 200px;
     padding: 4px 15px;
+}
+#etc-popup img {
+    max-width: 18px;
+    max-height: 18px;
+    margin-right: 5px;
+    transform: translate(0, 3px);
+}
+
+#etc-user {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+#etc-user > span:first-child {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+#etc-user > span:last-child {
+    font-size: 0.9em;
+}
+
+#etc-popup table {
+    width: 100%;
+    border-spacing: 0;
+}
+#etc-popup table tr > td:first-child {
+    width: 25%;
+    padding: 2px 5px;
+    text-align: right;
+}
+#etc-popup table tr > td:last-child {
+    width: 75%;
+    padding: 2px 0;
 }
 
 
@@ -161,7 +197,7 @@ hr {
     z-index: 1;
     width: var(--nav-width-full);
     height: calc(100vh - var(--topbar-height));
-    font-size: 18px;
+    font-size: 17px;
     overflow-x: hidden;
     overflow-y: overlay;
     transition: all 0.3s;
@@ -169,10 +205,9 @@ hr {
 
 #sidebar > a {
     display: flex;
-    margin-bottom: 5px;
 }
 #sidebar > a:first-child {
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 #sidebar > a > div:first-child {
@@ -182,8 +217,8 @@ hr {
 }
 
 #sidebar > a > div:first-child > img {
-    max-width: calc(var(--nav-width-small) - 24px);
-    max-height: calc(var(--nav-width-small) - 24px);
+    max-width: calc(var(--nav-width-small) - 28px);
+    max-height: calc(var(--nav-width-small) - 32px);
 }
 
 #sidebar > a > div:last-child {
@@ -248,7 +283,7 @@ hr {
 
     #sidebar:not(.open) {
         width: var(--nav-width-small);
-        font-size: 14px;
+        font-size: 13px;
     }
 
     #sidebar:not(.open) > a {
@@ -256,7 +291,11 @@ hr {
     }
 
     #sidebar:not(.open) > a > div:last-child {
-        justify-content: center;
+        display: inherit;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: center;
         width: var(--nav-width-small);
         height: 25px;
         padding-left: 0;

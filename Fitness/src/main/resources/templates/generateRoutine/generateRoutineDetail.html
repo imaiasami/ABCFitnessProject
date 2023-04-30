@@ -4,74 +4,77 @@
 	layout:decorate="layout/default_layout">
 <head>
 	<title>
-		<th:block th:switch="${lang}">
-			<th:block th:case="ko">루틴 상세</th:block>
-			<th:block th:case="jp">ルーチン詳細</th:block>
-			<th:block th:case="*">Routine Detail</th:block>
-		</th:block>
+		[[${routine.name}]]
 	</title>
 	<link rel="stylesheet" href="/css/detailpage.css">
+	<style>
+		#edit-btn {
+			height: 1em;
+			padding: 0;
+			border: none;
+			outline: none;
+			background: transparent;
+			font-size: 1em;
+			line-height: 0.5;
+			color: #ccc;
+			cursor: pointer;
+		}
+		#edit-btn::before {
+			content: "\270E";
+		}
+	</style>
 </head>
 <body layout:fragment="section">
 	<div class="text-center">
-		<h1 th:text="${routine.name}"></h1>
+		<h1>
+			<button id="edit-btn" th:if="${session.memberLogin != null and routine.getMem_no().equals(session.memberLogin.mem_no)}"></button>
+			[[${routine.name}]]
+		</h1>
 		<div id="box" class="flex-center">
 			<div class="text-center">
-				<th:block th:if="${routine.cardio}">
-					<th:block th:switch="${lang}">
-						<th:block th:case="ko"><h4>운동 목적</h4><hr>체중 감량</th:block>
-						<th:block th:case="jp"><h4>運動目的</h4><hr>体重減量</th:block>
-						<th:block th:case="*"><h4>Goal</h4><hr>Lose Weight</th:block>
-					</th:block>
+				<th:block th:if="${routine.cardio}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>운동 목적</h4><hr>체중 감량</th:block>
+					<th:block th:case="jp"><h4>運動目的</h4><hr>体重減量</th:block>
+					<th:block th:case="*"><h4>Goal</h4><hr>Lose Weight</th:block>
 				</th:block>
-				<th:block th:unless="${routine.cardio}">
-					<th:block th:switch="${lang}">
-						<th:block th:case="ko"><h4>운동 목적</h4><hr>근력 증가</th:block>
-						<th:block th:case="jp"><h4>運動目的</h4><hr>筋力増加</th:block>
-						<th:block th:case="*"><h4>Goal</h4><hr>Gain Muscle</th:block>
-					</th:block>
+				<th:block th:unless="${routine.cardio}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>운동 목적</h4><hr>근력 증가</th:block>
+					<th:block th:case="jp"><h4>運動目的</h4><hr>筋力増加</th:block>
+					<th:block th:case="*"><h4>Goal</h4><hr>Gain Muscle</th:block>
 				</th:block>
 			</div>
 			<div class="text-center">
-				<th:block th:switch="${routine.diff}">
-					<th:block th:case="1">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="2">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
-						</th:block>
-					</th:block>
-					<th:block th:case="3">
-						<th:block th:switch="${lang}">
-							<th:block th:case="ko"><h4>난이도</h4><hr>상급</th:block>
-							<th:block th:case="jp"><h4>難度</h4><hr>上級</th:block>
-							<th:block th:case="*"><h4>Difficulty</h4><hr>Advanced</th:block>
-						</th:block>
-					</th:block>
+				<th:block th:if="${routine.diff == 1}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>초급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>初級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Beginner</th:block>
+				</th:block>
+				<th:block th:if="${routine.diff == 2}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>중급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>中級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Intermediate</th:block>
+				</th:block>
+				<th:block th:if="${routine.diff == 3}" th:switch="${lang}">
+					<th:block th:case="ko"><h4>난이도</h4><hr>상급</th:block>
+					<th:block th:case="jp"><h4>難度</h4><hr>上級</th:block>
+					<th:block th:case="*"><h4>Difficulty</h4><hr>Advanced</th:block>
 				</th:block>
 			</div>
 			<div class="text-center">
-				<th:block th:switch="${lang}">
-					<h4 th:case="ko">사용 장비</h4>
-					<h4 th:case="jp">装備</h4>
-					<h4 th:case="*">Equipment</h4>
-				</th:block>
+				<h4 th:switch="${lang}">
+					<th:block th:case="ko">사용 장비</th:block>
+					<th:block th:case="jp">装備</th:block>
+					<th:block th:case="*">Equipment</th:block>
+				</h4>
 				<hr>
 				[[${#strings.replace(#strings.replace(routine.equip,'[','&nbsp;'),']','&nbsp;')}]]
 			</div>
 			<div class="text-center">
-				<th:block th:switch="${lang}">
-					<h4 th:case="ko">운동 일수</h4>
-					<h4 th:case="jp">運動日数</h4>
-					<h4 th:case="*">Days</h4>
-				</th:block>
+				<h4 th:switch="${lang}">
+					<th:block th:case="ko">운동 일수</th:block>
+					<th:block th:case="jp">運動日数</th:block>
+					<th:block th:case="*">Days</th:block>
+				</h4>
 				<hr>
 				[[${routine.days}]]
 			</div>
@@ -79,12 +82,12 @@
 	</div>
 	<div id="routine" class="flex-center">
 		<div class="text-center" th:each="steps : ${routine.getStep()}">
-			<th:block th:switch="${lang}">
-				<h3 th:case="ko">[[${stepsStat.count}]]일차</h3>
-				<h3 th:case="jp">[[${stepsStat.count}]]日目</h3>
-				<h3 th:case="*">Day [[${stepsStat.count}]]</h3>
-			</th:block>
-			<input type="button" class="pointer" value="▶" th:onclick="|location.href='/routine/run/g/${routine.rout_no}/${stepsStat.count}'|">
+			<h3 th:switch="${lang}">
+				<th:block th:case="ko">[[${stepsStat.count}]]일차</th:block>
+				<th:block th:case="jp">[[${stepsStat.count}]]日目</th:block>
+				<th:block th:case="*">Day [[${stepsStat.count}]]</th:block>
+			</h3>
+			<input type="button" class="pointer" value="▶" th:onclick="|location.href='@{/{lang}/routine/run/g/{rout_no}/{step}(lang=${lang}, rout_no=${routine.rout_no}, step=${stepsStat.count})}'|">
 			<hr>
 			<th:block th:each="step : ${steps}">
 				<span>

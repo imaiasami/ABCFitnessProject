@@ -17,8 +17,9 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(new LoginCheckInterceptor())
 		.order(1)
 		.addPathPatterns(
-				"/routine/generate/**",
-				"/routine/run/**"
+				"/*/setting/userInformation/**",
+				"/*/routine/generate/**",
+				"/*/routine/run/**"
 		)
 		.excludePathPatterns(
 				"/",

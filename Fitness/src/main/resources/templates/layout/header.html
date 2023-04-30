@@ -5,7 +5,7 @@
 			<img src="/images/icons/menu.png">
 		</div>
 		<div id="title-image" class="flex-center">
-			<a href="/">
+			<a th:href="|/${lang}/|">
 				<img src="/images/icons/logo.png">
 			</a>
 		</div>
@@ -13,24 +13,69 @@
 			<img src="/images/icons/drop_dowrn.png">
 		</div>
 		<div id="login-btn" class="flex-center" th:if="${session.memberLogin == null}">
-			<a href="/login">
+			<a th:href="|/${lang}/login|">
 				<div class="flex-center">
 					<img src="/images/icons/profile2.png">
-					<span>Login</span>
+					<span th:switch="${lang}">
+						<th:block th:case="ko">로그인</th:block>
+						<th:block th:case="jp">ログイン</th:block>
+						<th:block th:case="*">Login</th:block>
+					</span>
 				</div>
 			</a>
 		</div>
 		<div id="etc-popup">
 			<th:block th:if="${session.memberLogin != null}">
-				<div th:text="${session.memberLogin.mail}"></div>
-				<div class="pointer" onclick="location.href='/logout'">
-					Logout
+				<div id="etc-user">
+					<span th:text="${session.memberLogin.name}"></span>
+					<br>
+					<span th:text="${session.memberLogin.mail}"></span>
+				</div>
+				<div class="pointer" th:onclick="|location.href='@{/{lang}/logout(lang=${lang})}'|">
+					<img src="/images/icons/logout.png">
+					<span th:switch="${lang}">
+						<th:block th:case="ko">로그아웃</th:block>
+						<th:block th:case="jp">ログアウト</th:block>
+						<th:block th:case="*">Logout</th:block>
+					</span>
 				</div>
 				<hr>
 			</th:block>
-			<div id="etc-lang" class="pointer">Language</div>
-			<div class="pointer" onclick="location.href='/setting/userInformation'">
-				Setting
+			<div id="etc-lang" class="pointer">
+				<img src="/images/icons/language.png">
+				<span th:switch="${lang}">
+					<th:block th:case="ko">언어</th:block>
+					<th:block th:case="jp">言語</th:block>
+					<th:block th:case="*">Language</th:block>
+				</span>
+			</div>
+			<table id="etc-lang-select" class="hide">
+				<tr class="pointer"onclick="changeLanguage('en')">
+					<td>
+						<th:block th:if="${lang.equals('en')}">&gt;</th:block>
+					</td>
+					<td>English</td>
+				</tr>
+				<tr class="pointer"onclick="changeLanguage('jp')">
+					<td>
+						<th:block th:if="${lang.equals('jp')}">&gt;</th:block>
+					</td>
+					<td>日本語</td>
+				</tr>
+				<tr class="pointer"onclick="changeLanguage('ko')">
+					<td>
+						<th:block th:if="${lang.equals('ko')}">&gt;</th:block>
+					</td>
+					<td>한국어</td>
+				</tr>
+			</table>
+			<div class="pointer" th:onclick="|location.href='@{/{lang}/setting/userInformation(lang=${lang})}'|">
+				<img src="/images/icons/setting.png">
+				<span th:switch="${lang}">
+					<th:block th:case="ko">설정</th:block>
+					<th:block th:case="jp">設定</th:block>
+					<th:block th:case="*">Setting</th:block>
+				</span>
 			</div>
 		</div>
 	</div>

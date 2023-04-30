@@ -2,44 +2,54 @@
 <html xmlns:th="http://www.thymeleaf.org" th:fragment="navFragment">
 	<div id="sidemodal" class="modal"></div>
 	<div id="sidebar">
-		<a href="/">
+		<a th:href="|/${lang}/|">
 			<div class="flex-center">
 				<img src="/images/icons/home.png">
 			</div>
-			<div class="flex-center">
-				Home
+			<div class="flex-center" th:switch="${lang}">
+				<th:block th:case="ko">홈</th:block>
+				<th:block th:case="jp">ホーム</th:block>
+				<th:block th:case="*">Home</th:block>
 			</div>
 		</a>
-		<a href="/exercise">
+		<a th:href="|/${lang}/exercise|">
 			<div class="flex-center">
 				<img src="/images/icons/exercise.png">
 			</div>
-			<div class="flex-center">
-				Exercise
+			<div class="flex-center" th:switch="${lang}">
+				<th:block th:case="ko">운동</th:block>
+				<th:block th:case="jp">運動</th:block>
+				<th:block th:case="*">Exercise</th:block>
 			</div>
 		</a>
-		<a href="/routine/default">
+		<a th:href="|/${lang}/routine/default|">
 			<div class="flex-center">
 				<img src="/images/icons/routine2.png">
 			</div>
-			<div class="flex-center">
-				Routine
+			<div class="flex-center" th:switch="${lang}">
+				<th:block th:case="ko">루틴</th:block>
+				<th:block th:case="jp">ルーチン</th:block>
+				<th:block th:case="*">Routine</th:block>
 			</div>
 		</a>
-		<a href="/routine/generate">
+		<a th:href="|/${lang}/routine/generate|">
 			<div class="flex-center">
 				<img src="/images/icons/routine-icon.png">
 			</div>
-			<div class="flex-center">
-				Generate
+			<div class="flex-center" th:switch="${lang}">
+				<th:block th:case="ko">루틴 생성</th:block>
+				<th:block th:case="jp">ルーチン生成</th:block>
+				<th:block th:case="*">Generate</th:block>
 			</div>
 		</a>
-		<a href="/profile">
+		<a th:href="|/${lang}/profile|">
 			<div class="flex-center">
 				<img src="/images/icons/profile.png">
 			</div>
-			<div class="flex-center">
-				Profile
+			<div class="flex-center" th:switch="${lang}">
+				<th:block th:case="ko">프로필</th:block>
+				<th:block th:case="jp">プロフィール</th:block>
+				<th:block th:case="*">Profile</th:block>
 			</div>
 		</a>
 	</div>

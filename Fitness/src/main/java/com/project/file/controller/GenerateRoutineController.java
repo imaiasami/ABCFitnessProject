@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("routine")
+@RequestMapping("{lang}/routine")
 @Controller
 public class GenerateRoutineController {
 	public final ExerciseRepository exerciseMapper;
@@ -44,7 +44,7 @@ public class GenerateRoutineController {
 
 	// 루틴 생성 페이지로 이동
 	@GetMapping("generate")
-	public String selectConditions(@SessionAttribute(name = "memberLogin", required = false) Member memberLogin, Model model) {
+	public String selectConditions(@SessionAttribute(name = "memberLogin", required = false) Member memberLogin, @PathVariable String lang, Model model) {
 		if (memberLogin != null) {
 			List<String> equips = memberMapper.getEquipmentList(memberLogin.getMem_no());
 			model.addAttribute("equips", equips);
@@ -56,7 +56,7 @@ public class GenerateRoutineController {
 	
 	// 루틴 생성 로직
 	@PostMapping("generate")
-	public String generateRoutine(@ModelAttribute GenerateRoutineConditions conditions, HttpServletRequest request) {
+	public String generateRoutine(@ModelAttribute GenerateRoutineConditions conditions, @PathVariable String lang, HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		Member memberLogin = (Member) session.getAttribute("memberLogin");
 		
@@ -72,13 +72,13 @@ public class GenerateRoutineController {
 			for (int j = 0; j < weeklyMuscle.get(i).size(); j++) {
 				if (j != 0) step += ", ";
 				// 조건에 맞는 운동 가져오기
-				List<Exercise> exercises = exerciseMapper.getExercisesByMuscle(weeklyMuscle.get(i).get(j), getDifficulty(conditions.getSkill()), conditions.getEquip(), "ko");
-				if (exercises.size() == 0) exercises = exerciseMapper.getExercisesByMuscle(weeklyMuscle.get(i).get(j), getDifficulty(2), conditions.getEquip(), "ko");
+				List<Exercise> exercises = exerciseMapper.getExercisesByMuscle(weeklyMuscle.get(i).get(j), getDifficulty(conditions.getSkill()), conditions.getEquip(), lang);
+				if (exercises.size() == 0) exercises = exerciseMapper.getExercisesByMuscle(weeklyMuscle.get(i).get(j), getDifficulty(2), conditions.getEquip(), lang);
 				Exercise exercise = exercises.get(rd.nextInt(exercises.size()));
 				step += exercise.getEx_no() + ":3";
 				// 체중 감량이 목적일 경우, 각 일정 마지막에 유산소 운동 넣기
 				if (conditions.getCardio() && j == weeklyMuscle.get(i).size() - 1) {
-					List<Exercise> cardios = exerciseMapper.getExercisesByMuscle(null, new ArrayList<Integer>(Arrays.asList(6)), conditions.getEquip(), "ko");
+					List<Exercise> cardios = exerciseMapper.getExercisesByMuscle(null, new ArrayList<Integer>(Arrays.asList(6)), conditions.getEquip(), lang);
 					Exercise cardio = cardios.get(rd.nextInt(cardios.size()));
 					step += ", " + cardio.getEx_no() + ":3";
 				}
@@ -112,15 +112,15 @@ public class GenerateRoutineController {
 			}
 		}
 		
-		return "redirect:/routine/generate/" + rout_g.getRout_no();
+		return "redirect:/" + lang + "/routine/generate/" + rout_g.getRout_no();
 	}
 	
 	// 루틴 생성 완료 페이지로 이동
 	@GetMapping("generate/{rout_no}")
-	public String defaultRoutineDetail(@PathVariable long rout_no, Model model) {
+	public String defaultRoutineDetail(@PathVariable long rout_no, @PathVariable String lang, Model model) {
 		RoutineGenerated routine = routineMapper.getRoutineGeneratedByRoutNo(rout_no);
-		setStep(routine.getStep(), "ko");
-		routine.changeEquip(exerciseMapper.getEquipNames(routine.getEquip(), "ko"));
+		setStep(routine.getStep(), lang);
+		routine.changeEquip(exerciseMapper.getEquipNames(routine.getEquip(), lang));
 		model.addAttribute("routine", routine);
 		return "generateRoutine/generateRoutineDetail";
 	}

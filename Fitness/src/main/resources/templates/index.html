@@ -14,7 +14,7 @@
 	<h2>가장 인기 있는 운동</h2>
 	<div class="flex-container">
 		<th:block th:each="exercise : ${exercises}">
-			<a th:href="|/exercise/${exercise.ex_no}|">
+			<a th:href="|/${lang}/exercise/${exercise.ex_no}|">
 				<div class="flex-item">
 					<img th:src="${#strings.replace(exercise.image,'.gif','.png')}" th:alt="${exercise.name}">
 					<div class="item-name flex-center" th:text="${exercise.name}"></div>
@@ -26,7 +26,7 @@
 	<h2>가장 인기 있는 루틴</h2>
 	<div class="flex-container">
 		<th:block th:each="routine : ${routines}">
-			<a th:href="|/routine/default/${routine.rout_no}|">
+			<a th:href="|/${lang}/routine/default/${routine.rout_no}|">
 				<div class="flex-item">
 					<!-- <img th:src="${routine.image}" th:alt="${routine.name}"> -->
 					<div class="item-name flex-center" th:text="${routine.name}"></div>

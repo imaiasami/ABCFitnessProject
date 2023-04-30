@@ -21,7 +21,7 @@ import com.project.file.util.PageNavigator;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@RequestMapping("exercise")
+@RequestMapping("{lang}/exercise")
 @Controller
 public class ExerciseController {
 	
@@ -33,22 +33,22 @@ public class ExerciseController {
 	final int pagePerGroup = 5; // 페이지 그룹 당 표시할 페이지 수
 
 	@GetMapping("")
-	public String exercise(@RequestParam(defaultValue = "1") int page, Model model) {
-		int total = exerciseMapper.getTotal(null, null, null, null, "ko");
+	public String exercise(@RequestParam(defaultValue = "1") int page, @PathVariable String lang, Model model) {
+		int total = exerciseMapper.getTotal(null, null, null, null, lang);
 		
 		// 페이징 처리를 위한 네비게이터 객체 생성
 		PageNavigator navigator = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		model.addAttribute("navigator", navigator);
 		RowBounds rowBounds = new RowBounds(navigator.getStartRecord(), navigator.getCountPerPage());
 		
-		List<Exercise> exercises = exerciseMapper.getExercises(null, null, null, null, "ko", rowBounds);
+		List<Exercise> exercises = exerciseMapper.getExercises(null, null, null, null, lang, rowBounds);
 		model.addAttribute("exercises", exercises);
 		return "exercise/exercise";
 	}
 
 	@GetMapping("{ex_no}")
-	public String exerciseDetail(@PathVariable long ex_no, @SessionAttribute(name = "memberLogin", required = false) Member loginMember, Model model)  {
-		Exercise exercise = exerciseMapper.getExerciseByNo(ex_no, "ko");
+	public String exerciseDetail(@PathVariable long ex_no, @SessionAttribute(name = "memberLogin", required = false) Member loginMember, @PathVariable String lang, Model model)  {
+		Exercise exercise = exerciseMapper.getExerciseByNo(ex_no, lang);
 		exercise.toBrTag();
 		model.addAttribute("exercise", exercise);
 		

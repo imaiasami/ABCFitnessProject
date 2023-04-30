@@ -3,76 +3,70 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<title>로그인</title>
-<link rel="stylesheet" href="/css/login.css">
-<script>
+	<title>
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">로그인</th:block>
+			<th:block th:case="jp">ログイン</th:block>
+			<th:block th:case="*">Login</th:block>
+		</th:block>
+	</title>
+	<link rel="stylesheet" href="/css/login.css">
+	<script>
+		$(() => {
+			
+			if (document.querySelector('*[class$="-error"]') && localStorage.getItem("mail")) {
+				localStorage.removeItem("mail");
+			}
+			
+			let email = localStorage.getItem("mail");
+			if(email) {
+				document.getElementById("mail").value = email;
+				document.getElementById("saveId").checked = true;
+			}
+			
+		});
 
-$(() => {
-	
-	if (document.querySelector('*[class$="-error"]') && localStorage.getItem("mail")) {
-		localStorage.removeItem("mail");
-	}
-	
-	let email = localStorage.getItem("mail");
-	if(email) {
-		document.getElementById("mail").value = email;
-		document.getElementById("saveId").checked = true;
-	}
-	
-});
 
+		// 아이디 정보 저장 및 아이디 저장 미체크 시 저장 정보 삭제
+		function inputId() {
+			
+			const email = document.getElementById("mail").value;
+			const saveId = document.getElementById("saveId").checked; // true or false
 
-	// 아이디 정보 저장 및 아이디 저장 미체크 시 저장 정보 삭제
-	function inputId() {
-		
-		const email = document.getElementById("mail").value;
-		const saveId = document.getElementById("saveId").checked; // true or false
-
-		if (saveId) {
-			// 아이디 저장 체크 했으면 저장
-			localStorage.setItem("mail", email);
-		} else if (localStorage.getItem("mail")) {
-			// 아이디 저장 체크 안 했으면 삭제
-			localStorage.removeItem("mail");
+			if (saveId) {
+				// 아이디 저장 체크 했으면 저장
+				localStorage.setItem("mail", email);
+			} else if (localStorage.getItem("mail")) {
+				// 아이디 저장 체크 안 했으면 삭제
+				localStorage.removeItem("mail");
+			}
+			
 		}
-		
-	}
-	
-	
-	
-</script>
+	</script>
 </head>
 <body layout:fragment="section">
 	<form class="form-signin"
-		th:action="@{/login(redirectURL=${#request.getParameter('redirectURL')})}"
+		th:action="@{/{lang}/login(lang=${lang}, redirectURL=${#request.getParameter('redirectURL')})}"
 		method="post" th:object="${memberLogin}" onsubmit="return inputId()">
-		
 		<div class="wrapper">
-
 			<h1 class="form-signin-heading">Login</h1>
-
 			<input type="email" class="form-control" name="mail" id="mail"
 				th:field="*{mail}" placeholder="Email Address" required=""
 				autofocus="" />
-
-
 			<div th:errorClass="field-error" th:errors="*{mail}"></div>
-
-			<br> <input type="password" class="form-control"
-				th:field="*{password}" placeholder="Password" required="" />
-
+			<br>
+			<input type="password" class="form-control" th:field="*{password}" placeholder="Password" required="" />
 			<div th:errorClass="field-error" th:errors="*{password}"></div>
-			<br> <input type="checkbox" name="saveId" id="saveId"> <label>아이디
-				저장</label> <label class="checkbox"> </label> <br> <br>
+			<br>
+			<input type="checkbox" name="saveId" id="saveId"><label>아이디 저장</label>
+			<br><br>
 			<div class="global-error" th:if="${#fields.hasGlobalErrors()}">
 				<p th:each="err : ${#fields.globalErrors()}" th:text="${err}">
 			</div>
-
 			<div class="center">
-				<input type="submit" class="btn btn-lg btn-primary btn-block"
-					value="로그인">
+				<input type="submit" class="btn btn-lg btn-primary btn-block" value="로그인">
 				<p class="text--center">
-					Not a member? <a href="/join">Sign up</a>
+					Not a member? <a th:href="|/${lang}/join|">Sign up</a>
 				</p>
 			</div>
 		</div>

@@ -75,6 +75,17 @@
 	color: #1f3a50;
 }
 
+#go-menu {
+	min-width: 100px;
+	height: 40px;
+	border: 1px solid;
+	margin-top: 2em;
+	color: #ea945e;
+}
+#go-menu:hover {
+	background-color: #ea945e40;
+}
+
 @media screen and (max-width: 400px) {
 	.image {
 		width: calc(100vw - 30px);

@@ -3,6 +3,7 @@ package com.project.file.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.project.file.model.entity.exercise.Equipment;
@@ -43,7 +44,7 @@ public interface MemberRepository {
 
 	int deleteBookmark(Bookmark bookmark);
 
-	List<Exercise> getBookmarkList(long mem_no);
+	List<Exercise> getBookmarkList(@Param("mem_no") long mem_no, @Param("lang") String language);
 
 	// 루틴 즐겨찾기
 	int insertRoutineBookmark(RoutineBookmark routineBookmark);
@@ -52,7 +53,7 @@ public interface MemberRepository {
 
 	int deleteRoutineBookmark(RoutineBookmark routineBookmark);
 
-	List<Routine> getRoutineBookmarkList(long mem_no);
+	List<Routine> getRoutineBookmarkList(@Param("mem_no") long mem_no, @Param("lang") String language);
 
 	// 운동기구
 	int insertEquipment(Equipment equipment);

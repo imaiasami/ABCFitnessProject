@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
 <head>
-	<title>운동 목록</title>
+	<title>
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">운동</th:block>
+			<th:block th:case="jp">運動</th:block>
+			<th:block th:case="*">Exercise</th:block>
+		</th:block>
+	</title>
 	<link rel="stylesheet" href="/css/flexitem.css">
 </head>
 <body layout:fragment="section">
 	<div class="text-center">
-		<h1>운동</h1>
+		<h1 th:switch="${lang}">
+			<th:block th:case="ko">운동</th:block>
+			<th:block th:case="jp">運動</th:block>
+			<th:block th:case="*">Exercise</th:block>
+		</h1>
 	</div>
 	<div class="flex-container">
 		<th:block th:each="exercise : ${exercises}">
-			<a th:href="|/exercise/${exercise.ex_no}|">
+			<a th:href="|@{/{lang}/exercise/{ex_no}(lang=${lang}, ex_no=${exercise.ex_no}, page=${navigator.currentPage})}|">
 				<div class="flex-item">
 					<img th:src="${#strings.replace(exercise.image,'.gif','.png')}" th:alt="${exercise.name}">
 					<div class="item-name flex-center" th:text="${exercise.name}"></div>
@@ -21,20 +31,20 @@
 	<div class="navigator">
 		<th:block th:if="${navigator.currentGroup != 0}">
 			<!-- 첫 페이지로 이동 -->
-			<a th:href="@{/exercise(page=1)}">&lt;&lt;</a>
+			<a th:href="@{/{lang}/exercise(lang=${lang}, page=1)}">&lt;&lt;</a>
 			<!-- 이전 그룹 이동 -->
-			<a th:href="@{/exercise(page=${navigator.endPageGroup - navigator.pagePerGroup})}">&lt;</a>
+			<a th:href="@{/{lang}/exercise(lang=${lang}, page=${navigator.endPageGroup - navigator.pagePerGroup})}">&lt;</a>
 		</th:block>
 		<!-- 페이지 표시 -->
 		<th:block th:each="counter : ${#numbers.sequence(navigator.startPageGroup, navigator.endPageGroup)}">
 			<span th:if="${navigator.currentPage == counter}" th:text="${counter}"></span>
-			<a th:unless="${navigator.currentPage == counter}" th:href="@{/exercise/(page=${counter})}" th:text="${counter}"></a>
+			<a th:unless="${navigator.currentPage == counter}" th:href="@{/{lang}/exercise/(lang=${lang}, page=${counter})}" th:text="${counter}"></a>
 		</th:block>
 		<th:block th:if="${navigator.currentGroup < navigator.totalGroupCount - 1}">
 			<!-- 다음 그룹 이동 -->
-			<a th:href="@{/exercise(page=${navigator.startPageGroup + navigator.pagePerGroup})}">&gt;</a>
+			<a th:href="@{/{lang}/exercise(lang=${lang}, page=${navigator.startPageGroup + navigator.pagePerGroup})}">&gt;</a>
 			<!-- 마지막 페이지로 이동 -->
-			<a th:href="@{/exercise(page=${navigator.totalPageCount})}">&gt;&gt;</a>
+			<a th:href="@{/{lang}/exercise(lang=${lang}, page=${navigator.totalPageCount})}">&gt;&gt;</a>
 		</th:block>
 	</div>
 </body>

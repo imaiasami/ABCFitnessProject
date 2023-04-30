@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("routine")
+@RequestMapping("{lang}/routine")
 @Controller
 public class RoutineController {
 
@@ -40,25 +40,25 @@ public class RoutineController {
 
 	// 루틴 페이지 이동 시 자동으로 기본 루틴으로 연결
 	@GetMapping("default")
-	public String defaultRoutine(Model model, @RequestParam(defaultValue = "1") int page) {
-		int total = routineMapper.getDefaultTotal(null, null, null, "ko");
+	public String defaultRoutine(@RequestParam(defaultValue = "1") int page, @PathVariable String lang, Model model) {
+		int total = routineMapper.getDefaultTotal(null, null, null, lang);
 
 		// 페이징 처리를 위한 네비게이터 객체 생성
 		PageNavigator navigator = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		model.addAttribute("navigator", navigator);
 		RowBounds rowBounds = new RowBounds(navigator.getStartRecord(), navigator.getCountPerPage());
 		
-		List<RoutineDefault> routines = routineMapper.getRoutineDefaults(null, null, null, "ko", rowBounds);
+		List<RoutineDefault> routines = routineMapper.getRoutineDefaults(null, null, null, lang, rowBounds);
 		model.addAttribute("routines", routines);
 		return "routine/defaultRoutine";
 	}
 
 	// 기본 루틴 상세
 	@GetMapping("default/{rout_no}")
-	public String defaultRoutineDetail(@PathVariable long rout_no, Model model, @SessionAttribute(name = "memberLogin", required = false) Member loginMember) {
-		RoutineDefault routine = routineMapper.getRoutineDefaultByNo(rout_no, "ko");
-		setStep(routine.getStep(), "ko");
-		routine.changeEquip(exerciseMapper.getEquipNames(routine.getEquip(), "ko"));
+	public String defaultRoutineDetail(@PathVariable long rout_no, @SessionAttribute(name = "memberLogin", required = false) Member loginMember, @PathVariable String lang, Model model) {
+		RoutineDefault routine = routineMapper.getRoutineDefaultByNo(rout_no, lang);
+		setStep(routine.getStep(), lang);
+		routine.changeEquip(exerciseMapper.getEquipNames(routine.getEquip(), lang));
 		model.addAttribute("routine", routine);
 
 		if (loginMember != null) { // 로그인한 사용자일 경우 북마크 목록 추가
@@ -85,16 +85,16 @@ public class RoutineController {
 
 	// 루틴 재생 페이지 이동
 	@GetMapping("run/{type}/{rout_no}/{day}")
-	public String runRoutine(@PathVariable String type, @PathVariable long rout_no, @PathVariable int day, Model model) {
+	public String runRoutine(@PathVariable String type, @PathVariable long rout_no, @PathVariable int day, @PathVariable String lang, Model model) {
 		if (type.equals("d")) { // 기본 루틴
-			RoutineDefault routine = routineMapper.getRoutineDefaultByNo(rout_no, "ko");
-			setStep(routine.getStep(), "ko");
+			RoutineDefault routine = routineMapper.getRoutineDefaultByNo(rout_no, lang);
+			setStep(routine.getStep(), lang);
 			model.addAttribute("routine", routine);
 		} else if (type.equals("t")) { // 테마별 루틴(미구현)
 			
 		} else if (type.equals("g")) { // 생성된 루틴
 			RoutineGenerated routine = routineMapper.getRoutineGeneratedByRoutNo(rout_no);
-			setStep(routine.getStep(), "ko");
+			setStep(routine.getStep(), lang);
 			model.addAttribute("routine", routine);
 		}
 		return "routine/playRoutine";
