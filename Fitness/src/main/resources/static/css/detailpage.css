@@ -81,6 +81,7 @@
 	border: 1px solid;
 	margin-top: 2em;
 	color: #ea945e;
+	border-radius: 15px;
 }
 #go-menu:hover {
 	background-color: #ea945e40;
