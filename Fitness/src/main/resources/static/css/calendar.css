@@ -443,7 +443,6 @@
     max-width: 500px;
     min-height: 100vh;
     flex-direction: column;
-    border-radius: 0;
   }
   .container .left {
     width: 100%;

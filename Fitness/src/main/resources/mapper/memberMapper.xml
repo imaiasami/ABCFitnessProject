@@ -91,6 +91,13 @@
 		set language = #{language}
 		where mem_no = #{mem_no}
 	</update>
+	
+	<!-- 언어설정 수정 -->
+	<update id="updateMemberRecent">
+		update member
+		set recent = #{recent}
+		where mem_no = #{mem_no}
+	</update>
 
 	<!-- 나의 운동 북마크 -->
 	<select id="getBookmarkList" resultType="exercise">

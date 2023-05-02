@@ -1,36 +1,36 @@
-* {
+#section * {
 	box-sizing: border-box;
 }
 
-form {
+#section form {
 	max-width: 800px;
 	margin: 0 auto;
 }
 
-h2 {
+#section h2 {
 	margin: 30px;
 	text-align: center;
 	font-size: 30px;
 	color: #e2e2db;
 }
 
-span{
+#section span{
 	font-size: 12px;
 }
 
-table {
+#section table {
 	width: 100%;
 }
 
-tr {
+#section tr {
 	height: 75px;
 }
 
-td {
+#section td {
 	font-size: 20px;
 }
 
-select {
+#section select {
 	width: 15%;
 	height: 40px;
 	text-align: center;
@@ -40,27 +40,28 @@ select {
 	color: #e2e2db;
 }
 
-input[type="text"], input[type="email"], input[type="password"], input[type="tel"]
+#section input[type="text"], #section input[type="email"], #section input[type="password"], #section input[type="tel"]
 	{
 	width: 100%;
 	padding: 12px;
-	background-color: #1F3A50;
 	margin-bottom: 16px;
 	resize: vertical;
 	box-sizing: border-box;
 	border-top: 0;
 	border-left: 0;
 	border-right: 0;
+	background-color: #1F3A50;
+	color: #e2e2db;
 }
 /** ^ 는 여기서부터 시작이다. $ 는 여기까지가 끝이다. **/
-div[id^="btn_"] {
+#section div[id^="btn_"] {
 	width: 90px;
 	height: 40px;
 	padding: 12px;
-	color: #e2e2db;
 	resize: vertical;
 	box-sizing: border-box;
 	border-radius: 15px;
+	color: #e2e2db;
 	
 }
 

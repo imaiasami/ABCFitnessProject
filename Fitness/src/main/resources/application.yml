@@ -1,5 +1,9 @@
 server:
   port: 9000
+  servlet:
+    session:
+      timeout: 7200
+      tracking-modes: cookie
   
 spring:
   datasource:

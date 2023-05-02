@@ -3,7 +3,13 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>프로필</title>
+	<title>
+		<th:block th:switch="${lang}">
+			<th:block th:case="ko">프로필</th:block>
+			<th:block th:case="jp">プロフィール</th:block>
+			<th:block th:case="*">Profile</th:block>
+		</th:block>
+	</title>
 	<link rel="stylesheet" href="/css/calendar.css">
 	<link rel="stylesheet" href="/css/profile.css">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -58,15 +64,53 @@
 			<h1 class="profile-user-name inline-element" th:text="|${memberProfile.name}|"></h1>
 			<h1 class="profile-real-name" th:text="|@${memberProfile.mem_id}|"></h1>
 		</div>
-		<button class="btn profile-edit-btn" th:onclick="|location.href='@{/{lang}/setting/userInformation(lang=${lang})}'|" aria-label="profile settings" th:if="${session.memberLogin != null && memberProfile.mem_id == session.memberLogin.mem_id}">프로필 편집</button>
+		<button class="btn profile-edit-btn" th:onclick="|location.href='@{/{lang}/setting/update(lang=${lang})}'|" aria-label="profile settings" th:if="${session.memberLogin != null && memberProfile.mem_id == session.memberLogin.mem_id}" th:switch="${lang}">
+			<th:block th:case="ko">편집</th:block>
+			<th:block th:case="jp">修正</th:block>
+			<th:block th:case="*">Edit</th:block>
+		</button>
 	</div>
 	<!-- End of Profile -->
 	<hr>
-	<div>나의 운동루틴</div>
-	<br>
+	<th:block th:unless="${recent} == null">
+		<div id="recent">
+			<h2 th:switch="${lang}">
+				<th:block th:case="ko">진행 중인 루틴</th:block>
+				<th:block th:case="jp">進行中のルーチン</th:block>
+				<th:block th:case="*">Routine in Progress</th:block>
+			</h2>
+			<h3>
+				: [[${recentRoutine.name}]]
+				<th:block th:switch="${lang}">
+					<th:block th:case="ko">[[${#strings.arraySplit(recent,'/')[2]}]]일차</th:block>
+					<th:block th:case="jp">[[${#strings.arraySplit(recent,'/')[2]}]]日目</th:block>
+					<th:block th:case="*">Day [[${#strings.arraySplit(recent,'/')[2]}]]</th:block>
+				</th:block>
+				<input type="button" class="pointer" value="▶" th:onclick="|location.href='@{/{lang}/routine/run/{recent}(lang=${lang}, recent=${recent})}'|">
+			</h3>
+			<div class="scroll-x">
+				<th:block th:each="steps : ${recentRoutine.getStep()}">
+					<a th:each="step : ${steps}" th:href="|/${lang}/exercise/${step.ex_no}|" th:if="${#strings.arraySplit(recent,'/')[2].equals(#strings.toString(stepsStat.count))}">
+						<div class="image">
+							<img th:src="${#strings.replace(step.info.image,'.gif','.png')}">
+						</div>
+					</a>
+				</th:block>
+			</div>
+		</div>
+		<hr>
+	</th:block>
 	<div class="header">
-		<div id="calendar-header" class="pointer on">캘린더</div>
-		<div id="bookmark-header" class="pointer">나의 즐겨찾기</div>
+		<div id="calendar-header" class="pointer on" th:switch="${lang}">
+			<th:block th:case="ko">캘린더</th:block>
+			<th:block th:case="jp">カレンダー</th:block>
+			<th:block th:case="*">Calendar</th:block>
+		</div>
+		<div id="bookmark-header" class="pointer" th:switch="${lang}">
+			<th:block th:case="ko">즐겨찾기</th:block>
+			<th:block th:case="jp">ブックマーク</th:block>
+			<th:block th:case="*">Bookmark</th:block>
+		</div>
 	</div>
 	<div id="calendarDI">
 		<div class="container">
@@ -132,9 +176,21 @@
 	</div>
 	<div id="bookmark" class="hide">
 		<div class="header2">
-			<div id="muscle-header" class="pointer">운동</div>
-			<div id="default-header" class="pointer">기본 루틴</div>
-			<div id="generated-header" class="pointer on">생성 루틴</div>
+			<div id="muscle-header" class="pointer" th:switch="${lang}">
+				<th:block th:case="ko">운동</th:block>
+				<th:block th:case="jp">運動</th:block>
+				<th:block th:case="*">Exercise</th:block>
+			</div>
+			<div id="default-header" class="pointer" th:switch="${lang}">
+				<th:block th:case="ko">기본 루틴</th:block>
+				<th:block th:case="jp">基本ルーチン</th:block>
+				<th:block th:case="*">Default R.</th:block>
+			</div>
+			<div id="generated-header" class="pointer on" th:switch="${lang}">
+				<th:block th:case="ko">생성 루틴</th:block>
+				<th:block th:case="jp">生成ルーチン</th:block>
+				<th:block th:case="*">Generated R.</th:block>
+			</div>
 		</div>
 		<table id="muscle-table" class="hide">
 			<tr th:if="${bookmarks.size() == 0}">
@@ -142,9 +198,17 @@
 			</tr>
 			<th:block th:unless="${bookmarks.size() == 0}">
 				<tr>
-					<th>NO.</th>
-					<th>운동 이름</th>
-					<th>운동 부위</th>
+					<th>No.</th>
+					<th th:switch="${lang}">
+						<th:block th:case="ko">운동 이름</th:block>
+						<th:block th:case="jp">運動名</th:block>
+						<th:block th:case="*">Exercise Name</th:block>
+					</th>
+					<th th:switch="${lang}">
+						<th:block th:case="ko">운동 부위</th:block>
+						<th:block th:case="jp">運動部位</th:block>
+						<th:block th:case="*">Muscle</th:block>
+					</th>
 				</tr>
 				<tr th:each="bookmark : ${bookmarks}">
 					<td th:text="${bookmarkStat.size - bookmarkStat.index}"></td>
@@ -159,8 +223,12 @@
 			</tr>
 			<th:block th:unless="${routineBookmarks.size() == 0}">
 				<tr>
-					<th>NO.</th>
-					<th>루틴 이름</th>
+					<th>No.</th>
+					<th th:switch="${lang}">
+						<th:block th:case="ko">루틴 이름</th:block>
+						<th:block th:case="jp">ルーチン名</th:block>
+						<th:block th:case="*">Routine Name</th:block>
+					</th>
 				</tr>
 				<tr th:each="routineBookmark : ${routineBookmarks}">
 					<td th:text="${routineBookmarkStat.size - routineBookmarkStat.index}"></td>
@@ -174,9 +242,17 @@
 			</tr>
 			<th:block th:unless="${generateRoutines.size() == 0}">
 				<tr>
-					<th>NO.</th>
-					<th>루틴 이름</th>
-					<th>생성 날짜</th>
+					<th>No.</th>
+					<th th:switch="${lang}">
+						<th:block th:case="ko">루틴 이름</th:block>
+						<th:block th:case="jp">ルーチン名</th:block>
+						<th:block th:case="*">Routine Name</th:block>
+					</th>
+					<th th:switch="${lang}">
+						<th:block th:case="ko">생성 날짜</th:block>
+						<th:block th:case="jp">生成日</th:block>
+						<th:block th:case="*">Date</th:block>
+					</th>
 				</tr>
 				<tr th:each="routine : ${generateRoutines}">
 					<td th:text="${routineStat.size - routineStat.index}"></td>

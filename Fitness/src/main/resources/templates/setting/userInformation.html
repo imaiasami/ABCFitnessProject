@@ -3,118 +3,120 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<meta charset="UTF-8">
-<title>프로필 편집</title>
-<link rel="stylesheet" href="/css/userInformation.css">
-<link rel="stylesheet" href="/css/userInformation2.css">
-<style>
-h1 {
-	margin: 30px;
-	text-align: center;
-	font-size: 30px;
-	color: #e2e2db;
-}
+	<title>설정</title>
+	<link rel="stylesheet" href="/css/userInformation.css">
+	<link rel="stylesheet" href="/css/userInformation2.css">
+	<style>
+		#section {
+			text-align: center;
+		}
 
-legend {
-	font-size: 20px;
-	font-weight: bold;
-}
+		#section h1 {
+			margin: 30px;
+			text-align: center;
+			font-size: 30px;
+			color: #e2e2db;
+		}
 
-.toggles {
-	width: 43%;
-	display: inline-block;
-	vertical-align: top;
-	padding: 3px;
-	margin: 10px;
-}
+		#section legend {
+			font-size: 20px;
+			font-weight: bold;
+		}
 
+		#section th {
+			font-size: 19px;
+			color: #e2e2db;
+			text-align: left;
+			padding: 10px 10px 10px 0;
+		}
 
-th {
-	font-size: 19px;
-	color: #e2e2db;
-	text-align: left;
-	padding: 10px;
-}
+		#section td {
+			text-align: left;
+		}
 
-td {
-	text-align: left;
-}
+		#section input[type="button"] {
+			background-color: #1F3A50;
+			color: #E48C55;
+			border: 1px solid #E48C55;
+			border-radius: 15px;
+			width: 80px;
+		}
 
-input[type="button"] {
-	background-color: #1F3A50;
-	color: #E48C55;
-	border: 1px solid #E48C55;
-	border-radius: 15px;
-	width: 80px;
-}
+		.toggles {
+			width: 35%;
+			min-width: 230px;
+			display: inline-block;
+			vertical-align: top;
+			padding: 0 20px;
+			margin: 10px;
+		}
 
-.delete {
-	background-color: #1F3A50;
-	color: #E48C55;
-	border: 1px solid #E48C55;
-	border-radius: 15px;
-	width: 80px;
-}
+		.delete {
+			background-color: #1F3A50;
+			color: #E48C55;
+			border: 1px solid #E48C55;
+			border-radius: 15px;
+			width: 80px;
+		}
 
-div {
-	text-align: center;
-}
+		.equipment {
+			font-size: 50px;
+		}
 
-.equipment {
-	font-size: 50px;
-}
-</style>
+		@media screen and (max-width: 690px) {
+			.toggles {
+				width: 70%;
+			}
+		}
+	</style>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		var lang = location.pathname.substr(0, 3);
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('button').click(function() {
+		$(document).ready(function() {
+			$('button').click(function() {
 
-			var buttonId = $(this).attr('id');
-			var ariaPressed = $(this).attr('aria-pressed');
-			var data = {
-				equip_id : buttonId,
-				status : ariaPressed === 'false'
-			};
+				var buttonId = $(this).attr('id');
+				var ariaPressed = $(this).attr('aria-pressed');
+				var data = {
+					equip_id : buttonId,
+					status : ariaPressed === 'false'
+				};
 
-			$.ajax({
-				type : 'POST',
-				url : "/setting/userInformation",
-				dataType : "json",
-				data : data,
-				success : function(result) {
-					if (result.status === 'success') {
-						if (ariaPressed === 'true') {
-							alert("추가되었습니다.");
-
-							$('#' + buttonId).attr('aria-pressed', 'true');
-						} else {
-							alert("해제되었습니다.");
-
-							$('#' + buttonId).attr('aria-pressed', 'false');
+				$.ajax({
+					type : 'POST',
+					url : lang + "/setting/userInformation",
+					dataType : "json",
+					data : data,
+					success : function(result) {
+						if (result.status === 'success') {
+							if (ariaPressed === 'true') {
+								// alert("추가되었습니다.");
+								$('#' + buttonId).attr('aria-pressed', 'true');
+							} else {
+								// alert("해제되었습니다.");
+								$('#' + buttonId).attr('aria-pressed', 'false');
+							}
+						} else if (result.status === 'fail') {
+							alert("오류가 발생했습니다.");
 						}
-					} else if (result.status === 'fail') {
-						alert("오류가 발생했습니다.");
+					},
+					error : function() {
+						alert('오류가 발생했습니다.');
 					}
-				},
-				error : function() {
-					alert('오류가 발생했습니다.');
-				}
+				});
 			});
 		});
-	});
 
-	function toggle(btnID) {
-		var theButton = document.getElementById(btnID);
-		if (theButton.getAttribute("aria-pressed") == "false") {
-			theButton.setAttribute("aria-pressed", "true");
-		} else {
-			theButton.setAttribute("aria-pressed", "false");
+		function toggle(btnID) {
+			var theButton = document.getElementById(btnID);
+			if (theButton.getAttribute("aria-pressed") == "false") {
+				theButton.setAttribute("aria-pressed", "true");
+			} else {
+				theButton.setAttribute("aria-pressed", "false");
+			}
 		}
-	}
-</script>
-
-
+	</script>
 </head>
 <body layout:fragment="section">
 
@@ -133,7 +135,7 @@ div {
 					<td th:text="${session.memberLogin.mem_id}"></td>
 				</tr>
 				<tr>
-					<th>내 계정</th>
+					<th>이메일</th>
 					<td th:text="${session.memberLogin.mail}"></td>
 				</tr>
 				<tr>
@@ -161,11 +163,11 @@ div {
 		<div>
 			<th:block th:unless="${#lists.contains(equipmented, 'dumbbell')}">
 				<button type="button" id="dumbbell" aria-pressed="false"
-					class="equipment" onclick="toggle(this.id);">덤밸</button>
+					class="equipment" onclick="toggle(this.id);">덤벨</button>
 			</th:block>
 			<th:block th:if="${#lists.contains(equipmented, 'dumbbell')}">
 				<button type="button" id="dumbbell" aria-pressed="true"
-					class="equipment" onclick="toggle(this.id);">덤밸</button>
+					class="equipment" onclick="toggle(this.id);">덤벨</button>
 			</th:block>
 		</div>
 		<div>

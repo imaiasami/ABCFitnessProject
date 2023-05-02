@@ -9,7 +9,7 @@
 }
 
 .header {
-	margin-bottom: 20px;
+	margin: 2em 0 20px 0;
 	text-align: center;
 }
 
@@ -18,7 +18,7 @@
 	padding: 6px 0;
 	margin: 0 5px;
 	width: calc(50% - 12px);
-	border-radius: 2px;
+	border-radius: 3px;
 	font-weight: 500;
 	background-color: #455868;
 }
@@ -85,7 +85,7 @@
 .profile {
 	display: flex;
 	align-items: center;
-	padding: 1.5rem 1.5rem;
+	padding: 1.5em 1.5em 1em 1.5em;
 }
 
 .profile::after {
@@ -155,13 +155,55 @@
 	vertical-align: middle; /* 수직 정렬을 위해 추가 */
 }
 
-/* 즐겨찾기 */
+/* 최근 운동, 즐겨찾기 */
+#recent {
+	margin: 1.5em 0;
+}
+
+#recent h2, #recent h3 {
+	display: inline-block;
+}
+
+#recent input {
+	border: 0;
+	border-radius: 100px;
+	transform: translateY(-2px);
+	background-color: #ea945e;
+	color: #1f3a50;
+}
+
+.scroll-x {
+	margin-top: 10px;
+	display: flex;
+	overflow-x: auto;
+}
+
+.scroll-x a:not(:first-of-type) {
+	margin-left: 5px;
+}
+
+.image {
+	display: inline-flex;
+	align-items: center;
+    justify-content: center;
+	width: 90px;
+	height: 90px;
+	border-radius: 10px;
+	overflow: hidden;
+	background-color: #fff;
+}
+
+.image img {
+	max-width: 90px;
+	max-height: 90px;
+}
+
 #bookmark table {
 	margin: 0 auto;
 }
 
 #bookmark td {
-	padding: 2px 8px;
+	padding: 2px 10px;
 }
 
 #bookmark tr>td:not(:nth-child(2)) {

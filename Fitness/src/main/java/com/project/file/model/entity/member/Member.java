@@ -27,10 +27,10 @@ public class Member {
 	private int skill;
 	private int days;
 	private int cardio;
+	private String recent;
 	
 	
-	public Member(long mem_no, String mail, String password, String mem_id, String name, LocalDate birth,
-			String gender) {
+	public Member(long mem_no, String mail, String password, String mem_id, String name, LocalDate birth, String gender) {
 		this.mem_no = mem_no;
 		this.mail = mail;
 		this.password = password;

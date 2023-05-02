@@ -2,11 +2,15 @@ package com.project.file.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -98,6 +102,31 @@ public class RoutineController {
 			model.addAttribute("routine", routine);
 		}
 		return "routine/playRoutine";
+	}
+	
+	// 루틴 재생 완료
+	@PostMapping("run/{type}/{rout_no}/{day}")
+	public String completeRoutine(@PathVariable String type, @PathVariable long rout_no, @PathVariable int day, @RequestParam long time, @PathVariable String lang, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("memberLogin");
+		int next = 1;
+		
+		// mem_date 테이블에 오늘 수행한 루틴 정보 저장
+		if (type.equals("d")) { // 기본 루틴
+			RoutineDefault routine = routineMapper.getRoutineDefaultByNo(rout_no, lang);
+			if (day < routine.getStep().size()) next = day + 1;
+		} else if (type.equals("t")) { // 테마별 루틴(미구현)
+			
+		} else if (type.equals("g")) { // 생성된 루틴
+			RoutineGenerated routine = routineMapper.getRoutineGeneratedByRoutNo(rout_no);
+			if (day < routine.getStep().size()) next = day + 1;
+		}
+		
+		// member 테이블에 다음에 수행할 루틴 정보 저장
+		loginMember.setRecent(type + "/" + rout_no + "/" + next);
+		if (memberMapper.updateMemberRecent(loginMember) > 0) session.setAttribute("memberLogin", loginMember);
+		
+		return "redirect:/" + lang + "/profile/" + loginMember.getMem_id();
 	}
 
 	// 루틴에 저장된 운동 번호를 기반으로 각 운동 상세 불러오기

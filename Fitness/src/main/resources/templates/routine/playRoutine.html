@@ -165,7 +165,9 @@
 			$('#finish').click((e) => {
 				if (confirm('운동을 완료하시겠습니까?')) {
 					$(window).off('beforeunload');
-					// 이하 서버와 통신
+					let form = $('<form>', {'method':'post', 'action':location.href}).appendTo(document.body);
+					$('<input>', {'type':'hidden', 'name':'time', 'value':Date.now() - $timer.stime}).appendTo(form);
+					form.submit();
 				}
 			});
 

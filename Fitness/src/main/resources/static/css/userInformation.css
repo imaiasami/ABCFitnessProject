@@ -1,15 +1,5 @@
 @charset "UTF-8";
 
-body {
-	font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto,
-		Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-	line-height: 1.4;
-	/*   line-height: 1.5; */
-	/*   letter-spacing: 0.12em; */
-	/*   word-spacing: 0.16em; */
-	margin: 0;
-}
-
 form {
 	flex-wrap: wrap;
 	align-items: flex-start;
@@ -39,7 +29,7 @@ fieldset.toggles>div:last-of-type {
 }
 
 fieldset.toggles {
-	border: 0.1em solid rgba(0, 0, 0, 0.15);
+	border: 2px solid #e2e2db40;
 }
 
 .toggles [aria-pressed] {

@@ -30,6 +30,8 @@ public interface MemberRepository {
 	int updateMemberConditions(Member member);
 	
 	int updateMemberLanguage(Member member);
+	
+	int updateMemberRecent(Member member);
 
 	// 이메일 중복 확인
 	int countByEmail(String email);
