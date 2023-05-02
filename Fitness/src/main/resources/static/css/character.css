@@ -1,0 +1,99 @@
+form {
+	display: none;
+}
+
+#section {
+	text-align: center;
+}
+
+.select-btn {
+	display: inline-flex;
+	text-align: center;
+	margin: 0 3px 10px 3px;
+	border: 1px solid;
+	width: 100px;
+	height: 35px;
+	font-size: 16px;
+	border-radius: 15px;
+}
+
+.select-btn:hover:not(.on) {
+	background-color: #e2e2db40;
+}
+
+.on {
+	background-color: #e2e2db;
+	color: #1f3a50;
+}
+
+#edit-btn {
+	height: 1em;
+	padding: 0;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-size: 1em;
+	line-height: 0.5;
+	color: #ccc;
+	cursor: pointer;
+}
+
+#edit-btn::before {
+	content: "\270E";
+}
+
+body {
+	color: #E2E2DB;
+}
+
+p {
+	font-weight: bold;
+	font-size: 24px;
+	text-align: left;
+}
+
+r {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.dayForm {
+	text-align: center;
+	font-weight: bold;
+	font-size: 26px;
+}
+
+pre {
+	font-size: 10px;
+}
+
+li {
+	font-size: 16px;
+	text-align: left;
+}
+
+.routine {
+	width: 300px;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	display: inline-block;
+	margin: 16px;
+}
+
+.routine2 {
+	display: flex;
+	align-items: stretch;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+b {
+	font-size: 20px;
+}
+
+.titleForm {
+	text-align: center;
+	font-size: 36px
+}
+

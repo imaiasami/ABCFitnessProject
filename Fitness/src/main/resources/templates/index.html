@@ -3,8 +3,17 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>메인 페이지</title>
-	<link rel="stylesheet" href="/css/flexitem.css">
+<title>메인 페이지</title>
+<link rel="stylesheet" href="/css/flexitem.css">
+<style>
+.character {
+	border: 5px solid #e2e2db;
+	border-radius: 15px;
+	margin: 10px;
+	width: 210px;
+	height: 210px;
+}
+</style>
 </head>
 <body layout:fragment="section">
 	<h1>
@@ -16,7 +25,8 @@
 		<th:block th:each="exercise : ${exercises}">
 			<a th:href="|/${lang}/exercise/${exercise.ex_no}|">
 				<div class="flex-item">
-					<img th:src="${#strings.replace(exercise.image,'.gif','.png')}" th:alt="${exercise.name}">
+					<img th:src="${#strings.replace(exercise.image,'.gif','.png')}"
+						th:alt="${exercise.name}">
 					<div class="item-name flex-center" th:text="${exercise.name}"></div>
 				</div>
 			</a>
@@ -47,13 +57,34 @@
 	<br>
 	<br>
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br> Good World!
+	<h2>캐릭터별 루틴</h2>
+	<a href="character/saitama"> <img class="character"
+		src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxOTA3MDdfODIg%2FMDAxNTYyNDczOTQxMjI0.2LLs2cOB3uA7aAS_kPfpfrZTFOCdBzCzRVdokmQiC0Ug.GR3xFVMbURhXVN-0_vGfRalKb8RI5-SXz8GNp-VSA5cg.PNG.onlyone1707%2F%25BD%25BA%25C5%25A9%25B8%25B0%25BC%25A6_2019-07-07_%25BF%25C0%25C8%25C4_1.31.08.png&type=a340">
+	</a>
+
+	<a href="character/luffy"> <img class="character"
+		src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAxNzAyMDVfMjUx%2FMDAxNDg2MjkzNzg1ODQ4.SB66o834d_wkjsErGEQmNLIadggUrRIFfE1TxqnGBX4g.cgfY3xXha6E1bb04l0LPKxJneZlulCbX4KrASwW4n20g.JPEG.clwmalsl%2F77520-11-20.JPG&type=sc960_832">
+	</a>
+
+
+	<a href="character/zoro"> <img class="character"
+		src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEyMjVfODIg%2FMDAxNjcxOTQ3MTA2NjUz.Xi633raYC8T37hGeT6wKx7-QylIHh1FGbWP_yMXOLy0g.UvKunIZpeqFwFup4MwYNfGRJu9aY_vpIx6VlC_uUOScg.PNG.tjehdrms0908%2F%25BF%25C0%25A4%25C7%25BF%25F8_%25280%2529.png&type=a340">
+	</a>
+
+
+	<a href="character/levi"> <img class="character"
+		src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTAzMDVfMjM0%2FMDAxNjE0OTU0NTcxNTYx.iDmuc-BayY5Mt-cCprZZIeuKMdFGDwHDbPM83wQh858g.zXbbGrLb1mQ3bcQzp2FTNM_sIjXx7EU2w0aWaWBZlcEg.JPEG.boyeong0901%2FIMG_0475.JPG&type=a340">
+	</a>
+	<a href="character/manjiro"> <img class="character"
+		src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTExMDFfMTU5%2FMDAxNjM1NzMyNTEyNDg2.N7ARL724CjUAZvqKuCYUjsgKyG6QeuLVNo6L6csAlXYg.hU4Cc0sw_UCWrcSxD2yEP6EMeW1zh-54RA60q2Tq_UYg.PNG.elfin_day%2F%25BB%25E7%25B3%25EB_%25B8%25B8%25C1%25F6%25B7%25CE_%25B8%25B6%25C0%25CC%25C5%25B0_%25285%2529.png&type=a340">
+	</a>
+
+
+	<a href="character/tanjiro"> <img class="character"
+		src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMjEyMTZfMjY1%2FMDAxNjcxMTc1NzI5OTMw.V_4ca8vR13I-uGpwPg0pbwo-awdoMo4qniMxy7KCWQQg.GD9LDmPCjYiBySpk8-IrIGfErPoskFf-K7Keu53LXAsg.PNG.gmlwlsdl109%2F127.png&type=sc960_832">
+	</a>
+
+
 	<br>
 	<br>
 	<br>
