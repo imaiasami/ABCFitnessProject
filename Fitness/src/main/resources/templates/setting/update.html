@@ -4,9 +4,109 @@
 	layout:decorate="layout/default_layout">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/css/join.css">
+<script src="/js/join.js"></script>
 <title>개인정보 수정</title>
-<script>
+<style>
+.member-id-description {
+	font-size: 10px;
+	color: gray;
+	margin-top: 9px;
+}
 
+[disabled="disabled"] {
+ 
+  color: #E2E2DB;
+}
+
+
+
+input[type="text"] {
+	margin: 0px;
+}
+
+form {
+	color: #E2E2DB;
+}
+
+input[type="date"] {
+	font-size: 15px;
+	background-color: #1F3A50;
+
+	box-sizing: border-box;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	text-align: center;
+}
+
+input[type="button"] {
+	position: relative;
+	width: 50%;
+	height: 40px;
+	background: #E48C55;
+	color: #1F3A50;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	transition: 0.4s;
+	border-radius: 15px;
+	margin: auto;
+	display: block;
+}
+
+.delete {
+	background-color: #1F3A50;
+	color: #E48C55;
+	border: 1px solid #E48C55;
+	position: relative;
+	width: 80px;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 0; top : 50%;
+	left: 45%;
+	top: 50%;
+}
+
+h3 {
+	margin: 30px;
+}
+
+.modal1 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	color: #1F3A50;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal1.show {
+	display: block;
+}
+
+.modal_body {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	height: 500px;
+	padding: 40px;
+	text-align: center;
+	background-color: #E2E2DB;
+	border-radius: 50px;
+	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+	transform: translateX(-50%) translateY(-50%);
+}
+</style>
+
+
+
+
+<script>
 	function validatePassword() {
 		if (document.querySelector('#password').value !== document
 				.querySelector('#confirm-password').value) {
@@ -15,61 +115,110 @@
 			confirmPassword.setCustomValidity('');
 		}
 	}
-	
-
 </script>
 </head>
 <body layout:fragment="section">
 	<h2>[ 개인정보 수정 ]</h2>
-	<form th:action="|/${lang}/update|" method="post" th:object="${member}">
+	<form action="update" method="post" th:object="${member}">
 		<table>
 			<tr>
+				<td class="formName" style="width: 20%;">이메일</td>
 				<td><input type="email" th:field="*{mail}" disabled="disabled"></td>
 			</tr>
 
 			<tr>
+				<td class="formName">비밀번호</td>
 				<td><input type="password" th:field="*{password}"
-					placeholder="비밀번호" required
+					placeholder="숫자, 영어 대소문자, 특수문자(!@#$%^&*)를 최소 하나 이상 포함해 8자리 이상 16자리 이하 가능"
+					required
 					oninvalid="setCustomValidity('비밀번호는 숫자, 알파벳 대소문자, 특수문자 중 최소 하나를 꼭 포함해 8자 이상 16자 이하로 입력해주세요.')"
 					oninput="setCustomValidity('')"
 					pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,16}$">
-					<sub class="password">숫자, 영어 대소문자, 특수문자(!@#$%^&*)를 최소 하나 이상
-						포함해 8자리 이상 16자리 이하 가능</sub></td>
+					<sub class="password"></sub></td>
 			</tr>
 
 			<tr>
+				<td class="formName">비밀번호 확인</td>
 				<td><input type="password" id="confirm-password"
-					name="confirm-password" placeholder="비밀번호 확인" required
+					name="confirm-password" placeholder="비밀번호를 다시 한 번 입력해주세요." required
 					oninvalid="setCustomValidity('비밀번호는 숫자, 알파벳 대소문자, 특수문자 중 최소 하나를 꼭 포함해 8자 이상 16자 이하로 입력해주세요.')"
 					oninput="setCustomValidity('')"
 					pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,16}$">
-					<sub class="confirm-password">비밀번호를 한 번 더 입력해주세요.</sub></td>
+					<sub class="confirm-password"></sub></td>
 			</tr>
 			<tr>
+				<td class="formName">이름</td>
 				<td><input type="text" name="name" placeholder="성명"
 					th:field="*{name}" required></td>
 			</tr>
+
+
 			<tr>
+				<td class="formName">아이디</td>
 				<td><input type="text" name="member_id" placeholder="사용자 이름"
 					th:field="*{mem_id}" pattern="[a-z0-9_\-\.]{4,16}"
 					onkeyup="resetCheckMemberId()" required
 					oninvalid="setCustomValidity('아이디는 4~16글자 안으로 소문자, 숫자, -,_,. 문자만 사용할 수 있습니다.')"
-					oninput="setCustomValidity('')"> <sub class="member_id">4자리~
-						16자리로 영문 소문자, 숫자, 특수문자(_,-,.)만 사용할 수 있습니다.</sub></td>
+					oninput="setCustomValidity('')"> <sub
+					class="member-id-description">4자리~ 16자리로 영문 소문자, 숫자,
+						특수문자(_,-,.)만 사용할 수 있습니다.</sub></td>
+
 			</tr>
+
 			<tr>
+				<td class="formName">성별</td>
 				<td><input type="text" th:field="*{gender}" disabled="disabled"></td>
 			</tr>
 			<tr>
+				<td class="formName">생년월일</td>
 				<td><input type="date" th:field="*{birth}" disabled="disabled"></td>
 			</tr>
 			<tr>
+				<td class="formName">전화번호</td>
 				<td><input type="text" th:field="*{phone}"></td>
 			</tr>
 		</table>
 		<div>
-			<input type="submit" value="수정하기">
+			<input type="button" value="수정하기" class="updateForm"
+				onclick="location.href='/ko/profile'">
+
+			<button type="button" class="delete"
+				onclick="document.querySelector('.modal1').classList.add('show'); document.body.style.overflow = 'hidden';">탈퇴하기</button>
+
+
 		</div>
+
+		<div class="modal1">
+			<div class="modal_body">
+				<form action="/setting/withdrawal" method="post">
+					<h2 class="form-signin-heading">회원탈퇴를 하시겠습니까?</h2>
+					<h3>마지막으로 비밀번호 입력을 부탁드립니다.</h3>
+					<div>
+						<input type="password" class="form-control" name="password"
+							placeholder="Password" required="" />
+					</div>
+					<br>
+					<button type="submit">탈퇴하기</button>
+					<div th:if="${error}">
+						<p th:text="${error}"></p>
+					</div>
+					<button class="btn-close-popup">닫기</button>
+				</form>
+			</div>
+		</div>
+
+		<script>
+		// 모달 닫기 버튼에 이벤트 리스너 등록
+		const btnClosePopup = document.querySelector('.btn-close-popup');
+		btnClosePopup.addEventListener('click', () => {
+			document.querySelector('.modal1').classList.remove('show');
+			document.body.style.overflow = 'auto';
+		});
+	
+	</script>
+
+
+
 	</form>
 </body>
 </html>
