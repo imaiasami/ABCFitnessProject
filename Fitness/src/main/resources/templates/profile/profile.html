@@ -184,17 +184,21 @@
 			<div id="default-header" class="pointer" th:switch="${lang}">
 				<th:block th:case="ko">기본 루틴</th:block>
 				<th:block th:case="jp">基本ルーチン</th:block>
-				<th:block th:case="*">Default R.</th:block>
+				<th:block th:case="*">Default</th:block>
 			</div>
 			<div id="generated-header" class="pointer on" th:switch="${lang}">
 				<th:block th:case="ko">생성 루틴</th:block>
 				<th:block th:case="jp">生成ルーチン</th:block>
-				<th:block th:case="*">Generated R.</th:block>
+				<th:block th:case="*">Generated</th:block>
 			</div>
 		</div>
 		<table id="muscle-table" class="hide">
 			<tr th:if="${bookmarks.size() == 0}">
-				<td>결과가 없습니다.</td>
+				<td th:switch="${lang}">
+					<th:block th:case="ko">결과가 없습니다.</th:block>
+					<th:block th:case="jp">結果がありません。</th:block>
+					<th:block th:case="*">No Result</th:block>
+				</td>
 			</tr>
 			<th:block th:unless="${bookmarks.size() == 0}">
 				<tr>
@@ -219,7 +223,11 @@
 		</table>
 		<table id="default-table" class="hide">
 			<tr th:if="${routineBookmarks.size() == 0}">
-				<td>결과가 없습니다.</td>
+				<td th:switch="${lang}">
+					<th:block th:case="ko">결과가 없습니다.</th:block>
+					<th:block th:case="jp">結果がありません。</th:block>
+					<th:block th:case="*">No Result</th:block>
+				</td>
 			</tr>
 			<th:block th:unless="${routineBookmarks.size() == 0}">
 				<tr>
@@ -238,7 +246,11 @@
 		</table>
 		<table id="generated-table">
 			<tr th:if="${generateRoutines.size() == 0}">
-				<td>결과가 없습니다.</td>
+				<td th:switch="${lang}">
+					<th:block th:case="ko">결과가 없습니다.</th:block>
+					<th:block th:case="jp">結果がありません。</th:block>
+					<th:block th:case="*">No Result</th:block>
+				</td>
 			</tr>
 			<th:block th:unless="${generateRoutines.size() == 0}">
 				<tr>

@@ -3,17 +3,21 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<meta charset="UTF-8">
-
- <title>Manjiro sano</title>
-<link rel="stylesheet" href="/css/character.css">
+  <title>Manjiro sano</title>
+  <link rel="stylesheet" href="/css/character.css">
+  <style>
+		#section img {
+			max-width: 360px;
+			max-height: 540px;
+			border-radius: 20px;
+		}
+	</style>
 </head>
 <body layout:fragment="section">
 	<p class="titleForm">[ 도쿄 리벤져스 - 사노 만지로 ]</p>
 	
 	<div style="text-align: center;">
-		<br> <br> <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTAyMDFfMTQ0/MDAxNjEyMTM4ODQzNDA4.u7zEH3bgUS7wqzcBZK14uj7jqpumep3aO5vw4OJeWCQg.lbNsm0E7vDa-Q8nqQcb1XtOOebPzVMX-dAYjZnPE73og.PNG.a_z_manga/17750b07f151e371b.png?type=w800",
- width="300" height="400"><br>
+		<br> <br> <img src="/images/etc/manjiro.png"><br>
 		<br> <b>이름 : 사노 만지로</b>
 		<br> <b>키 : 162cm</b><br>
 		 <b>체중 : 61kg</b>

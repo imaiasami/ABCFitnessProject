@@ -22,7 +22,11 @@
 		<th:block th:each="routine : ${routines}">
 			<a th:href="|@{/{lang}/routine/default/{rout_no}(lang=${lang}, rout_no=${routine.rout_no}, page=${navigator.currentPage})}|">
 				<div class="flex-item">
-					<!-- <img th:src="${routine.image}" th:alt="${routine.name}"> -->
+					<img src="/images/etc/default1.png" th:if="${routineStat.count % 5 == 1}">
+					<img src="/images/etc/default2.png" th:if="${routineStat.count % 5 == 2}">
+					<img src="/images/etc/default3.png" th:if="${routineStat.count % 5 == 3}">
+					<img src="/images/etc/default4.png" th:if="${routineStat.count % 5 == 4}">
+					<img src="/images/etc/default5.png" th:if="${routineStat.count % 5 == 0}">
 					<div class="item-name flex-center" th:text="${routine.name}"></div>
 				</div>
 			</a>

@@ -3,19 +3,20 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-<meta charset="UTF-8">
-
-<title>Levi Ackerman</title>
-<link rel="stylesheet" href="/css/character.css">
+	<title>Levi Ackerman</title>
+	<link rel="stylesheet" href="/css/character.css">
+	<style>
+		#section img {
+			max-width: 360px;
+			max-height: 540px;
+			border-radius: 20px;
+		}
+	</style>
 </head>
 <body layout:fragment="section">
 	<p class="titleForm">[ 진격의 거인 - 리바이 ]</p>
-	<br>
 	<div style="text-align: center;">
-		<br> <br> <img
-			src="https://blog.kakaocdn.net/dn/brsv3J/btqRt6IqZVO/5rJRFZnXZ3FuAKGpyZ8zf0/img.jpg"
-			,
- width="300" height="300"><br>
+		<br> <br> <img src="/images/etc/levi.jpg"><br>
 		<br> <b>이름 : 리바이 아커만</b>
 		<br> <b>키 : 160cm</b><br>
 		<b> 체중 : 65kg</b>
