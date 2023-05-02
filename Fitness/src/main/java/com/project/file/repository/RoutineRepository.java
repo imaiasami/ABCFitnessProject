@@ -30,4 +30,7 @@ public interface RoutineRepository {
 	
 	// 회원 번호로 생성 루틴 가져오기
 	List<RoutineGenerated> getRoutineGeneratedByMemNo(long mem_no);
+	
+	// 생성 루틴 이름 변경
+	int renameRoutineGenerated(@Param("rout_no") long rout_g_no, @Param("mem_no") long mem_no, @Param("name") String name);
 }

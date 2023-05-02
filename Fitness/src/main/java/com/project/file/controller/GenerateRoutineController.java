@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.project.file.model.dto.exercise.ExerciseNoSet;
@@ -123,6 +124,13 @@ public class GenerateRoutineController {
 		routine.changeEquip(exerciseMapper.getEquipNames(routine.getEquip(), lang));
 		model.addAttribute("routine", routine);
 		return "generateRoutine/generateRoutineDetail";
+	}
+	
+	// 생성 루틴 이름 수정
+	@PostMapping("generate/{rout_no}")
+	public String defaultRoutineRename(@SessionAttribute(name = "memberLogin", required = false) Member memberLogin, @RequestParam String name, @PathVariable long rout_no, @PathVariable String lang) {
+		if (memberLogin != null) routineMapper.renameRoutineGenerated(rout_no, memberLogin.getMem_no(), name);
+		return "redirect:/" + lang + "/routine/generate/" + rout_no;
 	}
 	
 	// 운동 난이도 지정

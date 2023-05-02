@@ -54,7 +54,7 @@
 			$("#go-menu").click(function() {
 				// location.href = location.href.replace(/(?<=default\/)\d*/, ''); // 웹킷 엔진에서 (?<=)를 인식 못 하는 듯?
 				let path = location.pathname.split('/');
-				location.href = location.origin + '/' + path[1] + '/' + path[2] + '/' + location.search;
+				location.href = location.origin + '/' + path[1] + '/' + path[2] + '/' + path[3] + '/' + location.search;
 			});
 		});
 	</script>

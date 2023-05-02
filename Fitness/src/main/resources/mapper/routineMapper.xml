@@ -171,5 +171,14 @@
 			time
 		from rout_generated
 		where mem_no = #{mem_no}
+		order by rout_g_no desc
 	</select>
+	
+	<!-- 생성 루틴 이름 변경 -->
+	<update id="renameRoutineGenerated">
+		update rout_generated set
+			name = #{name}
+		where rout_g_no = #{rout_no}
+		and mem_no = #{mem_no}
+	</update>
 </mapper>

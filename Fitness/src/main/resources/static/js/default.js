@@ -24,9 +24,9 @@ $(() => {
     });
 
     $('#sidebar').hover(() => {
-        $('#sidebar').addClass('hosc')
+        $('#sidebar').addClass('hosc');
     }, () => {
-        $('#sidebar').removeClass('hosc')
+        $('#sidebar').removeClass('hosc');
     });
 
     if ($('#login-btn')) {

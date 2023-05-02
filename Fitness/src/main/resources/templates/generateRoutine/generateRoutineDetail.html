@@ -8,7 +8,11 @@
 	</title>
 	<link rel="stylesheet" href="/css/detailpage.css">
 	<style>
-		#edit-btn {
+		#section .hide {
+			display: none;
+		}
+
+		#edit-btn, #submit-btn, #cancel-btn {
 			height: 1em;
 			padding: 0;
 			border: none;
@@ -22,14 +26,54 @@
 		#edit-btn::before {
 			content: "\270E";
 		}
+
+		#edit-form {
+			font-size: 2em;
+		}
+		#edit-form > input[type="text"] {
+			max-width: 75%;
+			width: 600px;
+			height: 1em;
+			padding: 0;
+			border: none;
+			border-bottom: 2px solid #e2e2db80;
+			outline: none;
+			font-size: 1em;
+			font-weight: 700;
+			text-align: center;
+			background: transparent;
+			color: #e2e2db;
+		}
+		#edit-form > input[type="text"]:focus {
+			color: #fff;
+		}
 	</style>
+	<script>
+		$(() => {
+			$('#edit-btn').click((e) => {
+				$('#title').addClass('hide');
+				$('#edit-form').removeClass('hide');
+				document.querySelector('#edit-form > input[name="name"]').focus();
+			});
+			$('#cancel-btn').click((e) => {
+				$('#title').removeClass('hide');
+				$('#edit-form').addClass('hide');
+				document.querySelector('#edit-form > input[name="name"]').value = '[[${routine.name}]]';
+			});
+		});
+	</script>
 </head>
 <body layout:fragment="section">
 	<div class="text-center">
-		<h1>
+		<h1 id="title">
 			<button id="edit-btn" th:if="${session.memberLogin != null and routine.getMem_no().equals(session.memberLogin.mem_no)}"></button>
 			[[${routine.name}]]
 		</h1>
+		<form id="edit-form" class="hide" th:action="|/${lang}/routine/generate/${routine.rout_no}|" method="post">
+			<input id="submit-btn" type="submit" value="&#10003;">
+			<input type="text" name="name" th:value="${routine.name}">
+			<input id="cancel-btn" type="button" value="&#10008;">
+		</form>
 		<div id="box" class="flex-center">
 			<div class="text-center">
 				<th:block th:if="${routine.cardio}" th:switch="${lang}">

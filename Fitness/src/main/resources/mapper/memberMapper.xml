@@ -133,6 +133,17 @@
 		and bo.ex_no = ex.ex_no
 		and ex.musc_id = mu.musc_id
         and ex.equip_id = eq.equip_id
+        <choose>
+	       	<when test="lang != null and lang.equals('ko')">
+	       		order by ex.name_ko asc
+	       	</when>
+	       	<when test="lang != null and lang.equals('jp')">
+	       		order by ex.name_jp asc
+	       	</when>
+	       	<otherwise>
+	       		order by ex.name_en asc
+	       	</otherwise>
+        </choose>
 	</select>
 
 	<!-- 운동 북마크 추가 -->
@@ -186,6 +197,17 @@
 			rout_default ex
 		where bo.mem_no = #{mem_no}
 		and bo.rout_d_no = ex.rout_d_no
+		<choose>
+	       	<when test="lang != null and lang.equals('ko')">
+	       		order by ex.name_ko asc
+	       	</when>
+	       	<when test="lang != null and lang.equals('jp')">
+	       		order by ex.name_jp asc
+	       	</when>
+	       	<otherwise>
+	       		order by ex.name_en asc
+	       	</otherwise>
+        </choose>
 	</select>
 
 	<!-- 루틴 북마크 추가 -->
