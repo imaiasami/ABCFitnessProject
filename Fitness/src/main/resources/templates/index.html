@@ -11,12 +11,241 @@
 		</th:block>
 	</title>
 	<link rel="stylesheet" href="/css/flexitem.css">
+	<style>
+		:root {
+			--content-size: 980px;
+		}
+
+		.ea945e {
+			color: #ea945e;
+		}
+		.fi-e2e2db {
+			filter: invert(98%) sepia(15%) saturate(122%) hue-rotate(359deg) brightness(94%) contrast(88%);
+		}
+		.opa05 {
+			opacity: 0.5;
+		}
+		.right {
+			text-align: right;
+		}
+		.fo-900 {
+			font-weight: 900;
+		}
+		.fo-700 {
+			font-weight: 700;
+		}
+		.fo-500 {
+			font-weight: 500;
+		}
+
+		.check-btn {
+			height: 1em;
+			padding: 0 0.5em 0 1em;
+			border: none;
+			outline: none;
+			background: transparent;
+			font-size: 1em;
+			line-height: 0.5;
+			color: #f00;
+		}
+
+		#main1, #main2, #main3, #main4 {
+			margin: calc(var(--content-size) / 6) 0;
+		}
+		#main1 {
+			position: relative;
+			max-width: var(--content-size);
+			margin-top: 1em;
+			padding: 0 calc(var(--content-size) / 80);
+			font-size: calc(var(--content-size) / 16);
+			font-style: italic;
+		}
+		#main1 img {
+			width: 70%;
+		}
+		#main1 > span {
+			position: absolute;
+			top: 0;
+			left: calc(var(--content-size) / 80);
+		}
+		#main1 .fo-900 {
+			font-size: 1.55em;
+		}
+		#main1 .fo-700 {
+			letter-spacing: -0.1em;
+		}
+
+		#main2 {
+			position: relative;
+			max-width: var(--content-size);
+			font-size: calc(var(--content-size) / 30);
+		}
+		#main2 img {
+			margin-top: 0.4em;
+			width: 60%;
+		}
+		#main2 > span {
+			position: absolute;
+			top: 0;
+			right: calc(var(--content-size) / 80);
+		}
+		#main2 > span div {
+			display: inline-block;
+			margin-left: 4em;
+			padding: 0.2em 1em;
+			border-radius: 0.3em;
+			font-size: 0.8em;
+			font-weight: 700;
+			background-color: #ea945e;
+		}
+		#main2 .fo-700 {
+			font-size: 1.3em;
+		}
+
+		#main3 {
+			font-size: calc(var(--content-size) / 23);
+			font-weight: 700;
+			text-align: center;
+		}
+
+		#main4 {
+			padding: 2em;
+			margin-bottom: 1em;
+			font-size: calc(var(--content-size) / 24);
+			font-weight: 300;
+			background-image: linear-gradient(#00000080, #00000080), url("/images/etc/main3.jpg");
+			background-position: center center;
+			background-size: cover;
+		}
+		#main4 > div {
+			padding: 1.5em;
+			text-align: center;
+			border: 1px solid;
+		}
+
+		@media screen and (max-width: 425px) {
+			:root {
+				--content-size: calc(100vw - 20px);
+			}
+		}
+		@media screen and  (max-width: 580px) {
+			#main3 {
+				font-size: calc(var(--content-size) / 18);
+			}
+		}
+		@media screen and (min-width: 426px) and (max-width: 820px) {
+			:root {
+				--content-size: calc(100vw - 90px);
+			}
+		}
+		@media screen and (min-width: 821px) and (max-width: 1200px) {
+			:root {
+				--content-size: calc(100vw - 220px);
+			}
+		}
+	</style>
 </head>
 <body layout:fragment="section">
-	<h1>
-		운동이 쉬워진다.<br>ABC FITNESS
-	</h1>
-	<br>
+	<div id="main1">
+		<div class="right">
+			<img class="fi-e2e2db opa05" src="/images/etc/main1.png">
+		</div>
+		<span>
+			<span class="fo-900" th:switch="${lang}">
+				<th:block th:case="ko">운동이<br>쉬워진다.</th:block>
+				<th:block th:case="jp">運動が<br>楽になる。</th:block>
+				<th:block th:case="*">Easier<br>Exercise</th:block>
+			</span>
+			<br>
+			<span class="fo-700"><span class="ea945e">ABC</span> FITNESS</span>
+		</span>
+	</div>
+	<div id="main2" class="fo-500">
+		<div>
+			<img th:src="|/images/etc/main2-${lang}.png|">
+		</div>
+		<span>
+			<span class="fo-700" th:switch="${lang}">
+				<th:block th:case="ko"><span class="ea945e">컴퓨터</span>로도 <span class="ea945e">휴대폰</span>으로도<br>언제 어디서든 가능합니다!</th:block>
+				<th:block th:case="jp"><span class="ea945e">パソコン</span>でも<span class="ea945e">携帯</span>でも<br>いつでもどこでも可能です！</th:block>
+				<th:block th:case="*">On <span class="ea945e">PC</span> or on <span class="ea945e">cell phone?</span><br>Anytime, anywhere!</th:block>
+			</span>
+			<br><br>
+			<span th:switch="${lang}">
+				<th:block th:case="ko">
+					<input class="check-btn" type="button" value="&#10003;">약 170개의 운동 제공!<br>
+					<input class="check-btn" type="button" value="&#10003;">자신만의 운동 루틴을 생성!<br>
+					<input class="check-btn" type="button" value="&#10003;">모든 운동 루틴을 재생!<br>
+					<input class="check-btn" type="button" value="&#10003;">캘린더로 매일의 운동 습관 체크!
+				</th:block>
+				<th:block th:case="jp">
+					<input class="check-btn" type="button" value="&#10003;">約170個の運動提供！<br>
+					<input class="check-btn" type="button" value="&#10003;">自分だけの運動ルーチンを生成！<br>
+					<input class="check-btn" type="button" value="&#10003;">すべての運動ルーチンを再生！<br>
+					<input class="check-btn" type="button" value="&#10003;">毎日の運動習慣をチェック！
+				</th:block>
+				<th:block th:case="*">
+					<input class="check-btn" type="button" value="&#10003;">Nearly 170 workouts available!<br>
+					<input class="check-btn" type="button" value="&#10003;">Create your own workout routine!<br>
+					<input class="check-btn" type="button" value="&#10003;">Play all workout routines!<br>
+					<input class="check-btn" type="button" value="&#10003;">Track your daily exercise habits!
+				</th:block>
+			</span>
+			<br><br>
+			<div th:switch="${lang}">
+				<th:block th:case="ko">지금 바로 시작하세요</th:block>
+				<th:block th:case="jp">今すぐはじめましょう</th:block>
+				<th:block th:case="*">Start now</th:block>
+			</div>
+		</span>
+	</div>
+	<div id="main3">
+		<span th:switch="${lang}">
+			<th:block th:case="ko">내 최애캐의 운동 루틴은?</th:block>
+			<th:block th:case="jp">私の推しの運動ルーチンは？</th:block>
+			<th:block th:case="*">Anime Workout Routines</th:block>
+		</span>
+		<div class="flex-container">
+			<a href="character/saitama">
+				<div class="flex-item">
+					<img class="character" src="/images/etc/saitama-thumb.jpg">
+				</div>
+			</a>
+			<a href="character/luffy">
+				<div class="flex-item">
+					<img class="character" src="/images/etc/luffy-thumb.jpg">
+				</div>
+			</a>
+			<a href="character/zoro">
+				<div class="flex-item">
+					<img class="character" src="/images/etc/zoro-thumb.jpg">
+				</div>
+			</a>
+			<a href="character/levi">
+				<div class="flex-item">
+					<img class="character" src="/images/etc/levi-thumb.jpeg">
+				</div>
+			</a>
+			<a href="character/manjiro">
+				<div class="flex-item">
+					<img class="character" src="/images/etc/manjiro-thumb.jpg">
+				</div>
+			</a>
+			<a href="character/tanjiro">
+				<div class="flex-item">
+					<img class="character" src="/images/etc/tanjiro-thumb.jpg">
+				</div>
+			</a>
+		</div>
+	</div>
+	<div id="main4">
+		<div th:switch="${lang}">
+			<th:block th:case="ko">&nbsp;<br>늙어서 운동을 그만두는 게 아니라<br>운동을 그만둬서 늙는 것이다.<br>- 케네스 H. 쿠퍼 -<br>&nbsp;</th:block>
+			<th:block th:case="jp">&nbsp;<br>年をとって運動をやめるのではなく<br>運動をやめたから老いるのだ。<br>ーケネスH.クーパー<br>&nbsp;</th:block>
+			<th:block th:case="*">We do not stop exercising<br>because we grow old,<br>we grow old<br>because we stop exercising.<br>- Kenneth H. Cooper -</th:block>
+		</div>
+	</div>
+	<!-- <br>
 	<h2>가장 인기 있는 운동</h2>
 	<div class="flex-container">
 		<a th:each="exercise : ${exercises}" th:href="|/${lang}/exercise/${exercise.ex_no}|">
@@ -40,40 +269,6 @@
 				<div class="item-name flex-center" th:text="${routine.name}"></div>
 			</div>
 		</a>
-	</div>
-	<br>
-	<h2>캐릭터별 루틴</h2>
-	<div class="flex-container">
-		<a href="character/saitama">
-			<div class="flex-item">
-				<img class="character" src="/images/etc/saitama-thumb.jpg">
-			</div>
-		</a>
-		<a href="character/luffy">
-			<div class="flex-item">
-				<img class="character" src="/images/etc/luffy-thumb.jpg">
-			</div>
-		</a>
-		<a href="character/zoro">
-			<div class="flex-item">
-				<img class="character" src="/images/etc/zoro-thumb.jpg">
-			</div>
-		</a>
-		<a href="character/levi">
-			<div class="flex-item">
-				<img class="character" src="/images/etc/levi-thumb.jpeg">
-			</div>
-		</a>
-		<a href="character/manjiro">
-			<div class="flex-item">
-				<img class="character" src="/images/etc/manjiro-thumb.jpg">
-			</div>
-		</a>
-		<a href="character/tanjiro">
-			<div class="flex-item">
-				<img class="character" src="/images/etc/tanjiro-thumb.jpg">
-			</div>
-		</a>
-	</div>
+	</div> -->
 </body>
 </html>
