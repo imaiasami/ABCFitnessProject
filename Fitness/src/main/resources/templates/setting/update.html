@@ -3,111 +3,110 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>개인정보 수정</title>
-	<link rel="stylesheet" href="/css/join.css">
-	<style>
-		.member-id-description {
-			font-size: 10px;
-			color: gray;
-			margin-top: 9px;
-		}
+<title>개인정보 수정</title>
+<link rel="stylesheet" href="/css/join.css">
+<style>
+.member-id-description {
+	font-size: 10px;
+	color: gray;
+	margin-top: 9px;
+}
 
-		#section [disabled="disabled"] {
-			color: #E2E2DB;
-		}
+#section [disabled="disabled"] {
+	color: #E2E2DB;
+}
 
-		#section input[type="text"] {
-			margin: 0px;
-		}
+#section input[type="text"] {
+	margin: 0px;
+}
 
-		#section form {
-			color: #E2E2DB;
-		}
+#section form {
+	color: #E2E2DB;
+}
 
-		#section input[type="date"] {
-			font-size: 15px;
-			background-color: #1F3A50;
+#section input[type="date"] {
+	font-size: 15px;
+	background-color: #1F3A50;
+	box-sizing: border-box;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	text-align: center;
+}
 
-			box-sizing: border-box;
-			border-top: 0;
-			border-left: 0;
-			border-right: 0;
-			text-align: center;
-		}
+#section input[type="button"] {
+	position: relative;
+	width: 50%;
+	height: 40px;
+	background: #E48C55;
+	color: #1F3A50;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	transition: 0.4s;
+	border-radius: 15px;
+	margin: auto;
+	display: block;
+}
 
-		#section input[type="button"] {
-			position: relative;
-			width: 50%;
-			height: 40px;
-			background: #E48C55;
-			color: #1F3A50;
-			font-weight: bold;
-			border: none;
-			cursor: pointer;
-			transition: 0.4s;
-			border-radius: 15px;
-			margin: auto;
-			display: block;
-		}
+.delete {
+	background-color: #1F3A50;
+	color: #E48C55;
+	border: 1px solid #E48C55;
+	position: relative;
+	width: 80px;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 0;
+	top: 50%;
+	left: 45%;
+	top: 50%;
+}
 
-		.delete {
-			background-color: #1F3A50;
-			color: #E48C55;
-			border: 1px solid #E48C55;
-			position: relative;
-			width: 80px;
-			border-top: 0;
-			border-left: 0;
-			border-right: 0;
-			border-bottom: 0; top : 50%;
-			left: 45%;
-			top: 50%;
-		}
+#section h3 {
+	margin: 30px;
+}
 
-		#section h3 {
-			margin: 30px;
-		}
+.modal1 {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	color: #1F3A50;
+	background-color: rgba(0, 0, 0, 0.4);
+}
 
-		.modal1 {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			display: none;
-			color: #1F3A50;
-			background-color: rgba(0, 0, 0, 0.4);
-		}
+.modal1.show {
+	display: block;
+}
 
-		.modal1.show {
-			display: block;
-		}
+.modal_body {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 500px;
+	height: 500px;
+	padding: 40px;
+	text-align: center;
+	background-color: #E2E2DB;
+	border-radius: 50px;
+	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+	transform: translateX(-50%) translateY(-50%);
+}
 
-		.modal_body {
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			width: 500px;
-			height: 500px;
-			padding: 40px;
-			text-align: center;
-			background-color: #E2E2DB;
-			border-radius: 50px;
-			box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-			transform: translateX(-50%) translateY(-50%);
-		}
-	</style>
-	<script src="/js/join.js"></script>
-	<script>
-		function validatePassword() {
-			if (document.querySelector('#password').value !== document
-					.querySelector('#confirm-password').value) {
-				confirmPassword.setCustomValidity('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-			} else {
-				confirmPassword.setCustomValidity('');
-			}
-		}
-	</script>
+h2.form-signin-heading {
+	color: #1F3A50;
+}
+
+.form-signin-heading {
+	color: #1F3A50;
+}
+</style>
+<script src="/js/join.js"></script>
+
 </head>
 <body layout:fragment="section">
 	<h2>[ 개인정보 수정 ]</h2>
@@ -173,33 +172,32 @@
 		<div>
 			<input type="button" value="수정하기" class="updateForm"
 				onclick="location.href='/ko/profile'">
-
-			<button type="button" class="delete"
-				onclick="document.querySelector('.modal1').classList.add('show'); document.body.style.overflow = 'hidden';">탈퇴하기</button>
-
-
 		</div>
+		<button type="button" class="delete"
+			onclick="document.querySelector('.modal1').classList.add('show'); document.body.style.overflow = 'hidden';">탈퇴하기</button>
 
-		<div class="modal1">
-			<div class="modal_body">
-				<form action="/setting/withdrawal" method="post">
-					<h2 class="form-signin-heading">회원탈퇴를 하시겠습니까?</h2>
-					<h3>마지막으로 비밀번호 입력을 부탁드립니다.</h3>
-					<div>
-						<input type="password" class="form-control" name="password"
-							placeholder="Password" required="" />
-					</div>
-					<br>
-					<button type="submit">탈퇴하기</button>
-					<div th:if="${error}">
-						<p th:text="${error}"></p>
-					</div>
-					<button class="btn-close-popup">닫기</button>
-				</form>
-			</div>
+
+	</form>
+
+	<div class="modal1">
+		<div class="modal_body">
+			<form th:action="|/${lang}/setting/withdrawal|" method="post">
+				<h2 class="form-signin-heading">회원탈퇴를 하시겠습니까?</h2>
+				<h3 class="form-signin-heading">마지막으로 비밀번호 입력을 부탁드립니다.</h3>
+				<div>
+					<input type="password" class="form-control" name="password"
+						placeholder="Password" required="" />
+				</div>
+				<br> <input type="submit" value="탈퇴하기">
+				<div th:if="${error}">
+					<p th:text="${error}"></p>
+				</div>
+				<button class="btn-close-popup">닫기</button>
+			</form>
 		</div>
+	</div>
 
-		<script>
+	<script>
 		// 모달 닫기 버튼에 이벤트 리스너 등록
 		const btnClosePopup = document.querySelector('.btn-close-popup');
 		btnClosePopup.addEventListener('click', () => {

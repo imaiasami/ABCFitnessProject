@@ -3,7 +3,37 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="layout/default_layout">
 <head>
-	<title>회원탈퇴페이지</title>
+<title>회원탈퇴페이지</title>
+<style>
+.form-signin {
+	max-width: 380px;
+	padding: 15px 35px 45px;
+	margin: 100px auto 0 auto;
+	background-color: #E2E2DB;
+	border-radius: 20px;
+	color: #1F3A50;
+}
+
+hr {
+	border: 1px solid;
+}
+
+h2 {
+	font-size: 30px;
+}
+
+h2, h3, h5 {
+	text-align: center;
+}
+
+input[type="submit"] {
+	background-color: #E2E2DB;
+	color: #1F3A50;
+	border: 1px solid #1F3A50;
+	border-radius: 15px;
+	
+}
+</style>
 </head>
 <body layout:fragment="section">
 	<div class="form-signin">
@@ -11,18 +41,25 @@
 		<div th:if="${error}">
 			<p th:text="${error}"></p>
 		</div>
-		<h2 class="form-signin-heading">정말 떠나시는 건가요?</h2>
+		<h2 class="form-signin">정말 떠나시는 건가요?</h2>
 		<h3>한 번 더 생각해 보지 않으시겠어요?</h3>
-		<p>
-			계정을 삭제하시려는 이유를 말씀해주세요.<br>
-			사이트 개선에 중요한 자료로 활용하겠습니다.<br>
-			<label for="delete">개인정보 삭제</label><input type="radio" name="withdrawal" value="delete" id="delete"><br>
-			<label for="failure">이용이 불편하고 장애가 많아서</label><input type="radio" name="withdrawal" value="failure" id="failure"><br>
-			<label for="mirror">다른 사이트가 더 좋아서</label><input type="radio" name="withdrawal" value="mirror" id="mirror"><br>
-			<label for="frequency">사용빈도가 낮아서</label><input type="radio" name="withdrawal" value="frequency" id="frequency"><br>
-			<label for="inconvenience">콘텐츠 불편</label> <input type="radio" name="withdrawal" value="inconvenience" id="inconvenience"><br>
-			<label for="etc">기타</label> <input type="radio" name="withdrawal" value="etc" id="etc"><br><br><br>
-			<input type="submit" value="회원탈퇴" onclick="location.href='/'">
+		<hr>
+		<h5>
+			계정을 삭제하시려는 이유를 말씀해주세요.<br> 사이트 개선에 중요한 자료로 활용하겠습니다.</h5><br> <br>
+
+			<input type="radio" name="withdrawal" value="delete" id="delete">
+			<label for="delete">개인정보 삭제</label> <br> <input type="radio"
+				name="withdrawal" value="failure" id="failure"> <label
+				for="failure">이용이 불편하고 장애가 많아서</label><br> <input type="radio"
+				name="withdrawal" value="mirror" id="mirror"> <label
+				for="mirror">다른 사이트가 더 좋아서</label><br> <input type="radio"
+				name="withdrawal" value="frequency" id="frequency"> <label
+				for="frequency">사용빈도가 낮아서</label><br> <input type="radio"
+				name="withdrawal" value="inconvenience" id="inconvenience">
+			<label for="inconvenience">콘텐츠 불편</label> <br> <input
+				type="radio" name="withdrawal" value="etc" id="etc"> <label
+				for="etc">기타</label> <br> <br> <br> <input
+				type="submit" value="회원탈퇴" onclick="location.href='/'">
 		</p>
 	</div>
 </body>
